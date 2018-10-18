@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import uk.bizel.czi.exceptions.BadPositionException;
-import uk.bizel.czi.exceptions.BadStartPositionException;
+import uk.bisel.czi.exceptions.*;
+import uk.bisel.czi.model.Position;
 
 public class PositionTest {
 	

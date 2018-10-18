@@ -4,7 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import uk.bizel.czi.exceptions.BadPositionException;
+import uk.bisel.czi.exceptions.BadPositionException;
+import uk.bisel.czi.model.Image2PositionMapping;
 
 public class Image2PositionMappingTest {
 

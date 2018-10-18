@@ -4,9 +4,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import uk.bizel.czi.exceptions.BadPositionException;
-import uk.bizel.czi.exceptions.ComponentNotFoundException;
-import uk.bizel.czi.exceptions.GutComponentAlreadyExists;
+import uk.bisel.czi.exceptions.BadPositionException;
+import uk.bisel.czi.exceptions.ComponentNotFoundException;
+import uk.bisel.czi.exceptions.GutComponentAlreadyExists;
+import uk.bisel.czi.model.Colon;
+import uk.bisel.czi.model.GutComponent;
+import uk.bisel.czi.model.GutComponentName;
 
 public class ColonTest {
 

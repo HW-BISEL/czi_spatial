@@ -4,8 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import uk.bizel.czi.exceptions.BadPositionException;
-import uk.bizel.czi.exceptions.WrongNumberOfArgumentsException;
+import uk.bisel.czi.exceptions.BadPositionException;
+import uk.bisel.czi.exceptions.WrongNumberOfArgumentsException;
+import uk.bisel.czi.model.GutComponent;
+import uk.bisel.czi.model.GutComponentName;
 
 public class GutComponentTest {
 

@@ -1,7 +1,7 @@
-package uk.bizel.czi.model;
+package uk.bisel.czi.model;
 
-import uk.bizel.czi.exceptions.BadPositionException;
-import uk.bizel.czi.exceptions.BadStartPositionException;
+import uk.bisel.czi.exceptions.BadPositionException;
+import uk.bisel.czi.exceptions.BadStartPositionException;
 
 public final class Position {
 

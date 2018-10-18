@@ -1,4 +1,4 @@
-package uk.bizel.czi.exceptions;
+package uk.bisel.czi.exceptions;
 
 public class BadPositionException extends RuntimeException {
 

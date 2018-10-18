@@ -1,11 +1,23 @@
-package uk.bizel.czi.model;
+package uk.bisel.czi.model;
 
-import uk.bizel.czi.exceptions.WrongNumberOfArgumentsException;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+import uk.bisel.czi.exceptions.WrongNumberOfArgumentsException;
+
+@Entity
 public class GutComponent implements Comparable<GutComponent> {
+	@Id	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+		
 	private GutComponentName name;
 	private short startPosition;
 	private short endPosition;
+	
+	public GutComponent() {} ;
 
 	
 	public GutComponent(GutComponentName name, short position) {

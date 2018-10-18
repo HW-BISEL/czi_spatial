@@ -1,9 +1,21 @@
-package uk.bizel.czi.model;
+package uk.bisel.czi.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Image2PositionMapping implements Comparable<Image2PositionMapping> {
 
+	@Id	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	private String imageId;
 	private short position;
+	
+	public Image2PositionMapping() {}
 	
 	public Image2PositionMapping(String imageId, short position) {
 		Position.validatePosition(position);

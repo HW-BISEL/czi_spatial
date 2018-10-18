@@ -1,13 +1,26 @@
-package uk.bizel.czi.model;
+package uk.bisel.czi.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import uk.bizel.czi.exceptions.ComponentNotFoundException;
-import uk.bizel.czi.exceptions.GutComponentAlreadyExists;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+import uk.bisel.czi.exceptions.ComponentNotFoundException;
+import uk.bisel.czi.exceptions.GutComponentAlreadyExists;
+
+@Entity
 public class Colon {
 	
-	private ArrayList<GutComponent> allStructures;
+	@Id	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@OneToMany()
+	private List<GutComponent> allStructures;
 	
 	public Colon() {
 		allStructures = new ArrayList<>();
