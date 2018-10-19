@@ -30,7 +30,7 @@ public class Image2PositionMapping implements Comparable<Image2PositionMapping> 
 	public short getPosition() {
 		return position;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(obj.getClass().equals(this.getClass())) {
@@ -45,5 +45,15 @@ public class Image2PositionMapping implements Comparable<Image2PositionMapping> 
 		if(obj.position == this.position) return 0;
 		if(obj.position > this.position) return -1;
 		return 1;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder(imageId+": "+position);		
+		return sb.toString();
+	}
+	
+	public String toJson() {
+		return "{\"imageId\" : \""+imageId+"\", \"position\" :"+position+"\"}";
 	}
 }

@@ -2,11 +2,26 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <display-name>CZI Spatial Service</display-name>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <resource-ref>
+    <description>CZI database pool</description>
+    <res-ref-name>java:comp/env/jdbc/czi</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/AppExceptionHandler</location>
+  </error-page>
+  <servlet>
+    <description></description>
+    <display-name>ListAll</display-name>
+    <servlet-name>ListAll</servlet-name>
+    <servlet-class>uk.bizel.czi.webservice.ListAll</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListAll</servlet-name>
+    <url-pattern>/ListAll</url-pattern>
+  </servlet-mapping>
 </web-app>
