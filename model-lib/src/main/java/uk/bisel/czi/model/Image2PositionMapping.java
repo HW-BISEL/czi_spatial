@@ -52,8 +52,4 @@ public class Image2PositionMapping implements Comparable<Image2PositionMapping> 
 		StringBuilder sb = new StringBuilder(imageId+": "+position);		
 		return sb.toString();
 	}
-	
-	public String toJson() {
-		return "{\"imageId\" : \""+imageId+"\", \"position\" :"+position+"\"}";
-	}
 }

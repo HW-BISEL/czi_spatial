@@ -38,7 +38,7 @@ public class Colon {
 	
 	public GutComponent getComponent(GutComponentName name) {
 		for(GutComponent temp : allStructures) {
-			if(temp.getName().equals(name)) return temp;
+			if(temp.getName().equalsIgnoreCase((name.toString()))) return temp;
 		}
 		throw new ComponentNotFoundException(name.toString());		
 	}

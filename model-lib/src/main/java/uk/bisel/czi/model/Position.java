@@ -13,7 +13,9 @@ public final class Position {
 	}
 	
 	public static boolean validatePosition(short start, short end) {
-		if(start < end) return true;
+		validatePosition(start);
+		validatePosition(end);
+		if(start <= end) return true;
 		throw new BadStartPositionException(start, end);		
 	}	
 }

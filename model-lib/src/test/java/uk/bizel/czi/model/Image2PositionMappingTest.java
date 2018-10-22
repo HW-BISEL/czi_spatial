@@ -49,4 +49,11 @@ public class Image2PositionMappingTest {
 		Image2PositionMapping obj2 = new Image2PositionMapping("1", (short) 2);
 		assertEquals("should be false", false, obj.equals(obj2));
 	}
+	
+	@Test
+	public void toStringTest() {
+		Image2PositionMapping obj = new Image2PositionMapping("1", (short) 4);
+		String result = "1: 4";
+		assertEquals("Simple test string", result, obj.toString());	
+	}
 }

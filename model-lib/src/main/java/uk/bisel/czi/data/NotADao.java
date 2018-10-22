@@ -8,8 +8,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import uk.bisel.czi.exceptions.ComponentNotFoundException;
 import uk.bisel.czi.exceptions.NoSuchImageException;
+import uk.bisel.czi.model.GutComponent;
 import uk.bisel.czi.model.Image2PositionMapping;
+import uk.bisel.czi.model.Position;
 
 public class NotADao {
 
@@ -42,12 +45,14 @@ public class NotADao {
 	}
 	
 	public Image2PositionMapping[] getImagesAtPosition(short position) {
+		Position.validatePosition(position);
 		short upperBoundary = (short) (((position + 5) <=  150) ? position + 5 :  150);
 		short lowerBoundary = (short) (((position -  5) >=  0) ? position -  5 :  0);
 		return getImagesFromRange(lowerBoundary, upperBoundary);
 	}
 	
 	public Image2PositionMapping[] getImagesFromRange(short start, short end) {				
+		Position.validatePosition(start, end);
 		Query query = em.createQuery("from Image2PositionMapping i where i.position >= " + start + " and i.position <= " + end);
 		List<Image2PositionMapping> allMappings = query.getResultList();		
 				
@@ -59,32 +64,26 @@ public class NotADao {
 		return sortedMappings.toArray(result);
 	}	
 	
+	public short[] getPositionOfComponent(String name) {		
+		Query query = em.createQuery("from GutComponent c where name = '"+name.toLowerCase().trim()+"'");
+		List<GutComponent> allComponents = query.getResultList();		
+		if (allComponents.isEmpty()) throw new ComponentNotFoundException(name);
+		if(allComponents.size() > 1) throw new RuntimeException("Unique component not identified");
+		short[] positions = new short[2];
+		positions[0] = allComponents.get(0).getStartPosition();
+		positions[1] = allComponents.get(0).getEndPosition();
+		return positions;			
+	}
 	
+	public Image2PositionMapping[] getImagesFromComponent(String name) {
+		short[] position = getPositionOfComponent(name);
+		return getImagesFromRange(position[0], position[1]);
+	}
+		
 	@Override
 	protected void finalize() throws Throwable {
 		em.close();
 		super.finalize();
-	}
-	
-	
-	public static void main(String[] args) {
-		NotADao obj = new NotADao();
-		Image2PositionMapping[] allMappings = obj.getAllMappings();
-		System.out.println(allMappings.length);
-		for(Image2PositionMapping mapping : allMappings) {
-			System.out.println(mapping.toJson());
-		}
-		
-		System.out.println("*****************");
-		
-		short[] allPositions = obj.getPositionsFromImage("12");
-		for(short position: allPositions) {
-			System.out.println(position);
-		}
-		
-		System.out.println("*****************");
-		
-		
 	}
 	
 }

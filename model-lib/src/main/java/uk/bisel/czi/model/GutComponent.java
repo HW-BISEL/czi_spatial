@@ -13,7 +13,7 @@ public class GutComponent implements Comparable<GutComponent> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 		
-	private GutComponentName name;
+	private String name;
 	private short startPosition;
 	private short endPosition;
 	
@@ -23,7 +23,7 @@ public class GutComponent implements Comparable<GutComponent> {
 	public GutComponent(GutComponentName name, short position) {
 		if(name.equals(GutComponentName.APR) || name.equals(GutComponentName.ICV)) {
 			if(Position.validatePosition(position)) {
-				this.name = name;
+				this.name = name.toString();
 				this.startPosition = position;
 				this.endPosition = position;
 			}
@@ -39,12 +39,12 @@ public class GutComponent implements Comparable<GutComponent> {
 		Position.validatePosition(startPosition);
 		Position.validatePosition(endPosition);
 		Position.validatePosition(startPosition, endPosition);
-		this.name = name;
+		this.name = name.toString();
 		this.startPosition = startPosition;
 		this.endPosition = endPosition;		
 	}	
 	
-	public GutComponentName getName() {
+	public String getName() {
 		return name;
 	}
 

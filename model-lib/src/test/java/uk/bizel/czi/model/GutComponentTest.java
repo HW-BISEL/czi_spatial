@@ -14,7 +14,7 @@ public class GutComponentTest {
 	@Test
 	public void testConstructor() {
 		GutComponent gc = new GutComponent(GutComponentName.ANUS, (short) 0, (short) 4);
-		assertEquals("should be anus", GutComponentName.ANUS, gc.getName());
+		assertEquals("should be anus", GutComponentName.ANUS.toString(), gc.getName());
 		assertEquals("should be 0", (short) 0, gc.getStartPosition());
 		assertEquals("should be 4", (short) 4, gc.getEndPosition());
 	}
@@ -22,20 +22,45 @@ public class GutComponentTest {
 	@Test
 	public void testConstructor_apr() {
 		GutComponent gc = new GutComponent(GutComponentName.APR, (short) 10);
-		assertEquals("should be apr", GutComponentName.APR, gc.getName());
+		assertEquals("should be apr", GutComponentName.APR.toString(), gc.getName());
 		assertEquals("should be 10", (short) 10, gc.getStartPosition());
 		assertEquals("should be 10", (short) 10, gc.getEndPosition());
 	}
 	
+	@Test (expected=WrongNumberOfArgumentsException.class)
+	public void testConstructor_withWrongName() {
+		GutComponent gc = new GutComponent(GutComponentName.SIGMOID, (short) 10);
+	}	
+	
+	@Test (expected=WrongNumberOfArgumentsException.class)
+	public void testFullConstructor_withWrongName() {
+		GutComponent gc = new GutComponent(GutComponentName.APR, (short) 10, (short) 22);
+	}	
+	
+	@Test (expected=WrongNumberOfArgumentsException.class)
+	public void testFullConstructor_withWrongName_icv() {
+		GutComponent gc = new GutComponent(GutComponentName.ICV, (short) 10, (short) 22);
+	}		
+
+	@Test (expected = BadPositionException.class)
+	public void testConstructor_icv_badPosition_low() {
+		GutComponent gc = new GutComponent(GutComponentName.ICV, (short) -1);
+	}	
+	
+	@Test (expected = BadPositionException.class)
+	public void testConstructor_icv_badPosition_high() {
+		GutComponent gc = new GutComponent(GutComponentName.ICV, (short) 151);
+	}		
+	
 	@Test
 	public void testConstructor_icv() {
 		GutComponent gc = new GutComponent(GutComponentName.ICV, (short) 150);
-		assertEquals("should be icv", GutComponentName.ICV, gc.getName());
+		assertEquals("should be icv", GutComponentName.ICV.toString(), gc.getName());
 		assertEquals("should be 150", (short) 150, gc.getStartPosition());
 		assertEquals("should be 150", (short) 150, gc.getEndPosition());
 	}	
 	
-	
+
 	@Test(expected = BadPositionException.class)
 	public void testConstructor_badPosition_APR() {
 		new GutComponent(GutComponentName.APR, (short) -151);
