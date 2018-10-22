@@ -41,9 +41,8 @@ public class PositionTest {
 	public void startVsStopPositions_exception() {
 		Position.validatePosition((short) 1, (short) 0);		
 	}	
-	
-	@Test(expected = BadStartPositionException.class)
-	public void startVsStopPositions_sameValue_exception() {
-		Position.validatePosition((short) 1, (short) 1);		
+		
+	public void startVsStopPositions_sameValue_noexception() {
+		assertEquals("same position now valid", true, Position.validatePosition((short) 1, (short) 1));		
 	}	
 }
