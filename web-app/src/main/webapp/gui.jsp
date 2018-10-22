@@ -91,15 +91,31 @@ body {
 				<div id="searchByImage" class="tabcontent">
 					Enter the number of the image you are interested in: <input
 						type="text" maxlength="3" size="4" id="imageId"> <br /> <br />
-					<button type="button" onclick="QueryImage();">Query</button>
+					<button type="button"
+						onclick="Query('searchByImage', document.getElementById('imageId').value);">Query</button>
 
 					<br /> <br />
 				</div>
 				<div id="searchByComponent" class="tabcontent">
-					Enter the name of colon structure you are interested in: <input
-						type="text" maxlength="15" size="19" id="componentId"> <br />
+					Enter the name of colon structure you are interested in: 
+					
+					<select id="componentId">
+						<option value="anus">anus</option>
+						<option value="rectum">rectum</option>
+						<option value="apr">apr</option>
+						<option value="sigmoid">sigmoid</option>
+						<option value="descending">descending</option>
+						<option value="transverse">transverse</option>
+						<option value="ascending">ascending</option>
+						<option value="caecum">caecum</option>
+						<option value="icv">icv</option>
+						<option value="junk">junk value</option>
+					</select>
+					<!-- <input type="text" maxlength="15" size="19" id="componentId"> --> 
+				    <br />
 					<br />
-					<button type="button" onclick="QueryComponent();">Query</button>
+					<button type="button"
+						onclick="Query('searchByComponent', document.getElementById('componentId').value);">Query</button>
 
 					<br /> <br />
 				</div>
@@ -107,7 +123,8 @@ body {
 					Enter the position (as an integer) you are interested in: <input
 						type="text" maxlength="3" size="4" id="position"> <br />
 					<br />
-					<button type="button" onclick="QueryPosition();">Query</button>
+					<button type="button"
+						onclick="Query('searchByPosition', document.getElementById('position').value);">Query</button>
 
 					<br /> <br />
 				</div>
@@ -128,6 +145,7 @@ body {
 
 	<script>
 		function openTab(evt, tabName) {
+			document.getElementById('display').innerHTML = "";
 			var i, tabcontent, tablinks;
 			tabcontent = document.getElementsByClassName("tabcontent");
 			for (i = 0; i < tabcontent.length; i++) {
@@ -141,51 +159,28 @@ body {
 			document.getElementById(tabName).style.display = "block";
 			evt.currentTarget.className += " active";
 		}
-	</script>
 
-	<script>
-		function QueryImage() {
+		function Query(operation, value) {
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
 					document.getElementById("display").innerHTML = this.responseText;
-				};
-				if(this.readyState == 4 && this.status == 500) {
+				}
+				;
+				if (this.readyState == 4 && this.status == 500) {
 					document.getElementById("display").innerHTML = this.responseText;
-				};
+				}
+				;
 			};
-			xhttp.open("GET", "query/searchByImage/"
-					+ document.getElementById("imageId").value, true);
-			xhttp.send();
-		}
-
-		function QueryComponent() {
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					document.getElementById("display").innerHTML = this.responseText;
-				};
-				if(this.readyState == 4 && this.status == 500) {
-					document.getElementById("display").innerHTML = this.responseText;
-				};				
-			};
-			xhttp.open("GET", "query/searchByComponent/"
-					+ document.getElementById("componentId").value, true);
-			xhttp.send();
-		}
-
-		function QueryPosition() {
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					document.getElementById("display").innerHTML = this.responseText;
-				};
-				if(this.readyState == 4 && this.status == 500) {
-					document.getElementById("display").innerHTML = this.responseText;
-				};	
-			};
-			xhttp.open("GET", "query/searchByPosition/"
-					+ document.getElementById("position").value, true);
+			var url = "query/";
+			if (operation == "searchByImage") {
+				url += "searchByImage/" + value;
+			} else if (operation == "searchByComponent") {
+				url += "searchByComponent/" + value;
+			} else if (operation == "searchByPosition") {
+				url += "searchByPosition/" + value;
+			}
+			xhttp.open("GET", url, true);
 			xhttp.send();
 		}
 
@@ -194,10 +189,12 @@ body {
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
 					document.getElementById("display").innerHTML = this.responseText;
-				};
-				if(this.readyState == 4 && this.status == 500) {
+				}
+				;
+				if (this.readyState == 4 && this.status == 500) {
 					document.getElementById("display").innerHTML = this.responseText;
-				};	
+				}
+				;
 			};
 			xhttp.open("GET", "query/searchByRange/"
 					+ document.getElementById("start").value + "/"
