@@ -179,7 +179,8 @@ body {
 			}
 		}
 
-		function openTab(evt, tabName) {									
+		function openTab(evt, tabName) {	
+			document.getElementById('display').innerHTML = "";
 			var i, tabcontent, tablinks;
 			tabcontent = document.getElementsByClassName("tabcontent");
 			for (i = 0; i < tabcontent.length; i++) {

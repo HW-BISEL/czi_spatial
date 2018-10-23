@@ -100,14 +100,12 @@ body {
 					Enter the name of colon structure you are interested in: <select
 						id="componentId">
 						<option value="anus">anus</option>
-						<option value="rectum">rectum</option>
-						<option value="apr">apr</option>
+						<option value="rectum">rectum</option>						
 						<option value="sigmoid">sigmoid</option>
 						<option value="descending">descending</option>
 						<option value="transverse">transverse</option>
 						<option value="ascending">ascending</option>
-						<option value="caecum">caecum</option>
-						<option value="icv">icv</option>
+						<option value="caecum">caecum</option>						
 						<option value="junk">junk value</option>
 					</select>
 					<!-- <input type="text" maxlength="15" size="19" id="componentId"> -->
