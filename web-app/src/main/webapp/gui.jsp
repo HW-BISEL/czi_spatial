@@ -100,12 +100,12 @@ body {
 					Enter the name of colon structure you are interested in: <select
 						id="componentId">
 						<option value="anus">anus</option>
-						<option value="rectum">rectum</option>						
+						<option value="rectum">rectum</option>
 						<option value="sigmoid">sigmoid</option>
 						<option value="descending">descending</option>
 						<option value="transverse">transverse</option>
 						<option value="ascending">ascending</option>
-						<option value="caecum">caecum</option>						
+						<option value="caecum">caecum</option>
 						<option value="junk">junk value</option>
 					</select>
 					<!-- <input type="text" maxlength="15" size="19" id="componentId"> -->
@@ -134,6 +134,20 @@ body {
 					<br /> <br />
 				</div>
 				<textarea id="display" rows="15" style="width: 100%"></textarea>
+			</div>
+			<div class="col-sm-2"></div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="col-sm-2"></div>
+			<div class="com-sm-8">
+				<p>
+					&copy; 2018 <a href="http://www.macs.hw.ac.uk/bisel">BISEL</a>,
+					part of <a href="http://www.hw.ac.uk">Heriot-Watt University</a>.
+					Development funded by <a
+						href="https://www.chanzuckerberg.com/science/projects-hca">Chan
+						Zuckerberg Initiative</a>.
+				</p>
 			</div>
 			<div class="col-sm-2"></div>
 		</div>

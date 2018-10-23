@@ -169,7 +169,23 @@ body {
 			</div>
 			<div class="col-sm-2"></div>
 		</div>
+		<br />
+		<div class="row">
+			<div class="col-sm-2"></div>
+			<div class="com-sm-8">
+				<p>
+					&copy; 2018 <a href="http://www.macs.hw.ac.uk/bisel">BISEL</a>,
+					part of <a href="http://www.hw.ac.uk">Heriot-Watt University</a>.
+					Development funded by <a
+						href="https://www.chanzuckerberg.com/science/projects-hca">Chan
+						Zuckerberg Initiative</a>.
+				</p>
+			</div>
+			<div class="col-sm-2"></div>
+		</div>		
 	</div>
+	
+	
 
 	<script>
 		function updateModel(componentName) {
