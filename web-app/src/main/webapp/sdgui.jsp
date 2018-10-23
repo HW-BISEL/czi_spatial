@@ -55,7 +55,7 @@ body {
 </style>
 </head>
 
-<body onload="openTab(event, 'searchByImage')">
+<body onload="openTab(event, 'basic')">
 
 
 
@@ -65,7 +65,11 @@ body {
 		<div class="row">
 			<div class="col-sm-2"></div>
 			<div class="com-sm-8">
-				<img src="images/cziModel8.jpg">
+				<div class="container" style="position: relative;">
+					<div id="model" style="width: 100%;">
+						<img src="images/cziModel8.jpg">
+					</div>
+				</div>
 			</div>
 			<div class="col-sm-2"></div>
 		</div>
@@ -75,12 +79,14 @@ body {
 			<div class="col-sm-8" style="background-color: lavenderblush;">
 				<!-- Tab links -->
 				<div class="tab">
-					<button class="tablinks" onclick="openTab(event, 'searchByImage')">searchByImage</button>
+					<button class="tablinks" onclick="openTab(event, 'basic')">Basic
+						SD</button>
 					<button class="tablinks"
-						onclick="openTab(event, 'searchByComponent')">searchByComponent</button>
+						onclick="openTab(event, 'landmark')">Landmark</button>
 					<button class="tablinks"
-						onclick="openTab(event, 'searchByPosition')">searchByPosition</button>
-					<button class="tablinks" onclick="openTab(event, 'searchByRange')">searchByRange</button>
+						onclick="openTab(event, 'searchByPosition')">Not In Use</button>
+					<button class="tablinks" onclick="openTab(event, 'searchByRange')">Not
+						In Use</button>
 				</div>
 			</div>
 			<div class="col-sm-2"></div>
@@ -88,26 +94,16 @@ body {
 		<div class="row">
 			<div class="col-sm-2"></div>
 			<div class="col-sm-8" style="background-color: lavenderblush;">
-				<div id="searchByImage" class="tabcontent">
-					Enter the number of the image you are interested in: <input
-						type="text" maxlength="3" size="4" id="imageId"> <br /> <br />
-					<button type="button"
-						onclick="Query('searchByImage', document.getElementById('imageId').value);">Query</button>
-
-					<br /> <br />
-				</div>
-				<div id="searchByComponent" class="tabcontent">
+				<div id="basic" class="tabcontent">
 					Enter the name of colon structure you are interested in: <select
 						id="componentId">
 						<option value="anus">anus</option>
-						<option value="rectum">rectum</option>
-						<option value="apr">apr</option>
+						<option value="rectum">rectum</option>						
 						<option value="sigmoid">sigmoid</option>
 						<option value="descending">descending</option>
 						<option value="transverse">transverse</option>
 						<option value="ascending">ascending</option>
-						<option value="caecum">caecum</option>
-						<option value="icv">icv</option>
+						<option value="caecum">caecum</option>						
 						<option value="junk">junk value</option>
 					</select>
 					<!-- <input type="text" maxlength="15" size="19" id="componentId"> -->
@@ -117,24 +113,24 @@ body {
 
 					<br /> <br />
 				</div>
-				<div id="searchByPosition" class="tabcontent">
-					Enter the position (as an integer) you are interested in: <input
-						type="text" maxlength="3" size="4" id="position"> <br />
-					<br />
+				
+				<div id="landmark" class="tabcontent">
+					Enter the name of colon structure you are interested in: <select
+						id="landmarkId">
+						<option value="apr">apr</option>
+						<option value="icv">icv</option>
+						<option value="hf">hf</option>						
+						<option value="sf">sf</option>
+						<option value="junk">junk value</option>
+					</select>
+					<!-- <input type="text" maxlength="15" size="19" id="componentId"> -->
+					<br /> <br />
 					<button type="button"
-						onclick="Query('searchByPosition', document.getElementById('position').value);">Query</button>
+						onclick="Query('searchByPosition', document.getElementById('landmarkId').value);">Query</button>
 
 					<br /> <br />
-				</div>
-				<div id="searchByRange" class="tabcontent">
-					Enter the start AND stop positions (as an integer) you are
-					interested in: <input type="text" maxlength="3" size="4" id="start">
-					to <input type="text" maxlength="3" size="4" id="stop"> <br />
-					<br />
-					<button type="button" onclick="QueryRange();">Query</button>
+				</div>				
 
-					<br /> <br />
-				</div>
 				<textarea id="display" rows="15" style="width: 100%"></textarea>
 			</div>
 			<div class="col-sm-2"></div>
@@ -142,8 +138,48 @@ body {
 	</div>
 
 	<script>
-		function openTab(evt, tabName) {
-			document.getElementById('display').innerHTML = "";
+		function updateModel(componentName) {
+			switch(componentName) {
+				case "anus":
+					document.getElementById("model").innerHTML = "<img src='images/cziModel8_anus.jpg'>";
+					break;
+				case "rectum":
+					document.getElementById("model").innerHTML = "<img src='images/cziModel8_rectum.jpg'>";
+					break;
+				case "sigmoid":
+					document.getElementById("model").innerHTML = "<img src='images/cziModel8_sigmoid.jpg'>";
+					break;
+				case "descending":
+					document.getElementById("model").innerHTML = "<img src='images/cziModel8_descending.jpg'>";
+					break;
+				case "transverse":
+					document.getElementById("model").innerHTML = "<img src='images/cziModel8_transverse.jpg'>";
+					break;
+				case "ascending":
+					document.getElementById("model").innerHTML = "<img src='images/cziModel8_ascending.jpg'>";
+					break;
+				case "caecum":
+					document.getElementById("model").innerHTML = "<img src='images/cziModel8_caecum.jpg'>";
+					break;
+// landmark
+				case "apr":
+					document.getElementById("model").innerHTML = "<img src='images/cziModel8_apr.jpg'>";
+					break;
+				case "icv":
+					document.getElementById("model").innerHTML = "<img src='images/cziModel8_icv.jpg'>";
+					break;
+				case "hf":
+					document.getElementById("model").innerHTML = "<img src='images/cziModel8_hf.jpg'>";
+					break;
+				case "sf":
+					document.getElementById("model").innerHTML = "<img src='images/cziModel8_sf.jpg'>";
+					break;					
+				default:
+					document.getElementById("model").innerHTML = "<img src='images/cziModel8.jpg'>";
+			}
+		}
+
+		function openTab(evt, tabName) {									
 			var i, tabcontent, tablinks;
 			tabcontent = document.getElementsByClassName("tabcontent");
 			for (i = 0; i < tabcontent.length; i++) {
@@ -159,6 +195,8 @@ body {
 		}
 
 		function Query(operation, value) {
+			document.getElementById("model").innerHTML = "<img src='images/cziModel8.jpg'>";			
+			document.getElementById('display').innerHTML = "";
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
@@ -171,15 +209,31 @@ body {
 				;
 			};
 			var url = "query/";
-			if (operation == "searchByImage") {
-				url += "searchByImage/" + value;
-			} else if (operation == "searchByComponent") {
+			if (operation == "searchByComponent") {
 				url += "searchByComponent/" + value;
 			} else if (operation == "searchByPosition") {
-				url += "searchByPosition/" + value;
+				var position = 200;
+				switch (value) {
+					case "apr" :
+						position = 10;
+						break;
+					case "icv" :
+						position = 150;
+						break;
+					case "hf" :
+						position = 131;
+						break;
+					case "sf" :
+						position = 81;
+						break;
+					default:
+						alert('Invalid landmark selected!');
+				} 
+				url += "searchByPosition/" + position; 
 			}
 			xhttp.open("GET", url, true);
 			xhttp.send();
+			updateModel(value);
 		}
 
 		function QueryRange() {
