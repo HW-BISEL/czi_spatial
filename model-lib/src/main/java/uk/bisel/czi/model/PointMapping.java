@@ -20,12 +20,14 @@ public class PointMapping {
 
 	public PointMapping(String name, short position) {
 		super();
+		Position.validatePosition(position);
 		this.name = name;
 		this.position = position;
 	}
 	
 	public PointMapping(String name, short position, String description) {
 		super();
+		Position.validatePosition(position);
 		this.name = name;
 		this.position = position;
 		this.description = description;

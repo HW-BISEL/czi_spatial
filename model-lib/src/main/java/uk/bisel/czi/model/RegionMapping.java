@@ -23,6 +23,7 @@ public class RegionMapping {
 	
 	public RegionMapping(short startPosition, short endPosition, String name) {
 		super();
+		Position.validatePosition(startPosition, endPosition);
 		this.startPosition = startPosition;
 		this.endPosition = endPosition;
 		this.name = name;
@@ -30,6 +31,7 @@ public class RegionMapping {
 
 	public RegionMapping(short startPosition, short endPosition, String name, String description) {
 		super();
+		Position.validatePosition(startPosition, endPosition);		
 		this.startPosition = startPosition;
 		this.endPosition = endPosition;
 		this.name = name;
