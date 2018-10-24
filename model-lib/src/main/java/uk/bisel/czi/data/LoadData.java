@@ -15,6 +15,8 @@ import uk.bisel.czi.model.Colon;
 import uk.bisel.czi.model.GutComponent;
 import uk.bisel.czi.model.GutComponentName;
 import uk.bisel.czi.model.Image2PositionMapping;
+import uk.bisel.czi.model.PointMapping;
+import uk.bisel.czi.model.RegionMapping;
 
 public class LoadData {
 	private EntityManager em;
@@ -23,7 +25,7 @@ public class LoadData {
     	LoadData a = new LoadData();
     	a.readCSV();
     	a.insertModel();
-    	
+    	a.insertNewModel();    	    	
     }
     
     private void readCSV() throws IOException {
@@ -44,7 +46,41 @@ public class LoadData {
         }
         txn.commit();
         br.close();
+        em.clear();
         em.close();
+    }
+    
+    private void insertNewModel() {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("hibernate");
+		em = emf.createEntityManager();	
+		EntityTransaction txn = em.getTransaction();
+		txn.begin();
+		
+		RegionMapping anus = new RegionMapping((short) 0, (short) 4, "anus");
+		RegionMapping rectum = new RegionMapping((short) 4, (short) 16, "rectum");
+		RegionMapping sigmoid = new RegionMapping((short) 16, (short) 56, "sigmoid");
+		RegionMapping descending = new RegionMapping((short) 56, (short) 81, "descending");
+		RegionMapping transverse = new RegionMapping((short) 81, (short) 131, "transverse");
+		RegionMapping ascending = new RegionMapping((short) 131, (short) 146, "ascending");
+		RegionMapping caecum = new RegionMapping((short) 146, (short) 150, "caecum");
+		
+		em.persist(anus);
+		em.persist(rectum);
+		em.persist(sigmoid);
+		em.persist(descending);
+		em.persist(transverse);
+		em.persist(ascending);
+		em.persist(caecum);
+		
+		PointMapping apr = new PointMapping("apr", (short) 10);
+		PointMapping icv = new PointMapping("icv", (short) 150);
+		em.persist(apr);
+		em.persist(icv);
+	
+        txn.commit();
+        em.clear();
+        em.close();
+        
     }
     
     private void insertModel() {
@@ -86,6 +122,7 @@ public class LoadData {
 		em.persist(colon);
 		
         txn.commit();
+        em.clear();
         em.close();
     }
 }
