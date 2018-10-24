@@ -13,6 +13,7 @@ import uk.bisel.czi.exceptions.NoSuchImageException;
 import uk.bisel.czi.model.GutComponent;
 import uk.bisel.czi.model.Image2PositionMapping;
 import uk.bisel.czi.model.Position;
+import uk.bisel.czi.model.RegionMapping;
 
 public class NotADao {
 
@@ -37,7 +38,7 @@ public class NotADao {
 		return result;
 	}
 	
-	public Image2PositionMapping[] getAllMappings() {
+	public Image2PositionMapping[] getAllImageMappings() {
 		Query query = em.createQuery("from Image2PositionMapping");
 		List<Image2PositionMapping> allMappings = query.getResultList();		
 		Image2PositionMapping[] result = new Image2PositionMapping[allMappings.size()];
@@ -64,6 +65,7 @@ public class NotADao {
 		return sortedMappings.toArray(result);
 	}	
 	
+	@Deprecated
 	public short[] getPositionOfComponent(String name) {		
 		Query query = em.createQuery("from GutComponent c where name = '"+name.toLowerCase().trim()+"'");
 		List<GutComponent> allComponents = query.getResultList();		
@@ -75,10 +77,27 @@ public class NotADao {
 		return positions;			
 	}
 	
+	@Deprecated
 	public Image2PositionMapping[] getImagesFromComponent(String name) {
 		short[] position = getPositionOfComponent(name);
 		return getImagesFromRange(position[0], position[1]);
 	}
+	
+	public short[] getPositionOfRegion(String name) {		
+		Query query = em.createQuery("from RegionMapping where name LIKE '"+name.toLowerCase().trim()+"'");
+		List<RegionMapping> allComponents = query.getResultList();		
+		if (allComponents.isEmpty()) throw new ComponentNotFoundException(name);
+		if(allComponents.size() > 1) throw new RuntimeException("Unique component not identified");
+		short[] positions = new short[2];
+		positions[0] = allComponents.get(0).getStartPosition();
+		positions[1] = allComponents.get(0).getEndPosition();
+		return positions;			
+	}	
+	
+	public Image2PositionMapping[] getImagesFromRegion(String name) {
+		short[] position = getPositionOfRegion(name);
+		return getImagesFromRange(position[0], position[1]);
+	}	
 		
 	@Override
 	protected void finalize() throws Throwable {
