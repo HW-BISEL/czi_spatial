@@ -83,6 +83,7 @@ public class LoadData {
         
     }
     
+    @Deprecated
     private void insertModel() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("hibernate");
 		em = emf.createEntityManager();	
