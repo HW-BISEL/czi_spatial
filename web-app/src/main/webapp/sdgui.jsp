@@ -52,6 +52,28 @@ body {
 	border: 1px solid #ccc;
 	border-top: none;
 }
+
+table {
+	align: centre;
+	width: 100%;
+}
+
+th {
+	background-color: #ADD8E6;
+	padding: 15px;
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+}
+
+td {
+	padding: 15px;
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
 </style>
 </head>
 
@@ -76,7 +98,7 @@ body {
 		<br />
 		<div class="row">
 			<div class="col-sm-2"></div>
-			<div class="col-sm-8" style="background-color: lavenderblush;">
+			<div class="col-sm-8">
 				<!-- Tab links -->
 				<div class="tab">
 					<button class="tablinks" onclick="openTab(event, 'basic')">Basic</button>
@@ -90,12 +112,12 @@ body {
 		<div class="row">
 			<div class="col-sm-2"></div>
 
-			<div class="col-sm-8" style="background-color: lavenderblush;">
+			<div class="col-sm-8">
 
 				<div id="half" class="tabcontent">
 					The ROI is <em>near</em> the <select id="axis">
 						<option value="proximal">proximal</option>
-						<option value="distal">distal</option>						
+						<option value="distal">distal</option>
 					</select> half of the <select id="componentHalf">
 						<option value="anus">anus</option>
 						<option value="rectum">rectum</option>
@@ -141,8 +163,7 @@ body {
 						<option value="descending">descending</option>
 						<option value="transverse">transverse</option>
 						<option value="ascending">ascending</option>
-						<option value="caecum">caecum</option>
-						<option value="junk">junk value</option>
+						<option value="caecum">caecum</option>						
 					</select> <br /> <br />
 					<button type="button"
 						onclick="Query('searchByComponent', document.getElementById('componentId').value);">Query</button>
@@ -156,8 +177,7 @@ body {
 						<option value="apr">apr</option>
 						<option value="icv">icv</option>
 						<option value="hf">hf</option>
-						<option value="sf">sf</option>
-						<option value="junk">junk value</option>
+						<option value="sf">sf</option>						
 					</select> <br /> <br />
 					<button type="button"
 						onclick="Query('searchByPosition', document.getElementById('landmarkId').value);">Query</button>
@@ -165,7 +185,7 @@ body {
 					<br /> <br />
 				</div>
 
-				<textarea id="display" rows="15" style="width: 100%"></textarea>
+				<div id="displayArea" style="width: 100%;"></div>
 			</div>
 			<div class="col-sm-2"></div>
 		</div>
@@ -182,10 +202,10 @@ body {
 				</p>
 			</div>
 			<div class="col-sm-2"></div>
-		</div>		
+		</div>
 	</div>
-	
-	
+
+
 
 	<script>
 		function updateModel(componentName) {
@@ -258,19 +278,19 @@ body {
 				break;
 			case "anus_proximal":
 				document.getElementById("model").innerHTML = "<img src='images/cziModel8_anus_proximal.jpg'>";
-				break;			
+				break;
 			case "rectum_distal":
 				document.getElementById("model").innerHTML = "<img src='images/cziModel8_rectum_distal.jpg'>";
 				break;
 			case "rectum_proximal":
 				document.getElementById("model").innerHTML = "<img src='images/cziModel8_rectum_proximal.jpg'>";
-				break;						
+				break;
 			case "sigmoid_distal":
 				document.getElementById("model").innerHTML = "<img src='images/cziModel8_sigmoid_distal.jpg'>";
 				break;
 			case "sigmoid_proximal":
 				document.getElementById("model").innerHTML = "<img src='images/cziModel8_sigmoid_proximal.jpg'>";
-				break;			
+				break;
 			default:
 				document.getElementById("model").innerHTML = "<img src='images/cziModel8.jpg'>";
 			}
@@ -278,7 +298,7 @@ body {
 
 		function openTab(evt, tabName) {
 			document.getElementById("model").innerHTML = "<img src='images/cziModel8.jpg'>";
-			document.getElementById('display').innerHTML = "";
+			document.getElementById('displayArea').innerHTML = "<br />";
 			var i, tabcontent, tablinks;
 			tabcontent = document.getElementsByClassName("tabcontent");
 			for (i = 0; i < tabcontent.length; i++) {
@@ -293,13 +313,24 @@ body {
 			evt.currentTarget.className += " active";
 		}
 
+		function processOutput(queryResult) {
+			var output = "<br /><h3>Results</h3><table><tr><th>image id</th><th>position</th></tr>";
+			var obj = JSON.parse(queryResult);
+			for (i in obj.result) {
+				output += "<tr><td>" + obj.result[i].imageId + "</td><td>"
+						+ obj.result[i].position + "</td></tr>";
+			}
+			output += "</table>";
+			document.getElementById("displayArea").innerHTML = output;
+		}
+
 		function Query(operation, value) {
 			document.getElementById("model").innerHTML = "<img src='images/cziModel8.jpg'>";
-			document.getElementById('display').innerHTML = "";
+			document.getElementById('displayArea').innerHTML = "<br />";
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
-					document.getElementById("display").innerHTML = this.responseText;
+					processOutput(this.responseText);
 				}
 				;
 				if (this.readyState == 4 && this.status == 500) {
@@ -334,10 +365,10 @@ body {
 			xhttp.send();
 			updateModel(value);
 		}
-		
-		function QueryHalf(axis, component) {			
+
+		function QueryHalf(axis, component) {
 			document.getElementById("model").innerHTML = "<img src='images/cziModel8.jpg'>";
-			document.getElementById('display').innerHTML = "";
+			document.getElementById('displayArea').innerHTML = "<br />";
 
 			var startPos = 200;
 			var stopPos = 201;
@@ -369,12 +400,11 @@ body {
 					stopPos = 56;
 				}
 			}
-			
 
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
-					document.getElementById("display").innerHTML = this.responseText;
+					processOutput(this.responseText);
 				}
 				;
 				if (this.readyState == 4 && this.status == 500) {
@@ -386,11 +416,11 @@ body {
 					"query/searchByRange/" + startPos + "/" + stopPos, true);
 			xhttp.send();
 			updateModel(image);
-		}		
+		}
 
 		function QueryRange(place, nearBy) {
 			document.getElementById("model").innerHTML = "<img src='images/cziModel8.jpg'>";
-			document.getElementById('display').innerHTML = "";
+			document.getElementById('displayArea').innerHTML = "<br />";
 
 			var startPos = 200;
 			var stopPos = 201;
@@ -482,7 +512,7 @@ body {
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
-					document.getElementById("display").innerHTML = this.responseText;
+					processOutput(this.responseText);
 				}
 				;
 				if (this.readyState == 4 && this.status == 500) {
