@@ -13,6 +13,7 @@ import uk.bisel.czi.exceptions.ComponentNotFoundException;
 import uk.bisel.czi.exceptions.GutComponentAlreadyExists;
 
 @Entity
+@Deprecated
 public class Colon {
 	
 	@Id	

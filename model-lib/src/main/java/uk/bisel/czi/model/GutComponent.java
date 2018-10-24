@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import uk.bisel.czi.exceptions.WrongNumberOfArgumentsException;
 
 @Entity
+@Deprecated
 public class GutComponent implements Comparable<GutComponent> {
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
