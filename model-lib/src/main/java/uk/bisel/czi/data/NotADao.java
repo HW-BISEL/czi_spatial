@@ -8,18 +8,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
+import uk.bisel.czi.model.*;
+import uk.bisel.czi.exceptions.*;
 
-import uk.bisel.czi.exceptions.RegionNotFoundException;
-import uk.bisel.czi.exceptions.NoSuchImageException;
-import uk.bisel.czi.exceptions.PointNotFoundException;
-import uk.bisel.czi.model.GutComponent;
-import uk.bisel.czi.model.GutComponentName;
-import uk.bisel.czi.model.Image2PositionMapping;
-import uk.bisel.czi.model.PointMapping;
-import uk.bisel.czi.model.Position;
-import uk.bisel.czi.model.RegionMapping;
 
 public class NotADao {
 
