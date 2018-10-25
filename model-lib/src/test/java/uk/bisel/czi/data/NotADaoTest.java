@@ -8,8 +8,9 @@ import org.junit.Test;
 
 import uk.bisel.czi.exceptions.BadPositionException;
 import uk.bisel.czi.exceptions.BadStartPositionException;
-import uk.bisel.czi.exceptions.ComponentNotFoundException;
+import uk.bisel.czi.exceptions.RegionNotFoundException;
 import uk.bisel.czi.exceptions.NoSuchImageException;
+import uk.bisel.czi.exceptions.PointNotFoundException;
 import uk.bisel.czi.model.GutComponentName;
 import uk.bisel.czi.model.Image2PositionMapping;
 
@@ -18,7 +19,7 @@ public class NotADaoTest {
 	@Test
 	public void getAllMappings() {
 		NotADao obj = new NotADao();
-		Image2PositionMapping[] allMappings = obj.getAllMappings();
+		Image2PositionMapping[] allMappings = obj.getAllImageMappings();
 		
 		assertEquals("number of mappings", 100, allMappings.length);
 		
@@ -142,7 +143,7 @@ public class NotADaoTest {
 		assertEquals("number of results", 1, results.length);
 	}	
 	
-	@Test (expected=ComponentNotFoundException.class)
+	@Test (expected=RegionNotFoundException.class)
 	public void getImagesFromComponent_fail() {
 		NotADao obj = new NotADao();
 		Image2PositionMapping[] results = obj.getImagesFromComponent("nbb");		
@@ -159,9 +160,62 @@ public class NotADaoTest {
 		assertEquals("end pos is 4", 4, results[1]);
 	}
 	
-	@Test(expected=ComponentNotFoundException.class)
+	@Test(expected=RegionNotFoundException.class)
 	public void getPositionOfComponent_unknown() {
 		NotADao obj = new NotADao();
 		short[] results = obj.getPositionOfComponent("unknon");		
 	}	
+	
+	
+//
+	
+	@Test
+	public void getPositionOfRegion() {
+		NotADao obj = new NotADao();
+		short[] allPositions = obj.getPositionOfRegion("anus");
+		assertEquals("length should be 2", 2, allPositions.length);
+		assertEquals("should be 0", 0, allPositions[0]);
+		assertEquals("should be 4", 4, allPositions[1]);
+	}
+	
+	@Test(expected = RegionNotFoundException.class)
+	public void getPositionOfRegion_regionNotFound() {
+		NotADao obj = new NotADao();
+		obj.getPositionOfRegion("banana");
+	}	
+	
+	
+	@Test
+	public void getImagesFromRegion() {
+		NotADao obj = new NotADao();
+		Image2PositionMapping[] allImages = obj.getImagesFromRegion("anus");
+		assertTrue(allImages.length > 1 );
+	}
+	
+//
+	
+	@Test
+	public void getPositionofPoint() {
+		NotADao obj = new NotADao();
+		assertEquals("should be 10", 10, obj.getPositionOfPoint("APR"));
+	}
+	
+	@Test (expected = PointNotFoundException.class)
+	public void getPositionofPoint_pointNotExists() {
+		NotADao obj = new NotADao();
+		assertEquals("should be 10", 10, obj.getPositionOfPoint("banana"));
+	}	
+	
+//
+	
+	@Test 
+	public void getImagesAtPoint() {
+		NotADao obj = new NotADao();
+		Image2PositionMapping[] allImages = obj.getImagesAtPoint("APR");
+		Image2PositionMapping[] allImages2 = obj.getImagesAtPosition((short) 10);
+		assertEquals("should be same result", allImages2.length, allImages.length);
+		for(int i = 0; i < allImages.length; i++) {
+			assertEquals(i + " - should be same result", allImages2[i].getImageId(), allImages[i].getImageId());
+		}
+	}
 }

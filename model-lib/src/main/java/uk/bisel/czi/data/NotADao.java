@@ -8,10 +8,16 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import uk.bisel.czi.exceptions.ComponentNotFoundException;
+import org.junit.Before;
+import org.junit.BeforeClass;
+
+import uk.bisel.czi.exceptions.RegionNotFoundException;
 import uk.bisel.czi.exceptions.NoSuchImageException;
+import uk.bisel.czi.exceptions.PointNotFoundException;
 import uk.bisel.czi.model.GutComponent;
+import uk.bisel.czi.model.GutComponentName;
 import uk.bisel.czi.model.Image2PositionMapping;
+import uk.bisel.czi.model.PointMapping;
 import uk.bisel.czi.model.Position;
 import uk.bisel.czi.model.RegionMapping;
 
@@ -23,6 +29,9 @@ public class NotADao {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("hibernate");
 		em = emf.createEntityManager();				
 	}
+	
+	
+	//
 	
 	public short[] getPositionsFromImage(String imageId) {
 		Query query = em.createQuery("from Image2PositionMapping i where imageId = "+imageId+" order by i.position");
@@ -67,9 +76,9 @@ public class NotADao {
 	
 	@Deprecated
 	public short[] getPositionOfComponent(String name) {		
-		Query query = em.createQuery("from GutComponent c where name = '"+name.toLowerCase().trim()+"'");
+		Query query = em.createQuery("from GutComponent c where name LIKE '"+name.toUpperCase().trim()+"'");
 		List<GutComponent> allComponents = query.getResultList();		
-		if (allComponents.isEmpty()) throw new ComponentNotFoundException(name);
+		if (allComponents.isEmpty()) throw new RegionNotFoundException(name);
 		if(allComponents.size() > 1) throw new RuntimeException("Unique component not identified");
 		short[] positions = new short[2];
 		positions[0] = allComponents.get(0).getStartPosition();
@@ -86,7 +95,7 @@ public class NotADao {
 	public short[] getPositionOfRegion(String name) {		
 		Query query = em.createQuery("from RegionMapping where name LIKE '"+name.toLowerCase().trim()+"'");
 		List<RegionMapping> allComponents = query.getResultList();		
-		if (allComponents.isEmpty()) throw new ComponentNotFoundException(name);
+		if (allComponents.isEmpty()) throw new RegionNotFoundException(name);
 		if(allComponents.size() > 1) throw new RuntimeException("Unique component not identified");
 		short[] positions = new short[2];
 		positions[0] = allComponents.get(0).getStartPosition();
@@ -97,6 +106,18 @@ public class NotADao {
 	public Image2PositionMapping[] getImagesFromRegion(String name) {
 		short[] position = getPositionOfRegion(name);
 		return getImagesFromRange(position[0], position[1]);
+	}	
+	
+	public short getPositionOfPoint(String name) {
+		Query query = em.createQuery("from PointMapping where name LIKE '"+name.toLowerCase().trim()+"'");
+		List<PointMapping> allComponents = query.getResultList();		
+		if (allComponents.isEmpty()) throw new PointNotFoundException(name);
+		if(allComponents.size() > 1) throw new RuntimeException("Unique component not identified");
+		return allComponents.get(0).getPosition();				
+	}
+	
+	public Image2PositionMapping[] getImagesAtPoint(String name) {
+		return getImagesAtPosition(getPositionOfPoint(name));		
 	}	
 		
 	@Override
