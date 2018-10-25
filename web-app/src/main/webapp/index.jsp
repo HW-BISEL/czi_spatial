@@ -14,6 +14,8 @@
 <br />
 <p>All data used in this app is randomly generated.</p>
 <br />
+<p>Code for this work is available on <a href="https://github.com/kcmcleod/czi_spatial">Github</a>.</p>
+<br />
 <br />
 <p>&copy; 2018 <a href="http://www.macs.hw.ac.uk/bisel">BISEL</a>, part of <a href="http://www.hw.ac.uk">Heriot-Watt University</a>.</p>
 <p>Development funded by <a href="https://www.chanzuckerberg.com/science/projects-hca">Chan Zuckerberg Initiative</a>.</p>
