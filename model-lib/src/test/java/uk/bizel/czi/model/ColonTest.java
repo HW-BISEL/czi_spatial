@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import uk.bisel.czi.exceptions.BadPositionException;
-import uk.bisel.czi.exceptions.ComponentNotFoundException;
+import uk.bisel.czi.exceptions.RegionNotFoundException;
 import uk.bisel.czi.exceptions.GutComponentAlreadyExists;
 import uk.bisel.czi.model.Colon;
 import uk.bisel.czi.model.GutComponent;
@@ -51,7 +51,7 @@ public class ColonTest {
 		assertEquals("should be ICV",  gc, c.getComponent(GutComponentName.ICV));
 	}
 	
-	@Test (expected=ComponentNotFoundException.class)
+	@Test (expected=RegionNotFoundException.class)
 	public void getComponentNotFound() {
 		Colon c = new Colon();			
 		c.getComponent(GutComponentName.ANUS);
@@ -69,14 +69,14 @@ public class ColonTest {
 		c.whichComponentGivenPosition((short) -151);
 	}
 
-	@Test(expected = ComponentNotFoundException.class) 
+	@Test(expected = RegionNotFoundException.class) 
 	public void getComponentGivenPosition_fail_noComponent() {
 		Colon c = new Colon();	
 		c.whichComponentGivenPosition((short) 51);
 	}	
 	
 	
-	@Test(expected = ComponentNotFoundException.class) 
+	@Test(expected = RegionNotFoundException.class) 
 	public void getComponentGivenPosition_1() {
 		Colon c = new Colon();	
 		GutComponent gc = new GutComponent(GutComponentName.CAECUM, (short) 50, (short) 60);
@@ -84,7 +84,7 @@ public class ColonTest {
 		c.whichComponentGivenPosition((short) 14).toLowerCase();
 	}
 	
-	@Test(expected = ComponentNotFoundException.class) 
+	@Test(expected = RegionNotFoundException.class) 
 	public void getComponentGivenPosition_2() {
 		Colon c = new Colon();	
 		GutComponent gc = new GutComponent(GutComponentName.CAECUM, (short) 50, (short) 60);

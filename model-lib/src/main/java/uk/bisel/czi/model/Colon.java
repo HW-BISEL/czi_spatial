@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import uk.bisel.czi.exceptions.ComponentNotFoundException;
+import uk.bisel.czi.exceptions.RegionNotFoundException;
 import uk.bisel.czi.exceptions.GutComponentAlreadyExists;
 
 @Entity
@@ -41,7 +41,7 @@ public class Colon {
 		for(GutComponent temp : allStructures) {
 			if(temp.getName().equalsIgnoreCase((name.toString()))) return temp;
 		}
-		throw new ComponentNotFoundException(name.toString());		
+		throw new RegionNotFoundException(name.toString());		
 	}
 	
 	public String whichComponentGivenPosition(short position) {
@@ -49,7 +49,7 @@ public class Colon {
 		for(GutComponent temp : allStructures) {
 			if(temp.getStartPosition() <= position && position <= temp.getEndPosition()) return temp.getName().toString();
 		}
-		throw new ComponentNotFoundException(position);		
+		throw new RegionNotFoundException(position);		
 	}
 
 }
