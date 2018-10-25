@@ -45,7 +45,7 @@ public class ListAll extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		NotADao dao = new NotADao();
-		Image2PositionMapping[] allMappings = dao.getAllMappings();
+		Image2PositionMapping[] allMappings = dao.getAllImageMappings();
 		Gson gson = new GsonBuilder().create();
 		JsonElement element = gson.toJsonTree(allMappings);
 		
