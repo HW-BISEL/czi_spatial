@@ -65,23 +65,6 @@ public class NotADao {
 		return sortedMappings.toArray(result);
 	}	
 	
-	@Deprecated
-	public short[] getPositionOfComponent(String name) {		
-		Query query = em.createQuery("from GutComponent c where name LIKE '"+name.toUpperCase().trim()+"'");
-		List<GutComponent> allComponents = query.getResultList();		
-		if (allComponents.isEmpty()) throw new RegionNotFoundException(name);
-		if(allComponents.size() > 1) throw new RuntimeException("Unique component not identified");
-		short[] positions = new short[2];
-		positions[0] = allComponents.get(0).getStartPosition();
-		positions[1] = allComponents.get(0).getEndPosition();
-		return positions;			
-	}
-	
-	@Deprecated
-	public Image2PositionMapping[] getImagesFromComponent(String name) {
-		short[] position = getPositionOfComponent(name);
-		return getImagesFromRange(position[0], position[1]);
-	}
 	
 	public short[] getPositionOfRegion(String name) {		
 		Query query = em.createQuery("from RegionMapping where name LIKE '"+name.toLowerCase().trim()+"'");

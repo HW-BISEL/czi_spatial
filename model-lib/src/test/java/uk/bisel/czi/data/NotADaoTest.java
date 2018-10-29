@@ -128,43 +128,7 @@ public class NotADaoTest {
 	}
 	
 //	
-	
-	@Test
-	public void getImagesFromComponent_anus() {
-		NotADao obj = new NotADao();
-		Image2PositionMapping[] results = obj.getImagesFromComponent(GutComponentName.ANUS.toString());
-		assertEquals("number of results", 2, results.length);
-	}
-	
-	@Test
-	public void getImagesFromComponent_apr() {
-		NotADao obj = new NotADao();
-		Image2PositionMapping[] results = obj.getImagesFromComponent(GutComponentName.APR.toString());
-		assertEquals("number of results", 1, results.length);
-	}	
-	
-	@Test (expected=RegionNotFoundException.class)
-	public void getImagesFromComponent_fail() {
-		NotADao obj = new NotADao();
-		Image2PositionMapping[] results = obj.getImagesFromComponent("nbb");		
-	}		
-	
-//	
-	
-	@Test
-	public void getPositionOfComponent() {
-		NotADao obj = new NotADao();
-		short[] results = obj.getPositionOfComponent("ANUS");
-		assertEquals("number of results", 2, results.length);
-		assertEquals("start pos is 0", 0, results[0]);
-		assertEquals("end pos is 4", 4, results[1]);
-	}
-	
-	@Test(expected=RegionNotFoundException.class)
-	public void getPositionOfComponent_unknown() {
-		NotADao obj = new NotADao();
-		short[] results = obj.getPositionOfComponent("unknon");		
-	}	
+		
 	
 	
 //
