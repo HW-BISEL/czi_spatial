@@ -21,6 +21,9 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.4</version>
 				<configuration>
+					<excludes>
+						<exclude>**/persistence.xml</exclude>
+					</excludes>
 					<archive>
 						<manifest>
 							<mainClass>uk.bisel.czi.data.LoadData</mainClass>
