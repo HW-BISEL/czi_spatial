@@ -26,9 +26,14 @@ public class NotADao {
 	
 	public short[] getPositionsFromImage(String imageId) {
 		Query query = em.createQuery("from Image2PositionMapping i where imageId = "+imageId+" order by i.position");
-		List<Image2PositionMapping> allMappings = query.getResultList();		
+		List<Image2PositionMapping> allMappings;
+		try { 
+			allMappings = query.getResultList();
+		} catch (Exception e) {
+			throw new NoSuchImageException(imageId);
+		}
 		
-		if(allMappings.isEmpty()) throw new NoSuchImageException(imageId);
+		if(allMappings == null || allMappings.isEmpty()) throw new NoSuchImageException(imageId);
 		
 		short[] result = new short[allMappings.size()];
 		for(int i = 0; i < allMappings.size(); i++) {
