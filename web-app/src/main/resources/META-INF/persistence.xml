@@ -6,11 +6,11 @@
 
 	<persistence-unit name="hibernate"
 		transaction-type="RESOURCE_LOCAL">				
-		<non-jta-data-source>java:comp/env/jdbc/czi</non-jta-data-source>
-		<class>uk.bisel.czi.model.Colon</class>
-		<class>uk.bisel.czi.model.GutComponent</class>		
+		<non-jta-data-source>java:comp/env/jdbc/czi</non-jta-data-source>		
+		<class>uk.bisel.czi.model.PointMapping</class>
+		<class>uk.bisel.czi.model.RegionMapping</class>	
 		<class>uk.bisel.czi.model.Image2PositionMapping</class>
-		
+		<class>uk.bisel.czi.logging.LogToDBMS</class>
 		<properties>
 			<!-- SQL dialect -->
 			<property name="hibernate.dialect"
