@@ -93,7 +93,29 @@ public class NotADao {
 	public Image2PositionMapping[] getImagesAtPoint(String name) {
 		return getImagesAtPosition(getPositionOfPoint(name));		
 	}	
-		
+	
+	public String[] getAllRegions() {
+		Query query = em.createQuery("from RegionMapping");
+		List<RegionMapping> allComponents = query.getResultList();	
+		if (allComponents.isEmpty()) throw new DatabaseException("No regions in database");
+		String[] names = new String[allComponents.size()];
+		for (int i = 0; i < allComponents.size(); i++) {
+			names[i] = allComponents.get(i).getName();
+		}
+		return names;
+	}
+	
+	public String[] getAllPoints() {
+		Query query = em.createQuery("from PointMapping");
+		List<PointMapping> allComponents = query.getResultList();	
+		if (allComponents.isEmpty()) throw new DatabaseException("No points in database");
+		String[] names = new String[allComponents.size()];
+		for (int i = 0; i < allComponents.size(); i++) {
+			names[i] = allComponents.get(i).getName();
+		}
+		return names;
+	}	
+ 		
 	@Override
 	protected void finalize() throws Throwable {
 		em.close();

@@ -43,22 +43,12 @@ public class SpatialService extends HttpServlet {
 			throws ServletException, IOException {
 
 		WriteToLog log = new WriteToLog();
-		log.write(request.getRemoteAddr(), request.getRequestURL().toString());				
+		log.write(request.getRemoteAddr(), request.getRequestURL().toString());
 
 		String unprocessedPath = request.getPathInfo();
-		String[] pathElements = unprocessedPath.split("/");		
+		String[] pathElements = unprocessedPath.split("/");
 		if (pathElements.length < 3 || pathElements.length > 4) {
 			throw new PathException("URL should contain type of query and image or position(s) to be searched for.");
-		}		
-		
-		ArrayList<String> calls = new ArrayList<>();
-		calls.add("searchbyposition");
-		calls.add("searchbyrange");
-		calls.add("searchbyimage");
-		calls.add("searchbycomponent");
-		if (!calls.contains(pathElements[1].toLowerCase())) {
-			throw new PathException(
-					"URL should contain type (searchByPosition/searchByRange/searchByImage/searchByComponent) of query in second position.");
 		}
 
 		Gson gson = new GsonBuilder().create();
@@ -102,13 +92,16 @@ public class SpatialService extends HttpServlet {
 				throw new PathException("Only 1 component should be provided (eg, /searchByComponent/sigmoid).");
 
 			element = gson.toJsonTree(dao.getImagesFromRegion(pathElements[2]));
+		} else {
+			throw new PathException(
+					"URL should contain type (searchByPosition/searchByRange/searchByImage/searchByComponent) of query in second position.");
 		}
 
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Methods", "GET");
 		response.addHeader("Access-Control-Allow-Headers", "Content-Type");
 		response.addHeader("Access-Control-Max-Age", "86400");
-		response.addHeader("Content-Type", "application/json");		
+		response.addHeader("Content-Type", "application/json");
 		ResultOutputFormat result = new ResultOutputFormat("success", request.getRequestURL().toString(), element);
 		PrintWriter out = response.getWriter();
 		out.println(gson.toJson(result));
