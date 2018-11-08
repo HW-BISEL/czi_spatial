@@ -182,4 +182,23 @@ public class NotADaoTest {
 			assertEquals(i + " - should be same result", allImages2[i].getImageId(), allImages[i].getImageId());
 		}
 	}
+	
+//
+	
+	@Test
+	public void getAllRegions() {
+		NotADao obj = new NotADao();
+		String[] allImages = obj.getAllRegions();
+		assertEquals("7 regions", 7, allImages.length);					
+	}
+	
+	
+// 
+	
+	@Test
+	public void getAllPoints() {
+		NotADao obj = new NotADao();
+		String[] allImages = obj.getAllPoints();
+		assertEquals("2 points", 2, allImages.length);		
+	}	
 }
