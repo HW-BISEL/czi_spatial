@@ -75,11 +75,10 @@ public class SpatialService extends HttpServlet {
 			element = gson.toJsonTree(results);
 
 		} else if (pathElements[1].equalsIgnoreCase("searchByRange")) {
-			if (pathElements.length == 2)
-				throw new PathException("No positions provided; should be /searchByRange/startPosition/endPosition.");
-			if (pathElements.length > 4)
+			if (pathElements.length != 4) {
 				throw new PathException(
 						"Exactly 2 positions should be provided (eg, /searchByRange/startPosition/endPosition).");
+			}
 
 			Image2PositionMapping[] results = dao.getImagesFromRange((short) Integer.parseInt(pathElements[2]),
 					(short) Integer.parseInt(pathElements[3]));

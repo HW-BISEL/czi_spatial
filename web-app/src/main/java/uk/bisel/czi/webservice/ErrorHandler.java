@@ -3,6 +3,7 @@ package uk.bisel.czi.webservice;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.net.ssl.SSLEngineResult.Status;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,11 +34,12 @@ public class ErrorHandler extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// headers already set?
-
-		if (request.getAttribute("javax.servlet.error.exception_type").toString().contains("bisel")) {
-			response.setStatus(200);
-		}
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Methods", "GET");
+		response.addHeader("Access-Control-Allow-Headers", "Content-Type");
+		response.addHeader("Access-Control-Max-Age", "86400");
+		response.addHeader("Content-Type", "application/json");
+		
 		PrintWriter out = response.getWriter();
 		Error error = new Error("fail", request.getAttribute("javax.servlet.error.message").toString(),
 				request.getAttribute("javax.servlet.error.exception_type").toString(),
