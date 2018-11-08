@@ -157,7 +157,7 @@
 						renderableHeight);
 
 			}
-			img.src = "http://localhost:8080/CZI/images/cziModel8_web.svg";
+			img.src = "images/cziModel8_web.svg";
 		}
 
 		function resizeCanvas() {
