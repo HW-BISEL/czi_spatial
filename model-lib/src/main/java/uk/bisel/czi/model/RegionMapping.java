@@ -18,7 +18,10 @@ public class RegionMapping {
 	private String description;
 
 	public RegionMapping() {
-
+		this.startPosition = 0;
+		this.endPosition = 0;
+		this.name = "";
+		this.description = "";
 	}
 	
 	public RegionMapping(short startPosition, short endPosition, String name) {
@@ -27,6 +30,7 @@ public class RegionMapping {
 		this.startPosition = startPosition;
 		this.endPosition = endPosition;
 		this.name = name;
+		this.description = "";
 	}
 
 	public RegionMapping(short startPosition, short endPosition, String name, String description) {
@@ -52,9 +56,5 @@ public class RegionMapping {
 
 	public String getDescription() {
 		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 }

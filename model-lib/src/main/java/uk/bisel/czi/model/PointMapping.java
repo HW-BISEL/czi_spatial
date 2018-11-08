@@ -16,6 +16,9 @@ public class PointMapping {
 	private short position;
 
 	public PointMapping() {
+		this.name = "";
+		this.description = "";
+	    this.position = 0;
 	}
 
 	public PointMapping(String name, short position) {
@@ -23,6 +26,7 @@ public class PointMapping {
 		Position.validatePosition(position);
 		this.name = name;
 		this.position = position;
+		this.description = "";
 	}
 	
 	public PointMapping(String name, short position, String description) {
