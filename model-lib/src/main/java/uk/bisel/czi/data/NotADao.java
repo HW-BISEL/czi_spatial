@@ -83,6 +83,7 @@ public class NotADao {
 	}	
 	
 	public Image2PositionMapping[] getImagesFromRegion(String name) {
+		if(name.equalsIgnoreCase("cecum")) name = "caecum";
 		short[] position = getPositionOfRegion(name);
 		return getImagesFromRange(position[0], position[1]);
 	}	
