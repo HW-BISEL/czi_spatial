@@ -156,6 +156,14 @@ public class NotADaoTest {
 		assertTrue(allImages.length > 1 );
 	}
 	
+	@Test
+	public void getImagesFromRegion_cecum() {
+		NotADao obj = new NotADao();
+		Image2PositionMapping[] allImages = obj.getImagesFromRegion("cecum");
+		Image2PositionMapping[] allImages2 = obj.getImagesFromRegion("caecum");
+		assertTrue(allImages.length == allImages2.length );
+	}	
+	
 //
 	
 	@Test
