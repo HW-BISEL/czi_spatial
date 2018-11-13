@@ -1,4 +1,4 @@
-package uk.bizel.czi.model;
+package uk.bisel.czi.model;
 
 import static org.junit.Assert.*;
 
