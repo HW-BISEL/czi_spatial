@@ -209,7 +209,7 @@
 								ctx.fill();
 
 								if (document.getElementById('queryType').value == 'point') {
-									Query(queryPos);
+									QueryBySingleClick(queryPos);
 									disable = true;
 								} else if (document.getElementById('queryType').value == 'range'
 										&& click1 == 151) {
