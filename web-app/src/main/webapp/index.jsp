@@ -10,7 +10,7 @@
 <h1>CZI Spatial Mapping Service</h1>
 <p>Includes the actual service, a test gui for it and a spatial description test gui.</p>
 <p>Test GUI for spatial mapping service is <a href="gui.jsp">here</a>.
-<p>Test GUI for spatial descriptions is <a href="sdgui.jsp">here</a>.
+<p>Test GUI for spatial descriptions is <a href="sdgui3.jsp">here</a>.
 <br />
 <p>All data used in this app is randomly generated.</p>
 <br />
