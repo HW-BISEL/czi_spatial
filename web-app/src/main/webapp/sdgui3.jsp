@@ -22,8 +22,8 @@
 		<div class="row">
 			<div class="col-sm-2"></div>
 			<div class="com-sm-8" id="canvasDiv">
-				<canvas id="modelCanvas"
-					style="position: relative; width: 100%; border: 1px solid #000000;" />
+				<canvas id="modelCanvas" height="50"
+					style="position: relative; width: 100%;" />
 			</div>
 		</div>
 		<div class="col-sm-2"></div>
