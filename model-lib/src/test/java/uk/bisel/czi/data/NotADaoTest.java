@@ -36,13 +36,13 @@ public class NotADaoTest {
 	@Test (expected=NoSuchImageException.class)
 	public void getPositionsFromImage_noImage_low() {
 		NotADao obj = new NotADao();
-		short[] allPositions = obj.getPositionsFromImage("0");		
+		obj.getPositionsFromImage("0");		
 	}	
 	
 	@Test (expected=NoSuchImageException.class)
 	public void getPositionsFromImage_noImage_high() {
 		NotADao obj = new NotADao();
-		short[] allPositions = obj.getPositionsFromImage("150");		
+		obj.getPositionsFromImage("150");		
 	}		
 	
 	
@@ -77,19 +77,19 @@ public class NotADaoTest {
 	@Test(expected = BadPositionException.class)
 	public void getImagesFromRange_invalidRange_tooHigh() {
 		NotADao obj = new NotADao();
-		Image2PositionMapping[] results = obj.getImagesFromRange((short) 0, (short) 151);		
+		obj.getImagesFromRange((short) 0, (short) 151);		
 	}
 	
 	@Test(expected = BadPositionException.class)
 	public void getImagesFromRange_invalidRange_tooLow() {
 		NotADao obj = new NotADao();
-		Image2PositionMapping[] results = obj.getImagesFromRange((short) -10, (short) 151);		
+		obj.getImagesFromRange((short) -10, (short) 151);		
 	}	
 
 	@Test(expected = BadStartPositionException.class)
 	public void getImagesFromRange_invalidRange_wrongOrder() {
 		NotADao obj = new NotADao();
-		Image2PositionMapping[] results = obj.getImagesFromRange((short) 10, (short) 1);		
+		obj.getImagesFromRange((short) 10, (short) 1);		
 	}
 	
 //	
