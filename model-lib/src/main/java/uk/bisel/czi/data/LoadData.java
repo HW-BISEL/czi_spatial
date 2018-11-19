@@ -52,7 +52,7 @@ public class LoadData {
 		EntityTransaction txn = em.getTransaction();
 		txn.begin();
 		
-		RegionMapping anus = new RegionMapping((short) 0, (short) 4, "anus");
+		RegionMapping anal = new RegionMapping((short) 0, (short) 4, "anal");
 		RegionMapping rectum = new RegionMapping((short) 4, (short) 16, "rectum");
 		RegionMapping sigmoid = new RegionMapping((short) 16, (short) 56, "sigmoid");
 		RegionMapping descending = new RegionMapping((short) 56, (short) 81, "descending");
@@ -60,7 +60,7 @@ public class LoadData {
 		RegionMapping ascending = new RegionMapping((short) 131, (short) 146, "ascending");
 		RegionMapping caecum = new RegionMapping((short) 146, (short) 150, "caecum");
 		
-		em.persist(anus);
+		em.persist(anal);
 		em.persist(rectum);
 		em.persist(sigmoid);
 		em.persist(descending);

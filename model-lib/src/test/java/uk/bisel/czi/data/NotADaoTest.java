@@ -118,13 +118,13 @@ public class NotADaoTest {
 	@Test (expected=BadPositionException.class)
 	public void getImagesAtPosition_positionTooLow() {
 		NotADao obj = new NotADao();
-		Image2PositionMapping[] results = obj.getImagesAtPosition((short) -1);		
+		obj.getImagesAtPosition((short) -1);		
 	}
 
 	@Test (expected=BadPositionException.class)
 	public void getImagesAtPosition_positionTooHigh() {
 		NotADao obj = new NotADao();
-		Image2PositionMapping[] results = obj.getImagesAtPosition((short) 151);		
+		obj.getImagesAtPosition((short) 151);		
 	}
 	
 //	
@@ -136,7 +136,7 @@ public class NotADaoTest {
 	@Test
 	public void getPositionOfRegion() {
 		NotADao obj = new NotADao();
-		short[] allPositions = obj.getPositionOfRegion("anus");
+		short[] allPositions = obj.getPositionOfRegion("anal");
 		assertEquals("length should be 2", 2, allPositions.length);
 		assertEquals("should be 0", 0, allPositions[0]);
 		assertEquals("should be 4", 4, allPositions[1]);
@@ -152,7 +152,7 @@ public class NotADaoTest {
 	@Test
 	public void getImagesFromRegion() {
 		NotADao obj = new NotADao();
-		Image2PositionMapping[] allImages = obj.getImagesFromRegion("anus");
+		Image2PositionMapping[] allImages = obj.getImagesFromRegion("anal");
 		assertTrue(allImages.length > 1 );
 	}
 	
