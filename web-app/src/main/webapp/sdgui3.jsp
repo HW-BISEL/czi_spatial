@@ -59,7 +59,7 @@
 						<option value="proximal">proximal</option>
 						<option value="distal">distal</option>
 					</select> half of the <select id="componentHalf">
-						<option value="anus">anus</option>
+						<option value="anal">anal canal</option>
 						<option value="rectum">rectum</option>
 						<option value="sigmoid">sigmoid</option>
 						<option value="descending">descending</option>
@@ -80,7 +80,7 @@
 						<option value="middle">middle</option>
 						<option value="end">end</option>
 					</select> of the <select id="nearBy">
-						<option value="anus">anus</option>
+						<option value="anal">anal canal</option>
 						<option value="rectum">rectum</option>
 						<option value="sigmoid">sigmoid</option>
 						<option value="descending">descending</option>
@@ -97,7 +97,7 @@
 				<div id="basic" class="tabcontent">
 					Enter the name of colon structure you are interested in: <select
 						id="componentId">
-						<option value="anus">anus</option>
+						<option value="anal">anal canal</option>
 						<option value="rectum">rectum</option>
 						<option value="sigmoid">sigmoid</option>
 						<option value="descending">descending</option>

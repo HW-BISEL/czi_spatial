@@ -28,19 +28,20 @@ function drawModel() {
 	ctx.lineTo(rectumStart * unit, can.height / 2 + 5);
 	ctx.stroke();
 	ctx.beginPath();
-	ctx.rect(anusEnd * unit, can.height / 2, unit * 4, y_size);
+	ctx.rect(analEnd * unit, can.height / 2, unit * 4, y_size);
 	ctx.fill();
 
-	ctx.fillText("anus", 147 * unit, (can.height / 2) - 80);
+	ctx.fillText("anal", 148 * unit, (can.height / 2) - 100);
+	ctx.fillText("canal", 148 * unit, (can.height / 2) - 80);
 	ctx.fillText("rectum", 140 * unit, (can.height / 2) - 100);
 	ctx.fillText("sigmod", 114 * unit, (can.height / 2) - 100);
 	ctx.fillText("descending", 82 * unit, (can.height / 2) - 100);
 	ctx.fillText("transverse", 44 * unit, (can.height / 2) - 100);
 	ctx.fillText("ascending", 12 * unit, (can.height / 2) - 100);
-	ctx.fillText("cecum", 4 * unit, (can.height / 2) - 80);
+	ctx.fillText("cecum", 2 * unit, (can.height / 2) - 100);
 
 	ctx.beginPath();
-	ctx.fillStyle = "blue";
+	ctx.fillStyle = "olive";
 	ctx.rect(apr * unit, can.height / 2, unit, y_size);
 	ctx.fillText("APR", apr * unit, (can.height / 2) - 40);
 	ctx.fill();
@@ -48,23 +49,30 @@ function drawModel() {
 	ctx.beginPath();
 	ctx.fillStyle = "green";
 	ctx.rect(icv * unit, can.height / 2, unit, y_size);
-	ctx.fillText("ICV", 2 * unit, (can.height / 2) - 40);
+	ctx.fillText("ICV", unit, (can.height / 2) - 40);
 	ctx.fill();
 
 	ctx.beginPath();
-	ctx.fillStyle = "lime";
+	ctx.fillStyle = "teal";
 	ctx.rect(hf * unit, can.height / 2, unit, y_size);
 	ctx.fillText("HF", hf * unit, (can.height / 2) - 40);
 	ctx.fill();
 
 	ctx.beginPath();
-	ctx.fillStyle = "purple";
+	ctx.fillStyle = "olive";
 	ctx.rect(sf * unit, can.height / 2, unit, y_size);
 	ctx.fillText("SF", sf * unit, (can.height / 2) - 40);
 	ctx.fill();
+	
+	ctx.beginPath();
+	ctx.fillStyle = "purple";
+	ctx.rect(149 * unit, can.height / 2, unit, y_size);
+	ctx.fillText("anus", 148 * unit, (can.height / 2) - 40);
+	ctx.fill();
 
 	ctx.fillStyle = "black";
-	ctx.fillText("4", anusEnd * unit, (can.height / 2) + 40);
+	ctx.fillText("0",  149 * unit, (can.height / 2) + 40);
+	ctx.fillText("4", analEnd * unit, (can.height / 2) + 40);
 	ctx.fillText("16", rectumEnd * unit, (can.height / 2) + 40);
 	ctx.fillText("56", sigmoidEnd * unit, (can.height / 2) + 40);
 	ctx.fillText("81", descendingEnd * unit, (can.height / 2) + 40);
@@ -82,9 +90,9 @@ function updateModel(componentName) {
 	var y_size = 10;
 
 	switch (componentName) {
-	case "anus":
+	case "anal":
 		ctx.beginPath();
-		ctx.rect(anusStart * unit, y, -(unit * 4), y_size);
+		ctx.rect(analStart * unit, y, -(unit * 4), y_size);
 		ctx.fill();
 		break;
 	case "rectum":
@@ -142,19 +150,19 @@ function updateModel(componentName) {
 		ctx.fill();
 		break;
 	// near
-	case "anus_start":
+	case "anal_start":
 		ctx.beginPath();
-		ctx.rect(anusStart * unit, y, -(unit * 3), y_size);
+		ctx.rect(analStart * unit, y, -(unit * 3), y_size);
 		ctx.fill();
 		break;
-	case "anus_middle":
+	case "anal_middle":
 		ctx.beginPath();
-		ctx.rect(anusStart * unit, y, -(unit * 4), y_size);
+		ctx.rect(analStart * unit, y, -(unit * 4), y_size);
 		ctx.fill();
 		break;
-	case "anus_end":
+	case "anal_end":
 		ctx.beginPath();
-		ctx.rect(anusEnd * unit, y, (unit * 3), y_size);
+		ctx.rect(analEnd * unit, y, (unit * 3), y_size);
 		ctx.fill();
 		break;
 	case "rectum_start":
@@ -255,14 +263,14 @@ function updateModel(componentName) {
 		break;
 
 	// half
-	case "anus_distal":
+	case "anal_distal":
 		ctx.beginPath();
-		ctx.rect(anusStart * unit, y, -(unit * 2), y_size);
+		ctx.rect(analStart * unit, y, -(unit * 2), y_size);
 		ctx.fill();
 		break;
-	case "anus_proximal":
+	case "anal_proximal":
 		ctx.beginPath();
-		ctx.rect(anusEnd * unit, y, (unit * 2), y_size);
+		ctx.rect(analEnd * unit, y, (unit * 2), y_size);
 		ctx.fill();
 		break;
 	case "rectum_distal":

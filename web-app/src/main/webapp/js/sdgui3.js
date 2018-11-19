@@ -1,6 +1,6 @@
-const anusStart = 150;
-const anusEnd = 146;
-const rectumStart = anusEnd;
+const analStart = 150;
+const analEnd = 146;
+const rectumStart = analEnd;
 const rectumMiddle = 140;
 const rectumEnd = 134;
 const sigmoidStart = rectumEnd;
@@ -23,6 +23,7 @@ const apr = 140;
 const icv = 0;
 const hf = transverseEnd;
 const sf = transverseStart;
+const anus = 150;
 
 const mouse = {
 	x : 0,
@@ -177,7 +178,7 @@ function QueryHalf(axis, component) {
 	var stopPos = 201;
 	var image = component + "_" + axis;
 
-	if (component == 'anus') {
+	if (component == 'anal') {
 		if (axis == 'distal') {
 			startPos = 0;
 			stopPos = 2;
@@ -256,7 +257,7 @@ function QueryRange(place, nearBy) {
 	var stopPos = 201;
 	var image = nearBy + "_" + place;
 
-	if (nearBy == 'anus') {
+	if (nearBy == 'anal') {
 		if (place == 'start') {
 			startPos = 0;
 			stopPos = startPos + 3;
