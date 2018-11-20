@@ -30,6 +30,7 @@ const mouse = {
 	y : 0, // coordinates
 	lastX : 0,
 	lastY : 0, // last frames mouse position
+	guiX: 0 // lastX for GUI line not query
 }
 
 var clickQuery = false;
@@ -64,13 +65,22 @@ function mouseClicked(event) {
 			mouse.x *= can.width;
 			mouse.y *= can.height;
 
-			// draw point
-			ctx = can.getContext('2d');
 			var queryPos = Math.round(150 - ((mouse.x / can.width) * 150));
+			
+			// draw point
+//			ctx = can.getContext('2d');	
+//			ctx.beginPath();
+//			ctx.arc(mouse.x, mouse.y, 5, 0, 2 * Math.PI, true);
+//			ctx.fillStyle = "red";
+//			ctx.fill();
+			
+			// draw line
 			ctx.beginPath();
-			ctx.arc(mouse.x, mouse.y, 5, 0, 2 * Math.PI, true);
-			ctx.fillStyle = "red";
-			ctx.fill();
+			ctx.strokeStyle = "red";
+			ctx.lineWidth = 10;
+			ctx.moveTo(mouse.x, (can.height / 2));
+			ctx.lineTo(mouse.x, (can.height / 2)+40);
+			ctx.stroke();
 
 			if (clickTypeSelected == 'point') {
 				QueryBySingleClick(queryPos);
@@ -82,6 +92,7 @@ function mouseClicked(event) {
 				} else {
 					QueryByDoubleClick(queryPos, lastX);
 				}
+				guiX = lastX;
 				lastX = 0;
 			}
 		}
@@ -90,10 +101,27 @@ function mouseClicked(event) {
 	}
 }
 
-
-
 function processOutput(queryResult) {
-	var output = "<br /><h3>Results</h3><table><tr><th>image id</th><th>position</th></tr>";
+	var output = '';
+	if (clickQuery) {
+		var clickTypeSelected = document.getElementById('clickType').value;
+		if (clickTypeSelected == 'point') {
+			var queryPos = Math.round(150 - ((mouse.x / can.width) * 150));
+			output = "<br /><h3>Results for point: " + queryPos + "</h3><table><tr><th>image id</th><th>position</th></tr>";			
+		} else {
+			// range
+			var rangePos1 = Math.round(150 - ((mouse.x / can.width) * 150));
+			var rangePos2 = guiX;
+			if(rangePos1 < rangePos2) {
+				output = "<br /><h3>Results for range: "+ rangePos1 + " to " + rangePos2 + "</h3><table><tr><th>image id</th><th>position</th></tr>";
+			} else {
+				output = "<br /><h3>Results for range: "+ rangePos2 + " to " + rangePos1 + "</h3><table><tr><th>image id</th><th>position</th></tr>";
+			}
+			guiX = 0;
+		}
+	} else { 
+		output = "<br /><h3>Results</h3><table><tr><th>image id</th><th>position</th></tr>";
+	}
 	var obj = JSON.parse(queryResult);
 	for (i in obj.result) {
 		output += "<tr><td>" + obj.result[i].imageId + "</td><td>"
