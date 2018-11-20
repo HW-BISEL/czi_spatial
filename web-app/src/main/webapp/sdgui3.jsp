@@ -112,7 +112,7 @@
 				</div>
 
 				<div id="landmark" class="tabcontent">
-					Enter the name of colon structure you are interested in: <select
+					Enter the name of colon landmark you are interested in: <select
 						id="landmarkId">
 						<option value="apr">apr</option>
 						<option value="icv">icv</option>
