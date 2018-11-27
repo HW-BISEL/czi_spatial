@@ -34,7 +34,7 @@ function drawModel() {
 	ctx.fillText("anal", 148 * unit, (can.height / 2) - 100);
 	ctx.fillText("canal", 148 * unit, (can.height / 2) - 80);
 	ctx.fillText("rectum", 140 * unit, (can.height / 2) - 100);
-	ctx.fillText("sigmod", 114 * unit, (can.height / 2) - 100);
+	ctx.fillText("sigmoid", 114 * unit, (can.height / 2) - 100);
 	ctx.fillText("descending", 82 * unit, (can.height / 2) - 100);
 	ctx.fillText("transverse", 44 * unit, (can.height / 2) - 100);
 	ctx.fillText("ascending", 12 * unit, (can.height / 2) - 100);
