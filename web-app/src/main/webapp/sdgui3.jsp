@@ -24,7 +24,7 @@
 		<div class="row">
 			<div class="col-sm-2"></div>
 			<div class="com-sm-8" id="canvasDiv">
-				<canvas id="modelCanvas" height="50"
+				<canvas id="modelCanvas" height="90"
 					style="position: relative; width: 100%;" />
 			</div>
 		</div>
@@ -65,7 +65,7 @@
 						<option value="descending">descending</option>
 						<option value="transverse">transverse</option>
 						<option value="ascending">ascending</option>
-						<option value="cecum">cecum</option>
+						<option value="cecum">caecum</option>
 					</select> <br /> <br />
 					<button type="button"
 						onclick="QueryHalf(document.getElementById('axis').value, document.getElementById('componentHalf').value);">Query</button>
@@ -86,7 +86,7 @@
 						<option value="descending">descending</option>
 						<option value="transverse">transverse</option>
 						<option value="ascending">ascending</option>
-						<option value="cecum">cecum</option>
+						<option value="cecum">caecum</option>
 					</select> <br /> <br />
 					<button type="button"
 						onclick="QueryRange(document.getElementById('place').value, document.getElementById('nearBy').value);">Query</button>
@@ -103,7 +103,7 @@
 						<option value="descending">descending</option>
 						<option value="transverse">transverse</option>
 						<option value="ascending">ascending</option>
-						<option value="cecum">cecum</option>
+						<option value="cecum">caecum</option>
 					</select> <br /> <br />
 					<button type="button"
 						onclick="Query('searchByComponent', document.getElementById('componentId').value);">Query</button>
