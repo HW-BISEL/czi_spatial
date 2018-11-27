@@ -2,7 +2,7 @@ function drawModel() {
 	can = document.getElementById('modelCanvas');
 	ctx = can.getContext('2d');
 	var unit = can.width / 150;
-	var y_size = 10;
+	var y_size = 20;
 	ctx.font = "20px Georgia";
 	ctx.textAlign = "center";
 	ctx.lineWidth = 0.5;
@@ -10,22 +10,25 @@ function drawModel() {
 	ctx.rect(cecumEnd * unit, can.height / 2, unit * 4, y_size);
 	ctx.fill();
 	ctx.beginPath()
-	ctx.moveTo(ascendingEnd * unit, can.height / 2 + 5);
-	ctx.lineTo(ascendingStart * unit, can.height / 2 + 5);
+//	ctx.moveTo(ascendingEnd * unit, can.height / 2 + 5);
+//	ctx.lineTo(ascendingStart * unit, can.height / 2 + 5);
+	ctx.rect(ascendingEnd * unit, can.height / 2, (ascendingStart - ascendingEnd) * unit, y_size);
 	ctx.stroke();
 	ctx.beginPath();
 	ctx.rect(transverseEnd * unit, can.height / 2, unit * 50, y_size);
 	ctx.fill();
 	ctx.beginPath();
-	ctx.moveTo(descendingEnd * unit, can.height / 2 + 5);
-	ctx.lineTo(descendingStart * unit, can.height / 2 + 5);
+//	ctx.moveTo(descendingEnd * unit, can.height / 2 + 5);
+//	ctx.lineTo(descendingStart * unit, can.height / 2 + 5);
+	ctx.rect((descendingEnd+1) * unit, can.height / 2, (descendingStart - descendingEnd - 1) * unit, y_size);
 	ctx.stroke();
 	ctx.beginPath();
 	ctx.rect(sigmoidEnd * unit, can.height / 2, unit * 40, y_size);
 	ctx.fill();
 	ctx.beginPath();
-	ctx.moveTo(rectumEnd * unit, can.height / 2 + 5);
-	ctx.lineTo(rectumStart * unit, can.height / 2 + 5);
+//	ctx.moveTo(rectumEnd * unit, can.height / 2 + 5);
+//	ctx.lineTo(rectumStart * unit, can.height / 2 + 5);
+	ctx.rect(rectumEnd * unit, can.height / 2, (rectumStart - rectumEnd) * unit, y_size);
 	ctx.stroke();
 	ctx.beginPath();
 	ctx.rect(analEnd * unit, can.height / 2, unit * 4, y_size);
@@ -38,7 +41,7 @@ function drawModel() {
 	ctx.fillText("descending", 82 * unit, (can.height / 2) - 100);
 	ctx.fillText("transverse", 44 * unit, (can.height / 2) - 100);
 	ctx.fillText("ascending", 12 * unit, (can.height / 2) - 100);
-	ctx.fillText("cecum", 2 * unit, (can.height / 2) - 100);
+	ctx.fillText("caecum", 3 * unit, (can.height / 2) - 100);
 
 	ctx.beginPath();
 	ctx.fillStyle = "olive";
@@ -78,6 +81,7 @@ function drawModel() {
 	ctx.fillText("81", descendingEnd * unit, (can.height / 2) + 40);
 	ctx.fillText("131", transverseEnd * unit, (can.height / 2) + 40);
 	ctx.fillText("146", ascendingEnd * unit, (can.height / 2) + 40);
+	ctx.fillText("150", unit, (can.height / 2) + 40);
 }
 
 function updateModel(componentName) {
@@ -87,7 +91,7 @@ function updateModel(componentName) {
 	ctx.fillStyle = "red";
 	var unit = can.width / 150;
 	var y = can.height / 2;
-	var y_size = 10;
+	var y_size = 20;
 
 	switch (componentName) {
 	case "anal":
