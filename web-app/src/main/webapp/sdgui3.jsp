@@ -66,7 +66,9 @@
 						<option value="transverse">transverse</option>
 						<option value="ascending">ascending</option>
 						<option value="cecum">caecum</option>
-					</select> <br /> <br />
+					</select>.<br />
+					This queries exactly half the structure.
+					 <br /> <br />
 					<button type="button"
 						onclick="QueryHalf(document.getElementById('axis').value, document.getElementById('componentHalf').value);">Query</button>
 
@@ -87,7 +89,8 @@
 						<option value="transverse">transverse</option>
 						<option value="ascending">ascending</option>
 						<option value="cecum">caecum</option>
-					</select> <br /> <br />
+					</select>.<br />
+					If the start or end is selected the query is that point +/- 3cm (i.e., range of 4cm). If the middle is selected, it is the midpoint ± 3 (so a total range of 6cm). <br /> <br />
 					<button type="button"
 						onclick="QueryRange(document.getElementById('place').value, document.getElementById('nearBy').value);">Query</button>
 
@@ -118,7 +121,8 @@
 						<option value="icv">icv</option>
 						<option value="hf">hf</option>
 						<option value="sf">sf</option>
-					</select> <br /> <br />
+					</select>. <br />
+					Query is only the point selected, i.e., no range. <br /> <br />
 					<button type="button"
 						onclick="Query('searchByPosition', document.getElementById('landmarkId').value);">Query</button>
 
@@ -128,7 +132,7 @@
 				<div id="click" class="tabcontent">
 					<p>
 						Point queries require a single mouse click on the model to search
-						in that location. Range queries need two clicks, and the search
+						in that location (i.e., no range is applied so the query is only on a single point). Range queries need two clicks, and the search
 						occurs between the clicks. <select id="clickType"
 							onchange="resizeCanvas()">
 							<option value="" default></option>
