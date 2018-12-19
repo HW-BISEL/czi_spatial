@@ -34,54 +34,54 @@ function drawModel() {
 	ctx.rect(analEnd * unit, can.height / 2, unit * 4, y_size);
 	ctx.fill();
 
-	ctx.fillText("anal", 148 * unit, (can.height / 2) - 100);
-	ctx.fillText("canal", 148 * unit, (can.height / 2) - 80);
-	ctx.fillText("rectum", 140 * unit, (can.height / 2) - 100);
-	ctx.fillText("sigmoid", 114 * unit, (can.height / 2) - 100);
-	ctx.fillText("descending", 82 * unit, (can.height / 2) - 100);
-	ctx.fillText("transverse", 44 * unit, (can.height / 2) - 100);
-	ctx.fillText("ascending", 12 * unit, (can.height / 2) - 100);
-	ctx.fillText("caecum", 3 * unit, (can.height / 2) - 100);
+	ctx.fillText("anal", 148 * unit, (can.height / 2) - 80);
+	ctx.fillText("canal", 148 * unit, (can.height / 2) - 60);
+	ctx.fillText("rectum", 140 * unit, (can.height / 2) - 80);
+	ctx.fillText("sigmoid", 114 * unit, (can.height / 2) - 80);
+	ctx.fillText("descending", 82 * unit, (can.height / 2) - 80);
+	ctx.fillText("transverse", 44 * unit, (can.height / 2) - 80);
+	ctx.fillText("ascending", 12 * unit, (can.height / 2) - 80);
+	ctx.fillText("caecum", 3 * unit, (can.height / 2) - 80);
 
 	ctx.beginPath();
-	ctx.fillStyle = "olive";
-	ctx.rect(apr * unit, can.height / 2, unit, y_size);
-	ctx.fillText("APR", apr * unit, (can.height / 2) - 40);
-	ctx.fill();
-
-	ctx.beginPath();
-	ctx.fillStyle = "green";
-	ctx.rect(icv * unit, can.height / 2, unit, y_size);
+	ctx.fillStyle = "purple";
+	ctx.rect(icv * unit, can.height / 2, unit, y_size * 2);
 	ctx.fillText("ICV", unit, (can.height / 2) - 40);
 	ctx.fill();
 
 	ctx.beginPath();
-	ctx.fillStyle = "teal";
-	ctx.rect(hf * unit, can.height / 2, unit, y_size);
+	ctx.fillStyle = "blue";
+	ctx.rect(hf * unit, can.height / 2, unit, y_size * 2);
 	ctx.fillText("HF", hf * unit, (can.height / 2) - 40);
 	ctx.fill();
 
 	ctx.beginPath();
-	ctx.fillStyle = "olive";
-	ctx.rect(sf * unit, can.height / 2, unit, y_size);
+	ctx.fillStyle = "teal";
+	ctx.rect(sf * unit, can.height / 2, unit, y_size * 2);
 	ctx.fillText("SF", sf * unit, (can.height / 2) - 40);
 	ctx.fill();
 	
 	ctx.beginPath();
-	ctx.fillStyle = "purple";
-	ctx.rect(149 * unit, can.height / 2, unit, y_size);
+	ctx.fillStyle = "green";
+	ctx.rect(apr * unit, can.height / 2, unit, y_size * 2);
+	ctx.fillText("APR", apr * unit, (can.height / 2) - 40);
+	ctx.fill();	
+	
+	ctx.beginPath();
+	ctx.fillStyle = "olive";
+	ctx.rect(149 * unit, can.height / 2, unit, y_size * 2);
 	ctx.fillText("anus", 148 * unit, (can.height / 2) - 40);
 	ctx.fill();
 
 	ctx.fillStyle = "black";
-	ctx.fillText("0",  149 * unit, (can.height / 2) + 40);
-	ctx.fillText("4", analEnd * unit, (can.height / 2) + 40);
-	ctx.fillText("16", rectumEnd * unit, (can.height / 2) + 40);
-	ctx.fillText("56", sigmoidEnd * unit, (can.height / 2) + 40);
-	ctx.fillText("81", descendingEnd * unit, (can.height / 2) + 40);
-	ctx.fillText("131", transverseEnd * unit, (can.height / 2) + 40);
-	ctx.fillText("146", ascendingEnd * unit, (can.height / 2) + 40);
-	ctx.fillText("150", unit, (can.height / 2) + 40);
+	ctx.fillText("0",  149 * unit, (can.height / 2) + 60);
+	ctx.fillText("4", analEnd * unit, (can.height / 2) + 60);
+	ctx.fillText("16", rectumEnd * unit, (can.height / 2) + 60);
+	ctx.fillText("56", sigmoidEnd * unit, (can.height / 2) + 60);
+	ctx.fillText("81", descendingEnd * unit, (can.height / 2) + 60);
+	ctx.fillText("131", transverseEnd * unit, (can.height / 2) + 60);
+	ctx.fillText("146", ascendingEnd * unit, (can.height / 2) + 60);
+	ctx.fillText("150", unit, (can.height / 2) + 60);
 }
 
 function updateModel(componentName) {
