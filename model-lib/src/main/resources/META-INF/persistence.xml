@@ -17,10 +17,6 @@
 			<property name="javax.persistence.jdbc.password"
 				value="abcczi354" />
 
-			<!-- <property name="javax.persistence.jdbc.user" value="bisel" /> <property 
-				name="javax.persistence.jdbc.password" value="b1se1" /> -->
-
-
 
 			<!-- SQL dialect -->
 			<property name="hibernate.dialect"
