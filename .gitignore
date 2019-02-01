@@ -221,3 +221,6 @@ Temporary Items
 
 
 # End of https://www.gitignore.io/api/java,macos,linux,eclipse,intellij
+
+
+persistence.xml
