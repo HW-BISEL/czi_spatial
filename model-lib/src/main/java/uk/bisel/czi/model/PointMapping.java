@@ -1,43 +1,42 @@
 package uk.bisel.czi.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class PointMapping {
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	private String name;
+	@Enumerated(EnumType.STRING)
+	private GutComponentName name;
 	private String description;
 	private short position;
+	@Enumerated(EnumType.STRING)
+	private Species species;
 
 	public PointMapping() {
-		this.name = "";
 		this.description = "";
 	    this.position = 0;
 	}
 
-	public PointMapping(String name, short position) {
+	public PointMapping(GutComponentName name, short position, Species species) {
 		super();
-		Position.validatePosition(position);
 		this.name = name;
 		this.position = position;
 		this.description = "";
+		this.species = species;
 	}
 	
-	public PointMapping(String name, short position, String description) {
+	public PointMapping(GutComponentName name, short position, Species species, String description) {
 		super();
-		Position.validatePosition(position);
 		this.name = name;
 		this.position = position;
+		this.species = species;
 		this.description = description;
-	}	
+	}
+
 	public String getName() {
-		return name;
+		return name.toString();
 	}
 
 	public short getPosition() {
@@ -47,5 +46,7 @@ public class PointMapping {
 	public String getDescription() {
 		return description;
 	}
+
+	public String getSpecies() { return species.toString();}
 		
 }

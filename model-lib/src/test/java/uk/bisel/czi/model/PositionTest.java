@@ -16,33 +16,33 @@ public class PositionTest {
 
 	@Test
 	public void testValidatePosition() {
-		assertEquals("should be valid", true, Position.validatePosition((short) 0));
-		assertEquals("should be valid", true, Position.validatePosition((short) 45));
-		assertEquals("should be valid", true, Position.validatePosition((short) 150));		
+		assertEquals("should be valid", true, Position.validatePosition((short) 0, Species.HUMAN));
+		assertEquals("should be valid", true, Position.validatePosition((short) 450, Species.HUMAN));
+		assertEquals("should be valid", true, Position.validatePosition((short) 1500, Species.HUMAN));
 	}
 	
 	@Test(expected = BadPositionException.class) 
 	public void tooLow_exception() {
-		Position.validatePosition((short) -1);
+		Position.validatePosition((short) -1, Species.HUMAN);
 	}
 	
 	@Test(expected = BadPositionException.class) 
 	public void tooHigh_exception() {
-		Position.validatePosition((short) 151);
+		Position.validatePosition((short) 1501, Species.HUMAN);
 	}	
 
 	@Test
 	public void startVsStopPositions() {
-		assertEquals("should be valid", true, Position.validatePosition((short) 0, (short) 1));
-		assertEquals("should be valid", true, Position.validatePosition((short) 10, (short) 150));
+		assertEquals("should be valid", true, Position.validatePosition((short) 0, (short) 1, Species.HUMAN));
+		assertEquals("should be valid", true, Position.validatePosition((short) 10, (short) 1500, Species.HUMAN));
 	}
 	
 	@Test(expected = BadStartPositionException.class)
 	public void startVsStopPositions_exception() {
-		Position.validatePosition((short) 1, (short) 0);		
+		Position.validatePosition((short) 1, (short) 0, Species.HUMAN);
 	}	
 		
 	public void startVsStopPositions_sameValue_noexception() {
-		assertEquals("same position now valid", true, Position.validatePosition((short) 1, (short) 1));		
+		assertEquals("same position now valid", true, Position.validatePosition((short) 1, (short) 1, Species.HUMAN));
 	}	
 }
