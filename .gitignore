@@ -224,3 +224,13 @@ Temporary Items
 
 
 persistence.xml
+.idea/vcs.xml
+.idea/artifacts/web_app_war.xml
+.idea/artifacts/web_app_war_exploded.xml
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+czi.iml
+model-lib/model-lib.iml
+web-app/web-app.iml
