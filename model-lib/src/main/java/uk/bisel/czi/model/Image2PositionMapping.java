@@ -31,7 +31,7 @@ public class Image2PositionMapping implements Comparable<Image2PositionMapping> 
 		return position;
 	}
 
-	public String getSpecies() { return species.toString();}
+	public Species getSpecies() { return species;}
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -44,7 +44,7 @@ public class Image2PositionMapping implements Comparable<Image2PositionMapping> 
 
 	@Override
 	public int compareTo(Image2PositionMapping obj) {
-		if(obj.getSpecies().equalsIgnoreCase(this.getSpecies())) {
+		if(obj.getSpecies().toString().equalsIgnoreCase(this.getSpecies().toString())) {
 			if (obj.position == this.position) return 0;
 			if (obj.position > this.position) return -1;
 			return 1;
@@ -56,5 +56,25 @@ public class Image2PositionMapping implements Comparable<Image2PositionMapping> 
 	public String toString() {
 		StringBuilder sb = new StringBuilder(imageId+": "+position);		
 		return sb.toString();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setImageId(String imageId) {
+		this.imageId = imageId;
+	}
+
+	public void setPosition(short position) {
+		this.position = position;
+	}
+
+	public void setSpecies(Species species) {
+		this.species = species;
 	}
 }

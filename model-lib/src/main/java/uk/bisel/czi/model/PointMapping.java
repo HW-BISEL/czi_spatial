@@ -47,6 +47,29 @@ public class PointMapping {
 		return description;
 	}
 
-	public String getSpecies() { return species.toString();}
-		
+	public Species getSpecies() { return species;}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setName(GutComponentName name) {
+		this.name = name;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setPosition(short position) {
+		this.position = position;
+	}
+
+	public void setSpecies(Species species) {
+		this.species = species;
+	}
 }
