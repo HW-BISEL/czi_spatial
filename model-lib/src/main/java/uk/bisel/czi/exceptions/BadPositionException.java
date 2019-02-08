@@ -9,6 +9,6 @@ public class BadPositionException extends RuntimeException {
 	
 	
 	public BadPositionException(float position) {
-		super("Position specified ("+position+") is not between 0 and 150 inclusive.");
+		super("Position specified ("+position+") is outwith the limits.");
 	}	
 }
