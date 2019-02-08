@@ -32,42 +32,21 @@ public class LoadData {
 		EntityTransaction txn = em.getTransaction();
 		txn.begin();
     	for(int i = 0 ; i < 100; i++) {
-			Image2PositionMapping temp = new Image2PositionMapping(Integer.valueOf(i).toString(), (short) Math.round(Math.random() * humanICV), Species.HUMAN);
+			Image2PositionMapping temp = new Image2PositionMapping("h"+Math.round(Math.random() * 100), (short) Math.round(Math.random() * humanICV), Species.HUMAN);
 			em.persist(temp);
 		}
 		for(int i = 101 ; i < 175; i++) {
-			Image2PositionMapping temp = new Image2PositionMapping(Integer.valueOf(i).toString(),  (short) Math.round(Math.random() * mouseICV), Species.MOUSE);
+			Image2PositionMapping temp = new Image2PositionMapping("m"+Math.round(Math.random() * 75),  (short) Math.round(Math.random() * mouseICV), Species.MOUSE);
 			em.persist(temp);
 		}
 		for(int i = 180 ; i < 250; i++) {
-			Image2PositionMapping temp = new Image2PositionMapping(Integer.valueOf(i).toString(),  (short) Math.round(Math.random() * ratICV), Species.RAT);
+			Image2PositionMapping temp = new Image2PositionMapping("r"+Math.round(Math.random() * 40),  (short) Math.round(Math.random() * ratICV), Species.RAT);
 			em.persist(temp);
 		}
 		txn.commit();
 		em.clear();
 		em.close();
 	}
-    
-    private void readCSV() throws IOException {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("hibernate");
-		em = emf.createEntityManager();	
-		EntityTransaction txn = em.getTransaction();
-    	
-        System.out.println("Importing dummy data");
-        BufferedReader br = new BufferedReader(new FileReader(new File("MOCK_DATA.csv")));
-        String line = "";
-        br.readLine(); // throw away header
-        txn.begin();
-        while((line = br.readLine()) != null) {
-        	StringTokenizer st = new StringTokenizer(line, ",");
-        	Image2PositionMapping temp = new Image2PositionMapping(st.nextToken(), (short) Integer.parseInt(st.nextToken()), Species.HUMAN);
-        	em.persist(temp);        	
-        }
-        txn.commit();
-        br.close();
-        em.clear();
-        em.close();
-    }
 
     private void insertNewModel() {
     	insertNewModelHuman();
