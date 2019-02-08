@@ -22,7 +22,7 @@ public class PointMappingTest {
 
 		pm = new PointMapping(GutComponentName.ANUS, (short) 1, Species.HUMAN, "a description");
 		assertEquals("check position", (short) 1, pm.getPosition());
-		assertEquals(Species.HUMAN.toString(), pm.getSpecies());
+		assertEquals(Species.HUMAN, pm.getSpecies());
 		assertEquals("check description", "a description", pm.getDescription());
 	}
 
