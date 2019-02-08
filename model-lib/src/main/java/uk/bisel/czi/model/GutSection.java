@@ -59,5 +59,33 @@ public class GutSection {
 		return description;
 	}
 
-	public String getSpecies() { return species.toString(); }
+	public Species getSpecies() { return species; }
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setStartPosition(short startPosition) {
+		this.startPosition = startPosition;
+	}
+
+	public void setEndPosition(short endPosition) {
+		this.endPosition = endPosition;
+	}
+
+	public void setName(GutComponentName name) {
+		this.name = name;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setSpecies(Species species) {
+		this.species = species;
+	}
 }
