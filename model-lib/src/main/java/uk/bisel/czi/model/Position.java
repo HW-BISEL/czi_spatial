@@ -3,11 +3,21 @@ package uk.bisel.czi.model;
 import uk.bisel.czi.data.NotADao;
 import uk.bisel.czi.exceptions.BadPositionException;
 import uk.bisel.czi.exceptions.BadStartPositionException;
+import uk.bisel.czi.exceptions.PointNotFoundException;
 
 public final class Position {
 
 	public static boolean validatePosition(short position, Species species) {
 		NotADao dao = new NotADao();
+		int icvPos = 10000;
+		try {
+			icvPos = dao.getICVPosition(species);
+		} catch(PointNotFoundException pnfe) {
+			return false;
+		} catch (RuntimeException re) {
+			return false;
+		}
+
 		if (position < 0 || position > dao.getICVPosition(species)) {
 			throw new BadPositionException(position);
 		}

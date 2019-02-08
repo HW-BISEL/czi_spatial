@@ -17,7 +17,7 @@ public class Image2PositionMapping implements Comparable<Image2PositionMapping> 
 	public Image2PositionMapping() {}
 	
 	public Image2PositionMapping(String imageId, short position, Species species) {
-		//Position.validatePosition(position, species);
+		Position.validatePosition(position, species);
 		this.position = position;
 		this.imageId = imageId;
 		this.species = species;
