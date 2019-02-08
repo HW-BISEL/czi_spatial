@@ -15,6 +15,7 @@ import com.google.gson.JsonElement;
 
 import uk.bisel.czi.data.NotADao;
 import uk.bisel.czi.logging.WriteToLog;
+import uk.bisel.czi.model.Species;
 import uk.bisel.czi.webservice.exceptions.PathException;
 
 @WebServlet("/list/*")
@@ -44,7 +45,7 @@ public class List extends HttpServlet {
 		String[] pathElements = unprocessedPath.split("/");
 		
 		if (pathElements.length != 2) {
-			throw new PathException("URL should contain exactly 1 element: mappings/regions/points");
+			throw new PathException("URL should contain exactly 1 element: mappings/points");
 		}
 			
 		NotADao dao = new NotADao();
@@ -54,11 +55,9 @@ public class List extends HttpServlet {
 		if (pathElements[1].equalsIgnoreCase("mappings")) {			
 			element = gson.toJsonTree(dao.getAllImageMappings());
 
-		} else if (pathElements[1].equalsIgnoreCase("regions")) {			
-			element = gson.toJsonTree(dao.getAllRegions());
 
 		} else if (pathElements[1].equalsIgnoreCase("points")) {			
-			element = gson.toJsonTree(dao.getAllPoints());
+			element = gson.toJsonTree(dao.getAllPoints(Species.HUMAN));
 
 		} else {
 			throw new PathException(
