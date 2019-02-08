@@ -18,8 +18,8 @@ public final class Position {
 			return false;
 		}
 
-		if (position < 0 || position > dao.getICVPosition(species)) {
-			throw new BadPositionException(position);
+		if (position < 0 || position > icvPos) {
+			throw new BadPositionException("Min value is 0. Max is "+icvPos+"; you specified "+ position);
 		}
 		return true;
 	}
