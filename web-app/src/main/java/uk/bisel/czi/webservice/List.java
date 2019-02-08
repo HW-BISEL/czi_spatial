@@ -61,7 +61,7 @@ public class List extends HttpServlet {
 
 		} else {
 			throw new PathException(
-					"URL should contain 1 of: mappings/regions/points");
+					"URL should contain 1 of: mappings/points");
 		}		
 					
 		response.addHeader("Access-Control-Allow-Origin", "*");
