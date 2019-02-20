@@ -23,6 +23,12 @@ public class Image2PositionMapping implements Comparable<Image2PositionMapping> 
 		this.species = species;
 	}
 	
+	public Image2PositionMapping(String imageId, short position, Species species, boolean validation) {		
+		this.position = position;
+		this.imageId = imageId;
+		this.species = species;		
+	}
+	
 	public String getImageId() {
 		return imageId;
 	}
