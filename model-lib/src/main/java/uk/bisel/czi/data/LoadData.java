@@ -143,6 +143,19 @@ public class LoadData {
 		em.persist(transverse);
 		em.persist(ascending);
 		em.persist(caecum);
+		
+		
+		GutSection left = new GutSection((short) 200, (short) 500, GutComponentName.LEFT, Species.ABSTRACT);
+		GutSection right = new GutSection((short) 500, (short) 900, GutComponentName.RIGHT, Species.ABSTRACT);
+		em.persist(left);
+		em.persist(right);
+		
+		
+		GutSection d = new GutSection((short) 200, (short) 500, GutComponentName.DISTAL, Species.ABSTRACT);
+		GutSection pm = new GutSection((short) 500, (short) 900, GutComponentName.PROXIMAL_MID, Species.ABSTRACT);
+		em.persist(d);
+		em.persist(pm);
+		
 
 		PointMapping anus = new PointMapping(GutComponentName.ANUS, (short) 0, Species.ABSTRACT);
 		PointMapping sf = new PointMapping(GutComponentName.SPENLIC_FLEXURE, (short) 500, Species.ABSTRACT);
