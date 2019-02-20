@@ -43,11 +43,11 @@ public class GutSection {
 		this.description = description;
 	}
 
-	public float getStartPosition() {
+	public short getStartPosition() {
 		return startPosition;
 	}
 
-	public float getEndPosition() {
+	public short getEndPosition() {
 		return endPosition;
 	}
 
