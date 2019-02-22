@@ -121,7 +121,9 @@ public class NotADao {
     
     /**
      * Converts a given species-position pair into a section of the gut from the species AND then maps that section into a section from the second species (ie species2).
-     * The trip goes through the Abstract model; ie, species1 section -> abstract section - > species2 section
+     * The trip goes through the Abstract model; ie, species1 section -> abstract section - > species2 section.
+     * 
+     * If a boundary point is given, the name returned will be the proximal-most section
      * 
      * @param species1
      * @param position
@@ -134,17 +136,17 @@ public class NotADao {
     	if(allMaps.isEmpty()) {
     		throw new DatabaseException("No mapping from "+species1+" position " + position + " to the abstract model");
     	}      	
+    	
     	short abstractStart = allMaps.get(0).getAbstractStartPosition();
-    	short abstractStop = allMaps.get(0).getAbstractStopPosition();    	
-    	
+    	short abstractStop = allMaps.get(0).getAbstractStopPosition();
+    	    	
     	float species1PD = calculateProportionalDistance(species1, position);    	
-    	short abstractPoint = convertProportionalDistanceToActualDistance(abstractStart, abstractStop, species1PD);
-    	
-    	query = em.createQuery("FROM Model2AbstractMapping WHERE species1 LIKE '"+species2+"' AND abstractStartPosition <= " + abstractPoint + " AND abstractStopPosition >= "+ abstractPoint);
+    	short abstractPoint = convertProportionalDistanceToActualDistance(abstractStart, abstractStop, species1PD);    	    	
+    	query = em.createQuery("FROM Model2AbstractMapping WHERE species1 LIKE '"+species2+"' AND abstractStartPosition <= " + abstractPoint + " AND abstractStopPosition >= "+ abstractPoint +" ORDER BY abstractStopPosition DESC");
      	allMaps = query.getResultList();
     	if(allMaps.isEmpty()) {
     		throw new DatabaseException("No mapping from abstract position " + abstractPoint + " to "+species2);
-    	}      	    	    	
+    	}      	  
     	return allMaps.get(0).getSpecies1SectionName();
     }
     
