@@ -103,7 +103,7 @@ public class LoadData {
 		Model2AbstractMapping humanS = new Model2AbstractMapping(Species.HUMAN, GutComponentName.SIGMOID, (short) 160, (short) 560, (short) 200, (short) 300);
 		Model2AbstractMapping humanD = new Model2AbstractMapping(Species.HUMAN, GutComponentName.DESCENDING, (short) 560, (short) 810, (short) 300, (short) 500);
 		Model2AbstractMapping humanT = new Model2AbstractMapping(Species.HUMAN, GutComponentName.TRANSVERSE, (short) 810, (short) 1310, (short) 500, (short) 700);
-		Model2AbstractMapping humanAs = new Model2AbstractMapping(Species.HUMAN, GutComponentName.ASCENDING, (short) 1310, (short) 1470, (short) 300, (short) 500);
+		Model2AbstractMapping humanAs = new Model2AbstractMapping(Species.HUMAN, GutComponentName.ASCENDING, (short) 1310, (short) 1470, (short) 700, (short) 900);
 		Model2AbstractMapping humanC = new Model2AbstractMapping(Species.HUMAN, GutComponentName.CAECUM, (short) 1470, (short) 1500, (short) 900, (short) 1000);		
 		Model2AbstractMapping humanICV = new Model2AbstractMapping(Species.HUMAN, GutComponentName.ICV, (short) 1500, (short) 1000);
 		
