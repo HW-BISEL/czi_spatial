@@ -60,17 +60,8 @@ public class SpatialService extends HttpServlet {
 				
 		if (allSpecies.contains(pathElements[1].toUpperCase())) {
 			Species species = null;
-			switch (pathElements[1].toUpperCase()) {
-				case "HUMAN":
-					species = Species.HUMAN;
-					break;
-				case "MOUSE":
-					species = Species.MOUSE;
-					break;
-				case "RAT":
-					species = Species.RAT;
-					break;
-			}
+			
+			species = Species.valueOf(pathElements[1].toUpperCase());
 			
 			if(species == null) throw new PathException("A SPECIES must be provided; eg, /query/mouse/pointQuery?point=13");
 				
@@ -93,7 +84,7 @@ public class SpatialService extends HttpServlet {
 			} else if(pathElements[2].equalsIgnoreCase("searchByComponent")) {
 				
 				String c = request.getParameter("component").trim();
-				if(c == null) throw new PathException("Must specify a component; eg, query/mouse/searchByComponent?component=anal canal");
+				if(c == null) throw new PathException("Must specify a component; eg, query/mouse?component=anal canal");
 				Image2PositionMapping[] results = dao.getImagesFromRegion(species, c);
 				element = gson.toJsonTree(results);
 				
