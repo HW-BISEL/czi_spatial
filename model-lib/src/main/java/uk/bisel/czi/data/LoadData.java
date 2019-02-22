@@ -28,7 +28,7 @@ public class LoadData {
 
     private void randomGenerateImagePositions() {
 
-    	int humanICV = 1000;
+    	int humanICV = 1500;
     	int mouseICV = 140;
     	int ratICV = 250;
 
