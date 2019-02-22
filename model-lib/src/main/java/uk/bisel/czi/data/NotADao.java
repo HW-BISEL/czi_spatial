@@ -44,8 +44,8 @@ public class NotADao {
      * @return 
      */
     public short mapping(Species species1, short position1, Species species2) {
-    	float species1PD = calculateProportionalDistance(species1, position1);
-    	GutComponentName name2 = getSpecies2SectionNameFromSpecies1Position(species1, position1, species2);
+    	float species1PD = calculateProportionalDistance(species1, position1);    	
+    	GutComponentName name2 = getSpecies2SectionNameFromSpecies1Position(species1, position1, species2);    	
     	GutSection section2 = getSection(species2, name2);
     	return convertProportionalDistanceToActualDistance(section2.getStartPosition(), section2.getEndPosition(), species1PD);    	    	
     }
@@ -58,8 +58,7 @@ public class NotADao {
      * @param position
      * @return
      */
-	protected float calculateProportionalDistance(Species species, short position) {
-		// what happens if boundary
+	protected float calculateProportionalDistance(Species species, short position) {		
 		GutSection[] allSections = this.getRegionFromPosition(species, position);		
 		short distance = (short) (allSections[0].getEndPosition() - allSections[0].getStartPosition());				
 		short difference = (short) (position - allSections[0].getStartPosition());		
@@ -82,9 +81,8 @@ public class NotADao {
 			short temp = start;
 			start = end;
 			end = temp;
-		}
-		
-		return (short) ((pD * (end - start))+start);
+		}	
+		return (short) (Math.round((end - start) * pD) + start);
 	}	
 	
 	/**
@@ -96,7 +94,9 @@ public class NotADao {
 	 * @return
 	 */
 	public GutSection getSection(Species species, GutComponentName name) {
-		Query query = em.createQuery("FROM GutSection WHERE species LIKE '" + species + "' AND name LIKE '"+name+"'");
+		String queryString = "FROM GutSection WHERE species LIKE '" + species + "' AND name LIKE '"+name+"'";
+		logger.info(queryString);
+		Query query = em.createQuery(queryString);
     	List<GutSection> allSections = (List<GutSection>) query.getResultList();
     	if(allSections.isEmpty()) {
     		throw new DatabaseException("No "+name+" from species " + species.toString()+" in database.");
@@ -112,7 +112,9 @@ public class NotADao {
      * @return
      */
     public GutSection[] getRegionFromPosition(Species species, short position) {
-    	Query query = em.createQuery("FROM GutSection WHERE species LIKE '" + species + "' AND startPosition <= " + position +" AND endPosition >= "+ position);
+    	String queryString = "FROM GutSection WHERE species LIKE '" + species + "' AND startPosition <= " + position +" AND endPosition >= "+ position;
+    	logger.info(queryString);
+    	Query query = em.createQuery(queryString);
     	List<GutSection> allSections = query.getResultList();
     	if(allSections.isEmpty()) {
     		throw new RegionNotFoundException(species, position);
@@ -135,7 +137,9 @@ public class NotADao {
      * @return
      */
     public GutComponentName getSpecies2SectionNameFromSpecies1Position(Species species1, Short position, Species species2) {
-    	Query query = em.createQuery("FROM Model2AbstractMapping WHERE species1 LIKE '" + species1 + "' AND species1StartPosition <= " + position + " AND species1StopPosition >= "+ position);
+    	String queryString = "FROM Model2AbstractMapping WHERE species1 LIKE '" + species1 + "' AND species1StartPosition <= " + position + " AND species1StopPosition >= "+ position;
+    	logger.info(queryString);
+    	Query query = em.createQuery(queryString);
      	List<Model2AbstractMapping> allMaps = query.getResultList();
     	if(allMaps.isEmpty()) {
     		throw new DatabaseException("No mapping from "+species1+" position " + position + " to the abstract model");
@@ -145,8 +149,10 @@ public class NotADao {
     	short abstractStop = allMaps.get(0).getAbstractStopPosition();
     	    	
     	float species1PD = calculateProportionalDistance(species1, position);    	
-    	short abstractPoint = convertProportionalDistanceToActualDistance(abstractStart, abstractStop, species1PD);    	    	
-    	query = em.createQuery("FROM Model2AbstractMapping WHERE species1 LIKE '"+species2+"' AND abstractStartPosition <= " + abstractPoint + " AND abstractStopPosition >= "+ abstractPoint +" ORDER BY abstractStopPosition DESC");
+    	short abstractPoint = convertProportionalDistanceToActualDistance(abstractStart, abstractStop, species1PD);
+    	queryString = "FROM Model2AbstractMapping WHERE species1 LIKE '"+species2+"' AND abstractStartPosition <= " + abstractPoint + " AND abstractStopPosition >= "+ abstractPoint +" ORDER BY abstractStopPosition DESC";
+    	logger.info(queryString);
+    	query = em.createQuery(queryString);
      	allMaps = query.getResultList();
     	if(allMaps.isEmpty()) {
     		throw new DatabaseException("No mapping from abstract position " + abstractPoint + " to "+species2);
@@ -192,10 +198,12 @@ public class NotADao {
      * @return
      */
     public Image2PositionMapping[] getPositionsFromImage(String imageId) {
-        Query query = em.createQuery("from Image2PositionMapping i where imageId = '" + imageId + "' order by i.position");
+    	String queryString = "from Image2PositionMapping i where imageId = '" + imageId + "' order by i.position";
+    	logger.info(queryString);
+        Query query = em.createQuery(queryString);
         List<Image2PositionMapping> allMappings;
         allMappings = query.getResultList();
-        if(allMappings.isEmpty()) {
+        if(allMappings.isEmpty()) {        	
             throw new NoSuchImageException(imageId);
         }
 
@@ -214,7 +222,9 @@ public class NotADao {
      */
     public Image2PositionMapping[] getImagesFromRange(short start, short end, Species species) {
         Position.validatePosition(start, end, species);
-        Query query = em.createQuery("FROM Image2PositionMapping i WHERE species LIKE '" + species + "' AND i.position >= " + start + " AND i.position <= " + end);
+        String queryString = "FROM Image2PositionMapping i WHERE species LIKE '" + species + "' AND i.position >= " + start + " AND i.position <= " + end;
+        logger.info(queryString);
+        Query query = em.createQuery(queryString);
         List<Image2PositionMapping> allMappings = query.getResultList();
 
         if (allMappings.isEmpty()) { throw new NoImageFoundException(species, start, end); }
@@ -254,7 +264,9 @@ public class NotADao {
      * @return
      */
     public Image2PositionMapping[] getAllImageMappings() {
-        Query query = em.createQuery("from Image2PositionMapping");
+    	String queryString = "from Image2PositionMapping";
+    	logger.info(queryString);
+        Query query = em.createQuery(queryString);
         return runGetAlImageMappings(query);
     }
 
@@ -265,7 +277,9 @@ public class NotADao {
      * @return
      */
     public Image2PositionMapping[] getAllImageMappings(Species species) {
-        Query query = em.createQuery("from Image2PositionMapping WHERE species LIKE '"+species.toString()+"'");
+    	String queryString = "from Image2PositionMapping WHERE species LIKE '"+species.toString()+"'";
+    	logger.info(queryString);
+        Query query = em.createQuery(queryString);
         return runGetAlImageMappings(query);
     }
 
@@ -283,7 +297,9 @@ public class NotADao {
 	 * @return
 	 */
 	public short getPositionOfPoint(String name, Species species) {
-		Query query = em.createQuery("from PointMapping where name LIKE '"+name.toLowerCase().trim()+"' AND species LIKE '"+species+"'");
+		String queryString = "from PointMapping where name LIKE '"+name.toLowerCase().trim()+"' AND species LIKE '"+species+"'";
+		logger.info(queryString);
+		Query query = em.createQuery(queryString);
 		List<PointMapping> allComponents = query.getResultList();		
 		if (allComponents.isEmpty()) throw new PointNotFoundException(name);
 		if(allComponents.size() > 1) throw new RuntimeException("Unique component not identified");
@@ -309,7 +325,9 @@ public class NotADao {
      * @return
      */
 	public String[] getAllPoints(Species species) {
-		Query query = em.createQuery("from PointMapping where species LIKE '"+species+"'");
+		String queryString = "from PointMapping where species LIKE '"+species+"'";
+		logger.info(queryString);
+		Query query = em.createQuery(queryString);
 		List<PointMapping> allComponents = query.getResultList();	
 		if (allComponents.isEmpty()) throw new DatabaseException("No points in database");
 		String[] names = new String[allComponents.size()];
@@ -320,10 +338,11 @@ public class NotADao {
 	}
 
 	/**
+	 * Returns all images mapped to a given species-section pair.
 	 * 
-	 * 
-	 * @param name
-	 * @return
+	 * @param species 
+	 * @param name The name of the section
+	 * @return All images mapped to that section
 	 */
 	public Image2PositionMapping[] getImagesFromRegion(Species species, String name) {		
 		if(name.equalsIgnoreCase("cecum")) name = "caecum";
@@ -332,7 +351,7 @@ public class NotADao {
 			section = getSection(species, GutComponentName.valueOf(name.trim().toUpperCase().replaceAll(" ", "_")));
 		}
 		catch (IllegalArgumentException e) {
-			logger.info("IllegalArgumentException thrown");
+			logger.info("Cannot convert "+name+" into a GutComponentName");
 			logger.severe(e.getMessage());
 			throw new NoSuchGutSection(name);
 		}		

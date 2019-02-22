@@ -128,7 +128,7 @@ public class NotADaoTest {
     @Test
     public void convertProportionalDistanceToActualDistance_pass() {
     	assertEquals((short) 5, dao.convertProportionalDistanceToActualDistance((short) 0, (short) 10, 0.5F));
-    	assertEquals((short) 7, dao.convertProportionalDistanceToActualDistance((short) 0, (short) 10, 0.75F));    	
+    	assertEquals((short) 8, dao.convertProportionalDistanceToActualDistance((short) 0, (short) 10, 0.75F));    	
     }
     
     @Test
@@ -188,13 +188,17 @@ public class NotADaoTest {
     @Test
     public void mapping_pass() {
     	assertEquals((short) 1485, dao.mapping(Species.MOUSE, (short) 120, Species.HUMAN));
-    	assertEquals((short) 142, dao.mapping(Species.RAT, (short) 70, Species.HUMAN));
+    	assertEquals((short) 143, dao.mapping(Species.RAT, (short) 70, Species.HUMAN));
+    	assertEquals((short) 222, dao.mapping(Species.MOUSE, (short) 15, Species.HUMAN));
+    	assertEquals((short) 15, dao.mapping(Species.HUMAN, (short) 221, Species.MOUSE));
+    	assertEquals((short) 15, dao.mapping(Species.MOUSE, (short) 15, Species.MOUSE));
     }
     //
     @Test
     public void getImagesFromRegion_pass() {
     	assertTrue(dao.getImagesFromRegion(Species.MOUSE, "anal canal").length > 0);
     	assertTrue(dao.getImagesFromRegion(Species.HUMAN, "ascending").length > 0);
+    	assertTrue(dao.getImagesFromRegion(Species.MOUSE, "cecum").length > 0);
     }    
     
     @Test (expected = NoImageFoundException.class)
@@ -204,6 +208,6 @@ public class NotADaoTest {
     
     @Test (expected = NoSuchGutSection.class)
     public void getImagesFromRegion_fail_sectionDoesntExist() {
-    	assertEquals(0, dao.getImagesFromRegion(Species.ABSTRACT, "hbanana").length);
+    	assertEquals(0, dao.getImagesFromRegion(Species.ABSTRACT, "banana").length);
     }     
 }
