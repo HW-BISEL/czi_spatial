@@ -3,7 +3,6 @@ package uk.bisel.czi.webservice;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.net.ssl.SSLEngineResult.Status;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,7 +42,7 @@ public class ErrorHandler extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		Error error = new Error("fail", request.getAttribute("javax.servlet.error.message").toString(),
 				request.getAttribute("javax.servlet.error.exception_type").toString(),
-				request.getAttribute("javax.servlet.forward.request_uri").toString());
+				request.getAttribute("javax.servlet.forward.request_uri").toString()+"?"+request.getAttribute("javax.servlet.forward.query_string"));
 		Gson gson = new GsonBuilder().create();
 		out.println(gson.toJson(error));		
 	}
