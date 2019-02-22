@@ -8,6 +8,7 @@ import uk.bisel.czi.exceptions.NoSuchImageException;
 import uk.bisel.czi.exceptions.PointNotFoundException;
 import uk.bisel.czi.exceptions.RegionNotFoundException;
 import uk.bisel.czi.model.GutComponentName;
+import uk.bisel.czi.model.Image2PositionMapping;
 import uk.bisel.czi.model.Species;
 
 import static org.junit.Assert.*;
@@ -118,8 +119,8 @@ public class NotADaoTest {
     }
 
     @Test
-    public void getPositionsFromImage_pass() {
-        assertTrue(dao.getPositionsFromImage("r7").length > 1);
+    public void getPositionsFromImage_pass() {	
+        assertTrue(dao.getPositionsFromImage("r8").length > 1);
     }
     //
     @Test
@@ -171,6 +172,11 @@ public class NotADaoTest {
     	assertEquals(GutComponentName.CAECUM, dao.getSpecies2SectionNameFromSpecies1Position(Species.MOUSE, (short) 120, Species.HUMAN));
     	assertEquals(GutComponentName.RECTUM, dao.getSpecies2SectionNameFromSpecies1Position(Species.RAT, (short) 70, Species.HUMAN));
     }
+    
+    @Test
+    public void getSpecies2SectionNameFromSpecies1Position_pass_boundary() {
+    	assertEquals(GutComponentName.CAECUM, dao.getSpecies2SectionNameFromSpecies1Position(Species.MOUSE, (short) 100, Species.HUMAN)); 
+    }    
     
     @Test (expected = DatabaseException.class)
     public void getSpecies2SectionNameFromSpecies1Position_fail() {
