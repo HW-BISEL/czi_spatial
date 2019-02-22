@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import uk.bisel.czi.exceptions.BadPositionException;
 import uk.bisel.czi.exceptions.DatabaseException;
+import uk.bisel.czi.exceptions.NoImageFoundException;
+import uk.bisel.czi.exceptions.NoSuchGutSection;
 import uk.bisel.czi.exceptions.NoSuchImageException;
 import uk.bisel.czi.exceptions.PointNotFoundException;
 import uk.bisel.czi.exceptions.RegionNotFoundException;
@@ -120,7 +122,7 @@ public class NotADaoTest {
 
     @Test
     public void getPositionsFromImage_pass() {	
-        assertTrue(dao.getPositionsFromImage("r8").length > 1);
+        assertTrue(dao.getPositionsFromImage("h79").length > 1);
     }
     //
     @Test
@@ -189,4 +191,19 @@ public class NotADaoTest {
     	assertEquals((short) 142, dao.mapping(Species.RAT, (short) 70, Species.HUMAN));
     }
     //
+    @Test
+    public void getImagesFromRegion_pass() {
+    	assertTrue(dao.getImagesFromRegion(Species.MOUSE, "anal canal").length > 0);
+    	assertTrue(dao.getImagesFromRegion(Species.HUMAN, "ascending").length > 0);
+    }    
+    
+    @Test (expected = NoImageFoundException.class)
+    public void getImagesFromRegion_fail_noImagesForAbstract() {
+    	assertEquals(0, dao.getImagesFromRegion(Species.ABSTRACT, "rectum").length);
+    }
+    
+    @Test (expected = NoSuchGutSection.class)
+    public void getImagesFromRegion_fail_sectionDoesntExist() {
+    	assertEquals(0, dao.getImagesFromRegion(Species.ABSTRACT, "hbanana").length);
+    }     
 }

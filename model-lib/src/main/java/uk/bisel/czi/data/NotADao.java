@@ -2,6 +2,7 @@ package uk.bisel.czi.data;
 
 import java.util.List;
 import java.util.TreeSet;
+import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,6 +11,7 @@ import javax.persistence.Query;
 
 import uk.bisel.czi.exceptions.DatabaseException;
 import uk.bisel.czi.exceptions.NoImageFoundException;
+import uk.bisel.czi.exceptions.NoSuchGutSection;
 import uk.bisel.czi.exceptions.NoSuchImageException;
 import uk.bisel.czi.exceptions.PointNotFoundException;
 import uk.bisel.czi.exceptions.RegionNotFoundException;
@@ -25,6 +27,8 @@ import uk.bisel.czi.model.Species;
 public class NotADao {
 
     private EntityManager em = null;
+	
+    private Logger logger = Logger.getLogger(NotADao.class.getName());
 
     public NotADao() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hibernate");
@@ -92,8 +96,8 @@ public class NotADao {
 	 * @return
 	 */
 	public GutSection getSection(Species species, GutComponentName name) {
-		Query query = em.createQuery("FROM GutSection WHERE species LIKE '" + species + "' and name LIKE '"+name+"'");
-    	List<GutSection> allSections = query.getResultList();
+		Query query = em.createQuery("FROM GutSection WHERE species LIKE '" + species + "' AND name LIKE '"+name+"'");
+    	List<GutSection> allSections = (List<GutSection>) query.getResultList();
     	if(allSections.isEmpty()) {
     		throw new DatabaseException("No "+name+" from species " + species.toString()+" in database.");
     	}
@@ -313,6 +317,26 @@ public class NotADao {
 			names[i] = allComponents.get(i).getName();
 		}
 		return names;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Image2PositionMapping[] getImagesFromRegion(Species species, String name) {		
+		if(name.equalsIgnoreCase("cecum")) name = "caecum";
+		GutSection section = null;
+		try {						
+			section = getSection(species, GutComponentName.valueOf(name.trim().toUpperCase().replaceAll(" ", "_")));
+		}
+		catch (IllegalArgumentException e) {
+			logger.info("IllegalArgumentException thrown");
+			logger.severe(e.getMessage());
+			throw new NoSuchGutSection(name);
+		}		
+		return getImagesFromRange(section.getStartPosition(), section.getEndPosition(), species);		
 	}
 
 
