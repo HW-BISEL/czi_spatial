@@ -70,8 +70,8 @@ public class LoadData {
 		Model2AbstractMapping mouseAnus = new Model2AbstractMapping(Species.MOUSE, GutComponentName.ANUS, (short) 0, (short) 0);
 		Model2AbstractMapping mouseAC = new Model2AbstractMapping(Species.MOUSE, GutComponentName.ANAL_CANAL, (short) 0, (short) 2, (short) 0, (short) 100);
 		Model2AbstractMapping mouseR = new Model2AbstractMapping(Species.MOUSE, GutComponentName.RECTUM, (short) 2, (short) 5, (short) 100, (short) 200);
-		Model2AbstractMapping mouseMD = new Model2AbstractMapping(Species.MOUSE, GutComponentName.MID_DISTAL, (short) 5, (short) 70, (short) 200, (short) 700);
-		Model2AbstractMapping mouseP = new Model2AbstractMapping(Species.MOUSE, GutComponentName.PROXIMAL, (short) 70, (short) 100, (short) 700, (short) 900);
+		Model2AbstractMapping mouseMD = new Model2AbstractMapping(Species.MOUSE, GutComponentName.MID_DISTAL, (short) 5, (short) 70, (short) 200, (short) 700);  // flawed
+		Model2AbstractMapping mouseP = new Model2AbstractMapping(Species.MOUSE, GutComponentName.PROXIMAL, (short) 70, (short) 100, (short) 700, (short) 900);   // flawed
 		Model2AbstractMapping mouseC = new Model2AbstractMapping(Species.MOUSE, GutComponentName.CAECUM, (short) 100, (short) 140, (short) 900, (short) 1000);
 		Model2AbstractMapping mouseICV = new Model2AbstractMapping(Species.MOUSE, GutComponentName.ICV, (short) 140, (short) 1000);
 		
