@@ -125,47 +125,46 @@ function drawHuman() {
 
 function updateHuman(componentName) {
 	can = document.getElementById('modelCanvas');
-	ctx = can.getContext('2d');
-
+	ctx = can.getContext('2d');	
 	ctx.fillStyle = "red";
-	var unit = can.width / 150;
+	var unit = (can.width-1) / h_length;
 	var y = can.height / 2;
 	var y_size = 20;
 
 	switch (componentName) {
 	case "anal canal":
 		ctx.beginPath();
-		ctx.rect(analStart * unit, y, -(unit * 4), y_size);
+		ctx.rect(analStart * unit, y, -(analStart - analEnd) * unit, y_size);
 		ctx.fill();
 		break;
 	case "rectum":
 		ctx.beginPath();
-		ctx.rect(rectumStart * unit, y, -(unit * 12), y_size);
+		ctx.rect(rectumStart * unit, y, -(rectumStart - rectumEnd) * unit, y_size);
 		ctx.fill();
 		break;
 	case "sigmoid":
 		ctx.beginPath();
-		ctx.rect(sigmoidStart * unit, y, -(unit * 40), y_size);
+		ctx.rect(sigmoidStart * unit, y, -(sigmoidStart - sigmoidEnd) * unit, y_size);
 		ctx.fill();
 		break;
 	case "descending":
 		ctx.beginPath();
-		ctx.rect(descendingStart * unit, y, -(unit * 25), y_size);
+		ctx.rect(descendingStart * unit, y, -(descendingStart - descendingEnd) * unit, y_size);
 		ctx.fill();
 		break;
 	case "transverse":
 		ctx.beginPath();
-		ctx.rect(transverseStart * unit + unit, y, -(unit * 51), y_size);
+		ctx.rect(transverseStart * unit + unit, y, -(transverseStart - transverseEnd) * unit, y_size);
 		ctx.fill();
 		break;
 	case "ascending":
 		ctx.beginPath();
-		ctx.rect(ascendingStart * unit, y, -(unit * 16), y_size);
+		ctx.rect(ascendingStart * unit, y, -(ascendingStart - ascendingEnd) * unit, y_size);
 		ctx.fill();
 		break;
 	case "cecum":
 		ctx.beginPath();
-		ctx.rect(cecumStart * unit, y, -(unit * 4), y_size);
+		ctx.rect(cecumStart * unit, y, -(cecumStart - cecumEnd) * unit, y_size);
 		ctx.fill();
 		break;
 	// landmark
