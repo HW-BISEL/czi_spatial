@@ -44,12 +44,43 @@ public class NotADao {
      * @return 
      */
     public short mapping(Species species1, short position1, Species species2) {
-    	float species1PD = calculateProportionalDistance(species1, position1);    	
+    	float species1PD = calculateProportionalDistance(species1, position1);      	
     	GutComponentName name2 = getSpecies2SectionNameFromSpecies1Position(species1, position1, species2);    	
     	GutSection section2 = getSection(species2, name2);
     	return convertProportionalDistanceToActualDistance(section2.getStartPosition(), section2.getEndPosition(), species1PD);    	    	
     }
     
+    public short wholeColonMapping(Species species1, short position1, Species species2) {
+    	float species1PD = calculateProportionalDistanceWholeColon(species1, position1);     	
+    	return convertProportionalDistanceToActualDistance(getMinPosition(species2), getMaxPosition(species2), species1PD);
+    }    
+    
+	public short getMinPosition(Species species) {
+		return 0;
+	}    
+    
+	public short getMaxPosition(Species species) {
+		String queryString = "FROM GutSection WHERE species LIKE '" + species + "' ORDER BY endPosition DESC";
+		logger.info(queryString);
+		Query query = em.createQuery(queryString);
+		query.setMaxResults(1);
+    	List<GutSection> allSections = (List<GutSection>) query.getResultList();
+    	if(allSections.isEmpty()) {
+    		throw new DatabaseException("Cannot find any sections for the species "+species);
+    	}
+    	return allSections.get(0).getEndPosition();
+	}        		
+	
+	protected float calculateProportionalDistanceWholeColon(Species species, short position) {	
+		short minPos = getMinPosition(species);
+		short maxPos = getMaxPosition(species);		
+		short distance = (short) (maxPos - minPos);			
+		short difference = (short) (position - minPos);		
+		if(difference == (short) 0) return 0;
+		return ((float) difference / distance);
+	} 	
+	
+	
     /**
      * Calculates proportional distance in region of position. For example, if the section goes from 10 to 20 and the position
      * is 15, then 0.5 will be returned.
@@ -67,7 +98,7 @@ public class NotADao {
 	}    
     
 	/**
-	 * Converts a proportional distance in a section to a real distance along the whole model. For example if start = 10 and end = 20 and 
+	 * Converts a proportional distance in a section to a real distance along a specified range. For example if start = 10 and end = 20 and 
 	 * pD is 0.5 then 15 will be returned.
 	 *  
 	 * @param start

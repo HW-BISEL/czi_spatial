@@ -4,8 +4,8 @@ const mouse = {
 	lastX : 0,
 	lastY : 0, // last frames mouse position
 	guiX : 0, // used for swapping last x
-	queryPos: 0,
-	queryPos2: 0
+	queryPos : 0,
+	queryPos2 : 0
 }
 
 var clickQuery = false;
@@ -67,7 +67,8 @@ function mouseClicked(event) {
 			mouse.x *= can.width;
 			mouse.y *= can.height;
 
-			queryPos = Math.round(h_length - ((mouse.x / can.width) * h_length));			
+			queryPos = Math
+					.round(h_length - ((mouse.x / can.width) * h_length));
 
 			// draw line
 			var can = document.getElementById('modelCanvas');
@@ -79,9 +80,9 @@ function mouseClicked(event) {
 			ctx.lineTo(mouse.x, (can.height / 2) + 40);
 			ctx.stroke();
 
-			if ($(model2row).is(':visible')) {				
+			if ($(model2row).is(':visible')) {
 				Query4Mapping('human', 'mouse');
-			} else if (clickTypeSelected == 'point') {				
+			} else if (clickTypeSelected == 'point') {
 				QueryBySingleClick('human');
 			} else if (lastX == 0) {
 				lastX = queryPos;
@@ -100,19 +101,23 @@ function mouseClicked(event) {
 	}
 }
 
-function drawMousePoint(point) {		
+function drawMousePoint(point, colour) {
 	var can = document.getElementById('modelCanvas2');
 	var m_unit = (can.width - 1) / m_length;
-	var ctx = can.getContext('2d');	
+	var ctx = can.getContext('2d');
 	ctx.beginPath();
-	ctx.strokeStyle = "red";
+	if (colour === "green") {
+		ctx.strokeStyle = "green";
+	} else {
+		ctx.strokeStyle = "red";
+	}
 	ctx.lineWidth = 10;
 	ctx.moveTo((m_anus - point) * m_unit, (can.height / 2));
-	ctx.lineTo((m_anus - point) * m_unit, (can.height / 2) + 40);	
+	ctx.lineTo((m_anus - point) * m_unit, (can.height / 2) + 40);
 	ctx.stroke();
 }
 
-function processOutput(queryResult) {	
+function processOutput(queryResult) {
 	var output = '';
 	var obj = JSON.parse(queryResult);
 	if (obj.status === 'fail') {
@@ -120,14 +125,15 @@ function processOutput(queryResult) {
 	} else {
 		if (clickQuery || $(model2row).is(':visible')) {
 			var clickTypeSelected = document.getElementById('clickType').value;
-			if (clickTypeSelected == 'point' && $(model2row).is(':hidden')) {							
+			if (clickTypeSelected == 'point' && $(model2row).is(':hidden')) {
 				output = "<br /><h3>Results for point: "
 						+ queryPos
 						+ "</h3><table><tr><th>image id</th><th>position</th></tr>";
-			} else if (clickTypeSelected == 'range' && $(model2row).is(':hidden')) {
+			} else if (clickTypeSelected == 'range'
+					&& $(model2row).is(':hidden')) {
 				// range
 				var rangePos1 = queryPos;
-				var rangePos2 = guiX;				
+				var rangePos2 = guiX;
 				if (rangePos1 < rangePos2) {
 					output = "<br /><h3>Results for range: "
 							+ rangePos1
@@ -142,17 +148,18 @@ function processOutput(queryResult) {
 							+ "</h3><table><tr><th>image id</th><th>position</th></tr>";
 				}
 				guiX = 0;
-			} else {								
-				output = "<br /><h3>Human point: " + queryPos
+			} else {
+				output = "<br/><p><span style=\"color: green;\">Green</span> line in the mouse model represents the proportional mapping based on whole colon.<br /> <span style=\"color: red;\">Red</span> line is the mapping based on sectional proportional distances.</p>" 
+						+ "<br /><h3>Human point: " + queryPos
 						+ "mm maps to Mouse point: " + queryPos2
-				+"mm</h3><p>Results for the mouse are: </p> <br />" +
-						"<table><tr><th>image id</th><th>position</th></tr>";
+						+ "mm</h3><p>Results for the mouse are: </p> <br />"
+						+ "<table><tr><th>image id</th><th>position</th></tr>";
 
-				drawMousePoint(queryPos2);
+				drawMousePoint(queryPos2, 'red');
 				queryPos2 = 0;
 			}
-		} else {
-			output = "<br /><h3>Results</h3><table><tr><th>image id</th><th>position</th></tr>";
+		} else {			
+			output = "<h3>Results</h3><table><tr><th>image id</th><th>position</th></tr>";
 		}
 		var obj = JSON.parse(queryResult);
 		for (i in obj.result) {
@@ -167,9 +174,11 @@ function processOutput(queryResult) {
 function Query4Mapping(species1, species2) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {						
+		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {
 			var obj = JSON.parse(this.responseText);
-			queryPos2 = obj.result.position2;						
+			queryPos2 = obj.result.position2;
+			var pdPoint = obj.result.pdWholeColon;
+			drawMousePoint(pdPoint, 'green');
 			QueryBySingleClick2('mouse');
 		}
 		;
@@ -182,7 +191,7 @@ function Query4Mapping(species1, species2) {
 function QueryBySingleClick2(species) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {			
+		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {
 			processOutput(this.responseText);
 		}
 		;
@@ -195,7 +204,7 @@ function QueryBySingleClick2(species) {
 function QueryBySingleClick(species) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {			
+		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {
 			processOutput(this.responseText);
 		}
 		;
@@ -208,12 +217,12 @@ function QueryBySingleClick(species) {
 function QueryByDoubleClick(species) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {			
+		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {
 			processOutput(this.responseText);
 		}
 		;
 	};
-	var url = "query/" + species + "/searchByRange?point1=" + lastX 
+	var url = "query/" + species + "/searchByRange?point1=" + lastX
 			+ "&point2=" + queryPos;
 	xhttp.open("GET", encodeURI(url), true);
 	xhttp.send();
@@ -224,7 +233,7 @@ function Query(operation, value, species) {
 	document.getElementById('displayArea').innerHTML = "<br />";
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {			
+		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {
 			processOutput(this.responseText);
 		}
 		;

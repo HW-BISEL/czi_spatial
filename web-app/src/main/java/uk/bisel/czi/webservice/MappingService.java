@@ -54,6 +54,7 @@ public class MappingService extends HttpServlet {
 		}
 		
 		short species2Point = -1;
+		short wholeColonPoint = -1;
 		
 		if (allSpecies.contains(pathElements[1].toUpperCase()) && allSpecies.contains(pathElements[2].toUpperCase())) {
 			Species species1 = null;			
@@ -68,12 +69,14 @@ public class MappingService extends HttpServlet {
 			if(p1 == null) throw new PathException("A point must be provided; eg, /mapping/mouse/human?point=15");
 			
 			species2Point = dao.mapping(species1, (short) Integer.parseInt(p1), species2);
+			wholeColonPoint = dao.wholeColonMapping(species1, (short) Integer.parseInt(p1), species2);
 			
 			JsonObject mapping = new JsonObject();
 			mapping.addProperty("species1", species1.toString());
 			mapping.addProperty("position1", (short) Integer.parseInt(p1));
 			mapping.addProperty("species2", species2.toString());
-			mapping.addProperty("position2", species2Point);			
+			mapping.addProperty("position2", species2Point);	
+			mapping.addProperty("pdWholeColon", wholeColonPoint);
 			element = gson.toJsonTree(mapping);
 			
 			

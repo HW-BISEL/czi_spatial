@@ -24,7 +24,41 @@ public class NotADaoTest {
         dao = new NotADao();
     }
    
+    @Test
+    public void getMinPosition_pass() {
+    	assertEquals(0, dao.getMinPosition(Species.HUMAN));
+    	assertEquals(0, dao.getMinPosition(Species.MOUSE));
+    }
+    //
+    @Test
+    public void getMaxPosition_pass() {
+    	assertEquals(1500, dao.getMaxPosition(Species.HUMAN));
+    	assertEquals(140, dao.getMaxPosition(Species.MOUSE));
+    }    
     
+    @Test (expected = DatabaseException.class)
+    public void getMaxPosition_fail() {
+    	dao.getMaxPosition(Species.PIG);
+    }      
+    //
+    @Test
+    public void wholeColonMapping_pass() {
+    	assertEquals(0, dao.wholeColonMapping(Species.HUMAN, (short) 0, Species.MOUSE));
+    	assertEquals(0, dao.wholeColonMapping(Species.MOUSE, (short) 0, Species.HUMAN));
+    	
+    	assertEquals(140, dao.wholeColonMapping(Species.HUMAN, (short) 1500, Species.MOUSE));
+    	assertEquals(1500, dao.wholeColonMapping(Species.MOUSE, (short) 140, Species.HUMAN));  
+
+    	assertEquals(122, dao.wholeColonMapping(Species.HUMAN, (short) 1310, Species.MOUSE));
+    	assertEquals(750, dao.wholeColonMapping(Species.MOUSE, (short) 70, Species.HUMAN));
+    }
+    //
+    @Test
+    public void calculateProportionalDistanceWholeColon_pass() {
+    	assertEquals(0.001, 0.5, dao.calculateProportionalDistanceWholeColon(Species.MOUSE, (short) 70));
+    	assertEquals(0.001, 0.25, dao.calculateProportionalDistanceWholeColon(Species.MOUSE, (short) 35));
+    }
+    //
     @Test
     public void getRegionFromPosition_pass() {
     	assertEquals( GutComponentName.ANAL_CANAL ,dao.getRegionFromPosition(Species.ABSTRACT, (short) 5)[0].getName());
