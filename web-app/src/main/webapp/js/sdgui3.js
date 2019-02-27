@@ -3,8 +3,9 @@ const mouse = {
 	y : 0, // coordinates
 	lastX : 0,
 	lastY : 0, // last frames mouse position
-	guiX : 0
-// lastX for GUI line not query
+	guiX : 0, // used for swapping last x
+	queryPos: 0,
+	queryPos2: 0
 }
 
 var clickQuery = false;
@@ -66,7 +67,7 @@ function mouseClicked(event) {
 			mouse.x *= can.width;
 			mouse.y *= can.height;
 
-			var queryPos = Math.round(h_length - ((mouse.x / can.width) * h_length));
+			queryPos = Math.round(h_length - ((mouse.x / can.width) * h_length));			
 
 			// draw line
 			var can = document.getElementById('modelCanvas');
@@ -78,17 +79,17 @@ function mouseClicked(event) {
 			ctx.lineTo(mouse.x, (can.height / 2) + 40);
 			ctx.stroke();
 
-			if ($(model2row).is(':visible')) {
-				Query4Mapping(queryPos, 'human', 'mouse');
+			if ($(model2row).is(':visible')) {				
+				Query4Mapping('human', 'mouse');
 			} else if (clickTypeSelected == 'point') {				
-				QueryBySingleClick(queryPos, 'human');
+				QueryBySingleClick('human');
 			} else if (lastX == 0) {
 				lastX = queryPos;
 			} else if (lastX != 0) {
 				if (lastX < queryPos) {
-					QueryByDoubleClick(lastX, queryPos, 'human');
+					QueryByDoubleClick('human');
 				} else {
-					QueryByDoubleClick(queryPos, lastX, 'human');
+					QueryByDoubleClick('human');
 				}
 				guiX = lastX;
 				lastX = 0;
@@ -117,18 +118,16 @@ function processOutput(queryResult) {
 	if (obj.status === 'fail') {
 		output = "<div><b>MESSAGE:<p>" + obj.message + "</p></b></div>";
 	} else {
-
 		if (clickQuery || $(model2row).is(':visible')) {
 			var clickTypeSelected = document.getElementById('clickType').value;
-			if (clickTypeSelected == 'point') {
-				var queryPos = Math.round(h_length - ((mouse.x / can.width-1) * h_length));
+			if (clickTypeSelected == 'point' && $(model2row).is(':hidden')) {							
 				output = "<br /><h3>Results for point: "
 						+ queryPos
 						+ "</h3><table><tr><th>image id</th><th>position</th></tr>";
-			} else if (clickTypeSelected == 'range') {
+			} else if (clickTypeSelected == 'range' && $(model2row).is(':hidden')) {
 				// range
-				var rangePos1 = Math.round(h_length - ((mouse.x / can.width-1) * h_length));
-				var rangePos2 = guiX;
+				var rangePos1 = queryPos;
+				var rangePos2 = guiX;				
 				if (rangePos1 < rangePos2) {
 					output = "<br /><h3>Results for range: "
 							+ rangePos1
@@ -143,15 +142,14 @@ function processOutput(queryResult) {
 							+ "</h3><table><tr><th>image id</th><th>position</th></tr>";
 				}
 				guiX = 0;
-			} else {
-				var queryPos = Math.round(h_length - ((mouse.x / can.width-1) * h_length));
+			} else {								
 				output = "<br /><h3>Human point: " + queryPos
-						+ "mm maps to Mouse point: " + guiX
+						+ "mm maps to Mouse point: " + queryPos2
 				+"mm</h3><p>Results for the mouse are: </p> <br />" +
 						"<table><tr><th>image id</th><th>position</th></tr>";
 
-				drawMousePoint(guiX);
-				guiX = 0;
+				drawMousePoint(queryPos2);
+				queryPos2 = 0;
 			}
 		} else {
 			output = "<br /><h3>Results</h3><table><tr><th>image id</th><th>position</th></tr>";
@@ -166,22 +164,22 @@ function processOutput(queryResult) {
 	document.getElementById("displayArea").innerHTML = output;
 }
 
-function Query4Mapping(point, species1, species2) {
+function Query4Mapping(species1, species2) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {						
 			var obj = JSON.parse(this.responseText);
-			guiX = obj.result.position2;			
-			QueryBySingleClick(guiX, 'mouse');
+			queryPos2 = obj.result.position2;						
+			QueryBySingleClick2('mouse');
 		}
 		;
 	};
-	var url = "mapping/" + species1 + "/" + species2 + "?point=" + point;
+	var url = "mapping/" + species1 + "/" + species2 + "?point=" + queryPos;
 	xhttp.open("GET", encodeURI(url), true);
 	xhttp.send();
 }
 
-function QueryBySingleClick(point, species) {
+function QueryBySingleClick2(species) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {			
@@ -189,12 +187,12 @@ function QueryBySingleClick(point, species) {
 		}
 		;
 	};
-	var url = "query/" + species + "/searchByPosition?point=" + point;
+	var url = "query/" + species + "/searchByPosition?point=" + queryPos2;
 	xhttp.open("GET", encodeURI(url), true);
 	xhttp.send();
 }
 
-function QueryByDoubleClick(start, stop, species) {
+function QueryBySingleClick(species) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {			
@@ -202,8 +200,21 @@ function QueryByDoubleClick(start, stop, species) {
 		}
 		;
 	};
-	var url = "query/" + species + "/searchByRange?point1=" + start 
-			+ "&point2=" + stop;
+	var url = "query/" + species + "/searchByPosition?point=" + queryPos;
+	xhttp.open("GET", encodeURI(url), true);
+	xhttp.send();
+}
+
+function QueryByDoubleClick(species) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {			
+			processOutput(this.responseText);
+		}
+		;
+	};
+	var url = "query/" + species + "/searchByRange?point1=" + lastX 
+			+ "&point2=" + queryPos;
 	xhttp.open("GET", encodeURI(url), true);
 	xhttp.send();
 }
