@@ -80,8 +80,7 @@ function mouseClicked(event) {
 
 			if ($(model2row).is(':visible')) {
 				Query4Mapping(queryPos, 'human', 'mouse');
-			} else if (clickTypeSelected == 'point') {
-				alert(2);
+			} else if (clickTypeSelected == 'point') {				
 				QueryBySingleClick(queryPos, 'human');
 			} else if (lastX == 0) {
 				lastX = queryPos;
@@ -100,25 +99,19 @@ function mouseClicked(event) {
 	}
 }
 
-function drawMousePoint(point) {	
-	alert("WTF! "+point);
+function drawMousePoint(point) {		
 	var can = document.getElementById('modelCanvas2');
 	var m_unit = (can.width - 1) / m_length;
-	var ctx = can.getContext('2d');
-	alert(can.width + " " + m_length + " " + m_unit);
+	var ctx = can.getContext('2d');	
 	ctx.beginPath();
 	ctx.strokeStyle = "red";
 	ctx.lineWidth = 10;
-//	ctx.moveTo(can.width / 2, (can.height / 2));
-//	ctx.lineTo(can.width / 2, (can.height / 2) + 40);
-	alert(point + " " + (m_anus - point) + " " + (m_anus - point) * m_unit + " "+ can.width);
 	ctx.moveTo((m_anus - point) * m_unit, (can.height / 2));
 	ctx.lineTo((m_anus - point) * m_unit, (can.height / 2) + 40);	
 	ctx.stroke();
 }
 
-function processOutput(queryResult) {
-	alert(queryResult);
+function processOutput(queryResult) {	
 	var output = '';
 	var obj = JSON.parse(queryResult);
 	if (obj.status === 'fail') {
@@ -176,14 +169,10 @@ function processOutput(queryResult) {
 function Query4Mapping(point, species1, species2) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {			
-			alert(this.responseText);
+		if (this.readyState == 4 && (this.status == 200 || this.status == 500)) {						
 			var obj = JSON.parse(this.responseText);
-			var position2 = obj.result.position2;
-			alert(position2);
-			// processOutput(this.responseText);
-			guiX = position2;
-			QueryBySingleClick(position2, 'mouse');
+			guiX = obj.result.position2;			
+			QueryBySingleClick(guiX, 'mouse');
 		}
 		;
 	};
