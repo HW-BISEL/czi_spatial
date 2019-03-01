@@ -110,9 +110,14 @@ function mouseClicked(event) {
 	}
 }
 
-function drawMousePoint(point, colour) {
+function drawModel2Point(species, point, colour) {
 	var can = document.getElementById('modelCanvas2');
-	var m_unit = (can.width - 1) / m_length;
+	var unit2 = 0;
+	if(document.getElementById('species2').value == 'MOUSE') {
+		unit2 = (can.width - 1) / m_length;
+	} else {
+		unit2 = (can.width - 1) / r_length;
+	}	
 	var ctx = can.getContext('2d');
 	ctx.beginPath();
 	if (colour === "green") {
@@ -121,24 +126,13 @@ function drawMousePoint(point, colour) {
 		ctx.strokeStyle = "red";
 	}
 	ctx.lineWidth = 10;
-	ctx.moveTo((m_anus - point) * m_unit, (can.height / 2));
-	ctx.lineTo((m_anus - point) * m_unit, (can.height / 2) + 40);
-	ctx.stroke();
-}
-
-function drawRatPoint(point, colour) {
-	var can = document.getElementById('modelCanvas2');
-	var r_unit = (can.width - 1) / r_length;
-	var ctx = can.getContext('2d');
-	ctx.beginPath();
-	if (colour === "green") {
-		ctx.strokeStyle = "green";
+	if(document.getElementById('species2').value == 'MOUSE') {	
+		ctx.moveTo((m_anus - point) * unit2, (can.height / 2));
+		ctx.lineTo((m_anus - point) * unit2, (can.height / 2) + 40);
 	} else {
-		ctx.strokeStyle = "red";
+		ctx.moveTo((r_anus - point) * unit2, (can.height / 2));
+		ctx.lineTo((r_anus - point) * unit2, (can.height / 2) + 40);		
 	}
-	ctx.lineWidth = 10;
-	ctx.moveTo((r_anus - point) * r_unit, (can.height / 2));
-	ctx.lineTo((r_anus - point) * r_unit, (can.height / 2) + 40);
 	ctx.stroke();
 }
 
@@ -187,9 +181,9 @@ function processOutput(queryResult) {
 						+ "<table><tr><th>image id</th><th>position</th></tr>";
 
 				if(document.getElementById('species2').value == 'MOUSE') {
-					drawMousePoint(queryPos2, 'red');
+					drawModel2Point('MOUSE', queryPos2, 'red');
 				} else {
-					drawRatPoint(queryPos2, 'red');
+					drawModel2Point('RAT', queryPos2, 'red');
 				}
 			
 				queryPos2 = 0;
@@ -215,10 +209,10 @@ function Query4Mapping(species1, species2) {
 			queryPos2 = obj.result.position2;
 			var pdPoint = obj.result.pdWholeColon;
 			if(document.getElementById('species2').value == 'MOUSE') {
-				drawMousePoint(pdPoint, 'green');
+				drawModel2Point('MOUSE', pdPoint, 'green');
 				QueryBySingleClick2('mouse');
 			} else {
-				drawRatPoint(pdPoint, 'green');
+				drawModel2Point('RAT', pdPoint, 'green');
 				QueryBySingleClick2('rat');
 			}									
 		}
