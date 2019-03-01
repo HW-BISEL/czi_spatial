@@ -6,7 +6,6 @@ const m_analEnd = 138;
 const m_anus = 140;
 const m_icv = 0;
 
-
 const m_length = m_anus - m_icv;
 
 function drawMouse() {

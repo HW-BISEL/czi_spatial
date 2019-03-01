@@ -43,8 +43,9 @@
 		</div>
 		<div class="row" id="model2row" style="display: none;">
 			<div class="col-sm-2">
-				<select id="species2">
+				<select id="species2" onchange="resizeCanvas();">
 					<option value="MOUSE">MOUSE</option>
+					<option value="RAT">RAT</option>
 				</select>
 			</div>
 			<div class="com-sm-8">

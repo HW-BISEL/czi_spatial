@@ -14,6 +14,7 @@ var lastX = 0;
 $.getScript("js/human.js");
 $.getScript("js/scale.js");
 $.getScript("js/mouse.js");
+$.getScript("js/rat.js");
 
 function resizeCanvas() {
 	var dpi = window.devicePixelRatio;
@@ -36,7 +37,11 @@ function resizeCanvas() {
 	can = document.getElementById('modelCanvas2');
 	can.setAttribute('height', style_height * dpi);
 	can.setAttribute('width', style_width * dpi);
-	drawMouse();
+	if(document.getElementById('species2').value == 'MOUSE') { 
+		drawMouse();
+	} else {
+		drawRat();
+	}
 };
 
 function mouseClicked(event) {
@@ -81,7 +86,11 @@ function mouseClicked(event) {
 			ctx.stroke();
 
 			if ($(model2row).is(':visible')) {
-				Query4Mapping('human', 'mouse');
+				if(document.getElementById('species2').value == 'MOUSE') {
+					Query4Mapping('human', 'mouse');
+				} else {
+					Query4Mapping('human', 'rat');
+				}
 			} else if (clickTypeSelected == 'point') {
 				QueryBySingleClick('human');
 			} else if (lastX == 0) {
@@ -117,6 +126,22 @@ function drawMousePoint(point, colour) {
 	ctx.stroke();
 }
 
+function drawRatPoint(point, colour) {
+	var can = document.getElementById('modelCanvas2');
+	var r_unit = (can.width - 1) / r_length;
+	var ctx = can.getContext('2d');
+	ctx.beginPath();
+	if (colour === "green") {
+		ctx.strokeStyle = "green";
+	} else {
+		ctx.strokeStyle = "red";
+	}
+	ctx.lineWidth = 10;
+	ctx.moveTo((r_anus - point) * r_unit, (can.height / 2));
+	ctx.lineTo((r_anus - point) * r_unit, (can.height / 2) + 40);
+	ctx.stroke();
+}
+
 function processOutput(queryResult) {
 	var output = '';
 	var obj = JSON.parse(queryResult);
@@ -149,13 +174,24 @@ function processOutput(queryResult) {
 				}
 				guiX = 0;
 			} else {
-				output = "<br/><p><span style=\"color: green;\">Green</span> line in the mouse model represents the proportional mapping based on whole colon.<br /> <span style=\"color: red;\">Red</span> line is the mapping based on sectional proportional distances.</p>" 
+				var species2 = "";
+				if(document.getElementById('species2').value == 'MOUSE') {
+					species2 = 'Mouse';
+				} else {
+					species2 = 'Rat';
+				}
+				output = "<br/><p><span style=\"color: green;\">Green</span> line in the " + species2 + " model represents the proportional mapping based on whole colon.<br /> <span style=\"color: red;\">Red</span> line is the mapping based on sectional proportional distances.</p>" 
 						+ "<br /><h3>Human point: " + queryPos
-						+ "mm maps to Mouse point: " + queryPos2
-						+ "mm</h3><p>Results for the mouse are: </p> <br />"
+						+ "mm maps to " + species2+" point: " + queryPos2
+						+ "mm</h3><p>Results for the " + species2 + " are: </p> <br />"
 						+ "<table><tr><th>image id</th><th>position</th></tr>";
 
-				drawMousePoint(queryPos2, 'red');
+				if(document.getElementById('species2').value == 'MOUSE') {
+					drawMousePoint(queryPos2, 'red');
+				} else {
+					drawRatPoint(queryPos2, 'red');
+				}
+			
 				queryPos2 = 0;
 			}
 		} else {			
@@ -178,8 +214,13 @@ function Query4Mapping(species1, species2) {
 			var obj = JSON.parse(this.responseText);
 			queryPos2 = obj.result.position2;
 			var pdPoint = obj.result.pdWholeColon;
-			drawMousePoint(pdPoint, 'green');
-			QueryBySingleClick2('mouse');
+			if(document.getElementById('species2').value == 'MOUSE') {
+				drawMousePoint(pdPoint, 'green');
+				QueryBySingleClick2('mouse');
+			} else {
+				drawRatPoint(pdPoint, 'green');
+				QueryBySingleClick2('rat');
+			}									
 		}
 		;
 	};
