@@ -328,7 +328,7 @@ public class NotADao {
 	 * @return
 	 */
 	public short getPositionOfPoint(String name, Species species) {
-		String queryString = "from PointMapping where name LIKE '"+name.toLowerCase().trim()+"' AND species LIKE '"+species+"'";
+		String queryString = "from PointMapping where name = '"+name.toUpperCase().trim()+"' AND species = '"+species+"'";
 		logger.info(queryString);
 		Query query = em.createQuery(queryString);
 		List<PointMapping> allComponents = query.getResultList();		
