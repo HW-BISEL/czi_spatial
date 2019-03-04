@@ -11,11 +11,6 @@ const mouse = {
 var clickQuery = false;
 var lastX = 0;
 
-$.getScript("js/human.js");
-$.getScript("js/scale.js");
-$.getScript("js/mouse.js");
-$.getScript("js/rat.js");
-
 function resizeCanvas() {
 	var dpi = window.devicePixelRatio;
 	var can = document.getElementById('modelCanvas');

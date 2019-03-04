@@ -12,6 +12,10 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/sdgui3.js"></script>
 <script src="js/tabs.js"></script>
+<script src="js/human.js"></script>
+<script src="js/scale.js"></script>
+<script src="js/mouse.js"></script>
+<script src="js/rat.js"></script>
 <link href="stylesheet.css" rel="stylesheet" type="text/css">
 <title>SD Gui with Mappings</title>
 </head>
