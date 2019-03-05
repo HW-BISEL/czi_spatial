@@ -142,7 +142,7 @@ function processOutput(queryResult) {
 			if (clickTypeSelected == 'point' && $(model2row).is(':hidden')) {
 				output = "<br /><h3>Results for point: "
 						+ queryPos
-						+ "</h3><table><tr><th>image id</th><th>position</th></tr>";
+						+ "</h3><table><tr><th>image id</th><th>position (mm)</th></tr>";
 			} else if (clickTypeSelected == 'range'
 					&& $(model2row).is(':hidden')) {
 				// range
@@ -153,13 +153,13 @@ function processOutput(queryResult) {
 							+ rangePos1
 							+ " to "
 							+ rangePos2
-							+ "</h3><table><tr><th>image id</th><th>position</th></tr>";
+							+ "</h3><table><tr><th>image id</th><th>position (mm)</th></tr>";
 				} else {
 					output = "<br /><h3>Results for range: "
 							+ rangePos2
 							+ " to "
 							+ rangePos1
-							+ "</h3><table><tr><th>image id</th><th>position</th></tr>";
+							+ "</h3><table><tr><th>image id</th><th>position (mm)</th></tr>";
 				}
 				guiX = 0;
 			} else {
@@ -169,7 +169,7 @@ function processOutput(queryResult) {
 				} else {
 					species2 = 'Rat';
 				}
-				output = "<br/><p><span style=\"color: green;\">Green</span> line in the " + species2 + " model represents the proportional mapping based on whole colon.<br /> <span style=\"color: red;\">Red</span> line is the mapping based on sectional proportional distances.</p>" 
+				output = "<br/><span style=\"color: red;\">Red</span> line is the mapping based on proportional distances in the equivalent section. E.g., 50% along the Human Caecum maps to 50% along the Mouse Caecum.</p>" 
 						+ "<br /><h3>Human point: " + queryPos
 						+ "mm maps to " + species2+" point: " + queryPos2
 						+ "mm</h3><p>Results for the " + species2 + " are: </p> <br />"
@@ -184,7 +184,7 @@ function processOutput(queryResult) {
 				queryPos2 = 0;
 			}
 		} else {			
-			output = "<h3>Results</h3><table><tr><th>image id</th><th>position</th></tr>";
+			output = "<h3>Results</h3><table><tr><th>image id</th><th>position (mm)</th></tr>";
 		}
 		var obj = JSON.parse(queryResult);
 		for (i in obj.result) {
@@ -204,10 +204,10 @@ function Query4Mapping(species1, species2) {
 			queryPos2 = obj.result.position2;
 			var pdPoint = obj.result.pdWholeColon;
 			if(document.getElementById('species2').value == 'MOUSE') {
-				drawModel2Point('MOUSE', pdPoint, 'green');
+				// drawModel2Point('MOUSE', pdPoint, 'green');
 				QueryBySingleClick2('mouse');
 			} else {
-				drawModel2Point('RAT', pdPoint, 'green');
+				// drawModel2Point('RAT', pdPoint, 'green');
 				QueryBySingleClick2('rat');
 			}									
 		}
