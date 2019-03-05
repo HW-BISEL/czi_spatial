@@ -44,6 +44,33 @@ public class NotADao {
      * @return 
      */
     public short mapping(Species species1, short position1, Species species2) {
+    	GutSection[] allSections = this.getRegionFromPosition(species1, position1);
+    	
+    	if(species1 == species2) return position1;
+    	
+    	// special rules because the mouse & rat dont map well to the abstract
+    	if(species1 == Species.HUMAN && species2 == Species.MOUSE) {
+    		if(allSections[0].getName() == GutComponentName.SIGMOID || allSections[0].getName() == GutComponentName.DESCENDING || allSections[0].getName() == GutComponentName.TRANSVERSE) {    			
+    			float species1PD = calculateProportionalDistance((short) 160, (short) 1310, position1);
+    			return convertProportionalDistanceToActualDistance((short) 5, (short) 70, species1PD);
+    		}
+    	} else if(species2 == Species.HUMAN && species1 == Species.MOUSE) {    		
+    		if(allSections[0].getName() == GutComponentName.MID_DISTAL) {
+    			float species1PD = calculateProportionalDistance(species1, position1);
+    			return convertProportionalDistanceToActualDistance((short) 160, (short) 1310, species1PD); 
+    		}
+    	} else if(species1 == Species.HUMAN && species2 == Species.RAT) {
+    		if(allSections[0].getName() == GutComponentName.SIGMOID || allSections[0].getName() == GutComponentName.DESCENDING || allSections[0].getName() == GutComponentName.TRANSVERSE || allSections[0].getName() == GutComponentName.ASCENDING) {
+    			float species1PD = calculateProportionalDistance((short) 160, (short) 1470, position1);
+    			return convertProportionalDistanceToActualDistance((short) 80, (short) 180, species1PD);
+    		}
+    	} else if(species2 == Species.HUMAN && species1 == Species.RAT) {
+    		if(allSections[0].getName() == GutComponentName.PROXIMAL_MID_DISTAL) {
+    			float species1PD = calculateProportionalDistance(species1, position1); 
+    			return convertProportionalDistanceToActualDistance((short) 160, (short) 1470, species1PD); 
+    		}
+    	}
+    	
     	float species1PD = calculateProportionalDistance(species1, position1);      	
     	GutComponentName name2 = getSpecies2SectionNameFromSpecies1Position(species1, position1, species2);    	
     	GutSection section2 = getSection(species2, name2);
@@ -96,6 +123,13 @@ public class NotADao {
 		if(difference == (short) 0) return 0;
 		return ((float) difference / distance);
 	}    
+	
+	protected float calculateProportionalDistance(short start, short end, short position) {				
+		short distance = (short) (end - start);				
+		short difference = (short) (position - start);		
+		if(difference == (short) 0) return 0;
+		return ((float) difference / distance);
+	} 	
     
 	/**
 	 * Converts a proportional distance in a section to a real distance along a specified range. For example if start = 10 and end = 20 and 

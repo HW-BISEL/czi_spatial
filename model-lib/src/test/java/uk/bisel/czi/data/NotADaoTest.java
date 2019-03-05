@@ -156,7 +156,7 @@ public class NotADaoTest {
 
     @Test
     public void getPositionsFromImage_pass() {	
-        assertTrue(dao.getPositionsFromImage("h79").length > 1);
+        assertTrue(dao.getPositionsFromImage("r8").length > 1);
     }
     //
     @Test
@@ -220,11 +220,15 @@ public class NotADaoTest {
     }    
     //
     @Test
-    public void mapping_pass() {
-    	assertEquals((short) 1485, dao.mapping(Species.MOUSE, (short) 120, Species.HUMAN));
+    public void mapping_pass() {    	
+    	assertEquals((short) 102, dao.mapping(Species.HUMAN, (short) 1462, Species.MOUSE));
+    	assertEquals((short) 1462, dao.mapping(Species.MOUSE, (short) 102, Species.HUMAN));
+    	assertEquals((short) 1480, dao.mapping(Species.MOUSE, (short) 120, Species.HUMAN));
+    	assertEquals((short) 120, dao.mapping(Species.HUMAN, (short) 1480, Species.MOUSE));
     	assertEquals((short) 143, dao.mapping(Species.RAT, (short) 70, Species.HUMAN));
-    	assertEquals((short) 222, dao.mapping(Species.MOUSE, (short) 15, Species.HUMAN));
-    	assertEquals((short) 15, dao.mapping(Species.HUMAN, (short) 221, Species.MOUSE));
+    	assertEquals((short) 70, dao.mapping(Species.HUMAN, (short) 143, Species.RAT));
+    	assertEquals((short) 8, dao.mapping(Species.HUMAN, (short) 221, Species.MOUSE));
+    	assertEquals((short) 213, dao.mapping(Species.MOUSE, (short) 8, Species.HUMAN));
     	assertEquals((short) 15, dao.mapping(Species.MOUSE, (short) 15, Species.MOUSE));
     }
     //
