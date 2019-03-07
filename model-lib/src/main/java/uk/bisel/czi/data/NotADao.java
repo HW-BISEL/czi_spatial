@@ -2,6 +2,7 @@ package uk.bisel.czi.data;
 
 import java.util.List;
 import java.util.TreeSet;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
@@ -31,6 +32,7 @@ public class NotADao {
     private Logger logger = Logger.getLogger(NotADao.class.getName());
 
     public NotADao() {
+    	java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hibernate");
         em = emf.createEntityManager();
     }
@@ -45,7 +47,7 @@ public class NotADao {
      */
     public short mapping(Species species1, short position1, Species species2) {
     	GutSection[] allSections = this.getRegionFromPosition(species1, position1);
-    	
+    	logger.info("***1 " + allSections[0].getName().toString());
     	if(species1 == species2) return position1;
     	
     	// special rules because the mouse & rat dont map well to the abstract
@@ -61,18 +63,37 @@ public class NotADao {
     		}
     	} else if(species1 == Species.HUMAN && species2 == Species.RAT) {
     		if(allSections[0].getName() == GutComponentName.SIGMOID || allSections[0].getName() == GutComponentName.DESCENDING || allSections[0].getName() == GutComponentName.TRANSVERSE || allSections[0].getName() == GutComponentName.ASCENDING) {
-    			float species1PD = calculateProportionalDistance((short) 160, (short) 1470, position1);
+    			float species1PD = calculateProportionalDistance((short) 160, (short) 1460, position1);
     			return convertProportionalDistanceToActualDistance((short) 80, (short) 180, species1PD);
     		}
     	} else if(species2 == Species.HUMAN && species1 == Species.RAT) {
+    		logger.info("*** rat to human");
     		if(allSections[0].getName() == GutComponentName.PROXIMAL_MID_DISTAL) {
     			float species1PD = calculateProportionalDistance(species1, position1); 
-    			return convertProportionalDistanceToActualDistance((short) 160, (short) 1470, species1PD); 
+    			logger.info("*** rat to human: " + Float.toString(species1PD));
+    			logger.info("*** rat to human: " + convertProportionalDistanceToActualDistance((short) 160, (short) 1460, species1PD));    			
+    			return convertProportionalDistanceToActualDistance((short) 160, (short) 1460, species1PD); 
+    		}
+    	} else if(species1 == Species.MOUSE && species2 == Species.RAT) {
+    		logger.info("*** mouse to rat");
+    		if(allSections[0].getName() == GutComponentName.MID_DISTAL || allSections[0].getName() == GutComponentName.PROXIMAL) {
+    			float species1PD = calculateProportionalDistance((short) 5, (short) 100, position1); // proximal & mid_distal
+    			logger.info("*** mouse to rat: " + Float.toString(species1PD));
+    			logger.info("*** mouse to rat: " + convertProportionalDistanceToActualDistance((short) 80, (short) 180, species1PD));
+    			return convertProportionalDistanceToActualDistance((short) 80, (short) 180, species1PD);
+    		} 
+    	} else if(species2 == Species.MOUSE && species1 == Species.RAT) {
+    		if(allSections[0].getName() == GutComponentName.PROXIMAL_MID_DISTAL) {
+    			float species1PD = calculateProportionalDistance(species1, position1); 
+    			return convertProportionalDistanceToActualDistance((short) 5, (short) 100, species1PD); 
     		}
     	}
     	
+    	// general way
     	float species1PD = calculateProportionalDistance(species1, position1);      	
+    	logger.info("***2 " + Float.toString(species1PD));
     	GutComponentName name2 = getSpecies2SectionNameFromSpecies1Position(species1, position1, species2);    	
+    	logger.info("***3 " + name2);
     	GutSection section2 = getSection(species2, name2);
     	return convertProportionalDistanceToActualDistance(section2.getStartPosition(), section2.getEndPosition(), species1PD);    	    	
     }
@@ -177,7 +198,7 @@ public class NotADao {
      * @return
      */
     public GutSection[] getRegionFromPosition(Species species, short position) {
-    	String queryString = "FROM GutSection WHERE species LIKE '" + species + "' AND startPosition <= " + position +" AND endPosition >= "+ position;
+    	String queryString = "FROM GutSection WHERE species LIKE '" + species + "' AND startPosition <= " + position +" AND endPosition >= "+ position + " ORDER BY startPosition ASC";
     	logger.info(queryString);
     	Query query = em.createQuery(queryString);
     	List<GutSection> allSections = query.getResultList();
@@ -203,7 +224,7 @@ public class NotADao {
      */
     public GutComponentName getSpecies2SectionNameFromSpecies1Position(Species species1, Short position, Species species2) {
     	String queryString = "FROM Model2AbstractMapping WHERE species1 LIKE '" + species1 + "' AND species1StartPosition <= " + position + " AND species1StopPosition >= "+ position;
-    	logger.info(queryString);
+    	logger.info("****4 " +queryString);
     	Query query = em.createQuery(queryString);
      	List<Model2AbstractMapping> allMaps = query.getResultList();
     	if(allMaps.isEmpty()) {
@@ -212,16 +233,20 @@ public class NotADao {
     	
     	short abstractStart = allMaps.get(0).getAbstractStartPosition();
     	short abstractStop = allMaps.get(0).getAbstractStopPosition();
+    	logger.info("****5 "+ abstractStart + " " + abstractStop);
     	    	
     	float species1PD = calculateProportionalDistance(species1, position);    	
+    	logger.info("****6 "+ Float.toString(species1PD));
     	short abstractPoint = convertProportionalDistanceToActualDistance(abstractStart, abstractStop, species1PD);
-    	queryString = "FROM Model2AbstractMapping WHERE species1 LIKE '"+species2+"' AND abstractStartPosition <= " + abstractPoint + " AND abstractStopPosition >= "+ abstractPoint +" ORDER BY abstractStopPosition DESC";
-    	logger.info(queryString);
+    	logger.info("****7 "+abstractPoint);
+    	queryString = "FROM Model2AbstractMapping WHERE species1 LIKE '"+species2+"' AND abstractStartPosition <= " + abstractPoint + " AND abstractStopPosition >= "+ abstractPoint +" ORDER BY abstractStopPosition ASC";
+    	logger.info("****8 "+queryString);
     	query = em.createQuery(queryString);
      	allMaps = query.getResultList();
     	if(allMaps.isEmpty()) {
     		throw new DatabaseException("No mapping from abstract position " + abstractPoint + " to "+species2);
     	}      	  
+    	logger.info("****9 "+allMaps.size());
     	return allMaps.get(0).getSpecies1SectionName();
     }
     
