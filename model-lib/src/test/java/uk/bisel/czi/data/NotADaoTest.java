@@ -156,7 +156,7 @@ public class NotADaoTest {
 
     @Test
     public void getPositionsFromImage_pass() {	
-        assertTrue(dao.getPositionsFromImage("r8").length > 1);
+        assertTrue(dao.getPositionsFromImage("m8").length > 1);
     }
     //
     @Test
@@ -211,7 +211,7 @@ public class NotADaoTest {
     
     @Test
     public void getSpecies2SectionNameFromSpecies1Position_pass_boundary() {
-    	assertEquals(GutComponentName.CAECUM, dao.getSpecies2SectionNameFromSpecies1Position(Species.MOUSE, (short) 100, Species.HUMAN)); 
+    	assertEquals(GutComponentName.ASCENDING, dao.getSpecies2SectionNameFromSpecies1Position(Species.MOUSE, (short) 100, Species.HUMAN)); 
     }    
     
     @Test (expected = DatabaseException.class)
@@ -221,10 +221,10 @@ public class NotADaoTest {
     //
     @Test
     public void mapping_pass() {    	
-    	assertEquals((short) 102, dao.mapping(Species.HUMAN, (short) 1462, Species.MOUSE));
-    	assertEquals((short) 1462, dao.mapping(Species.MOUSE, (short) 102, Species.HUMAN));
-    	assertEquals((short) 1480, dao.mapping(Species.MOUSE, (short) 120, Species.HUMAN));
-    	assertEquals((short) 120, dao.mapping(Species.HUMAN, (short) 1480, Species.MOUSE));
+    	assertEquals((short) 99, dao.mapping(Species.HUMAN, (short) 1462, Species.MOUSE));
+    	assertEquals((short) 1472, dao.mapping(Species.MOUSE, (short) 102, Species.HUMAN));
+    	assertEquals((short) 1485, dao.mapping(Species.MOUSE, (short) 120, Species.HUMAN));
+    	assertEquals((short) 113, dao.mapping(Species.HUMAN, (short) 1480, Species.MOUSE));
     	assertEquals((short) 143, dao.mapping(Species.RAT, (short) 70, Species.HUMAN));
     	assertEquals((short) 70, dao.mapping(Species.HUMAN, (short) 143, Species.RAT));
     	assertEquals((short) 8, dao.mapping(Species.HUMAN, (short) 221, Species.MOUSE));
@@ -234,7 +234,7 @@ public class NotADaoTest {
     //
     @Test
     public void getImagesFromRegion_pass() {
-    	assertTrue(dao.getImagesFromRegion(Species.MOUSE, "anal canal").length > 0);
+    	assertTrue(dao.getImagesFromRegion(Species.HUMAN, "rectum").length > 0);
     	assertTrue(dao.getImagesFromRegion(Species.HUMAN, "ascending").length > 0);
     	assertTrue(dao.getImagesFromRegion(Species.MOUSE, "cecum").length > 0);
     }    
