@@ -142,9 +142,9 @@ fabric.properties
 ### Intellij Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
-# *.iml
+ *.iml
 # modules.xml
-# .idea/misc.xml
+ .idea/misc.xml
 # *.ipr
 
 # Sonarlint plugin
@@ -221,3 +221,22 @@ Temporary Items
 
 
 # End of https://www.gitignore.io/api/java,macos,linux,eclipse,intellij
+
+
+persistence.xml
+.idea/vcs.xml
+.idea/artifacts/web_app_war.xml
+.idea/artifacts/web_app_war_exploded.xml
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+czi.iml
+model-lib/model-lib.iml
+web-app/web-app.iml
+model-lib/R2M.txt
+model-lib/R2H.txt
+model-lib/M2R.txt
+model-lib/M2H.txt
+model-lib/H2R.txt
+model-lib/H2M.txt

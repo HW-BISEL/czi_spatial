@@ -23,23 +23,16 @@
 		<br />
 		<div class="row">
 			<div class="col-sm-2"></div>
-			<div class="com-sm-8">
-				<img src="images/cziModel8.jpg">
-			</div>
-			<div class="col-sm-2"></div>
-		</div>
-		<br />
-		<div class="row">
-			<div class="col-sm-2"></div>
 			<div class="col-sm-8" style="background-color: lavenderblush;">
 				<!-- Tab links -->
 				<div class="tab">
-					<button class="tablinks" onclick="openTab(event, 'searchByImage')">searchByImage</button>
+					<!-- <button class="tablinks" onclick="openTab(event, 'searchByImage')">searchByImage</button> -->
 					<button class="tablinks"
 						onclick="openTab(event, 'searchByComponent')">searchByComponent</button>
 					<button class="tablinks"
 						onclick="openTab(event, 'searchByPosition')">searchByPosition</button>
 					<button class="tablinks" onclick="openTab(event, 'searchByRange')">searchByRange</button>
+					<button class="tablinks" onclick="openTab(event, 'mapping')">mapping</button>
 				</div>
 			</div>
 			<div class="col-sm-2"></div>
@@ -47,18 +40,10 @@
 		<div class="row">
 			<div class="col-sm-2"></div>
 			<div class="col-sm-8" style="background-color: lavenderblush;">
-				<div id="searchByImage" class="tabcontent">
-					Enter the number of the image you are interested in: <input
-						type="text" maxlength="3" size="4" id="imageId"> <br /> <br />
-					<button type="button"
-						onclick="Query('searchByImage', document.getElementById('imageId').value);">Query</button>
-
-					<br /> <br />
-				</div>
 				<div id="searchByComponent" class="tabcontent">
 					Enter the name of colon structure you are interested in: <select
 						id="componentId">
-						<option value="anus">anus</option>
+						<option value="anal canal">anal canal</option>
 						<option value="rectum">rectum</option>
 						<option value="sigmoid">sigmoid</option>
 						<option value="descending">descending</option>
@@ -75,20 +60,26 @@
 					<br /> <br />
 				</div>
 				<div id="searchByPosition" class="tabcontent">
-					Enter the position (as an integer) you are interested in: <input
-						type="text" maxlength="3" size="4" id="position"> <br />
-					<br />
+					Enter the position (as an integer) you are interested in between 0
+					and 1500: <input type="text" maxlength="4" size="4" id="position">
+					<br /> <br />
 					<button type="button"
 						onclick="Query('searchByPosition', document.getElementById('position').value);">Query</button>
 
 					<br /> <br />
 				</div>
 				<div id="searchByRange" class="tabcontent">
-					Enter the start AND stop positions (as an integer) you are
-					interested in: <input type="text" maxlength="3" size="4" id="start">
-					to <input type="text" maxlength="3" size="4" id="stop"> <br />
-					<br />
+					Enter the start & stop positions (as an integer) between 0 and 1500: <input type="text" maxlength="4"
+						size="4" id="position"> <br /> <br />
 					<button type="button" onclick="QueryRange();">Query</button>
+					<br /> <br />
+				</div>
+				<div id="mapping" class="tabcontent">
+					Mapping from human to mouse; enter a mouse point between 0 and
+					1500: <input type="text" maxlength="3" size="4" id="mapPos">
+					<br /><br />
+					<button type="button"
+						onclick="Query('mapping', document.getElementById('mapPos').value);">Query</button>
 
 					<br /> <br />
 				</div>
@@ -128,7 +119,6 @@
 			document.getElementById(tabName).style.display = "block";
 			evt.currentTarget.className += " active";
 		}
-
 		function Query(operation, value) {
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
@@ -136,23 +126,26 @@
 					document.getElementById("display").innerHTML = this.responseText;
 				}
 				;
-				if (this.readyState == 4 && this.status == 500) {
+				if (this.readyState == 4 && this.status != 200) {
 					document.getElementById("display").innerHTML = this.responseText;
 				}
 				;
 			};
-			var url = "query/";
-			if (operation == "searchByImage") {
-				url += "searchByImage/" + value;
-			} else if (operation == "searchByComponent") {
-				url += "searchByComponent/" + value;
-			} else if (operation == "searchByPosition") {
-				url += "searchByPosition/" + value;
+			if (operation == 'mapping') {
+				var url = "mapping/human/mouse?point="+value;
+			} else {
+				var url = "query/human/";
+				if (operation == "searchByImage") {
+					url += "searchByImage/" + value;
+				} else if (operation == "searchByComponent") {
+					url += "searchByComponent?component=" + value;
+				} else if (operation == "searchByPosition") {
+					url += "searchByPosition?point=" + value;
+				}
 			}
 			xhttp.open("GET", url, true);
 			xhttp.send();
 		}
-
 		function QueryRange() {
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
@@ -160,13 +153,13 @@
 					document.getElementById("display").innerHTML = this.responseText;
 				}
 				;
-				if (this.readyState == 4 && this.status == 500) {
+				if (this.readyState == 4 && this.status != 200) {
 					document.getElementById("display").innerHTML = this.responseText;
 				}
 				;
 			};
-			xhttp.open("GET", "query/searchByRange/"
-					+ document.getElementById("start").value + "/"
+			xhttp.open("GET", "query/human/searchByRange?point1="
+					+ document.getElementById("start").value + "&point2="
 					+ document.getElementById("stop").value, true);
 			xhttp.send();
 		}

@@ -2,8 +2,8 @@ package uk.bisel.czi.webservice;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 
-import javax.net.ssl.SSLEngineResult.Status;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,10 +40,11 @@ public class ErrorHandler extends HttpServlet {
 		response.addHeader("Access-Control-Max-Age", "86400");
 		response.addHeader("Content-Type", "application/json");
 		
+		
 		PrintWriter out = response.getWriter();
 		Error error = new Error("fail", request.getAttribute("javax.servlet.error.message").toString(),
 				request.getAttribute("javax.servlet.error.exception_type").toString(),
-				request.getAttribute("javax.servlet.forward.request_uri").toString());
+				request.getAttribute("javax.servlet.forward.request_uri").toString()+"?"+URLEncoder.encode((String) request.getAttribute("javax.servlet.forward.query_string"), "UTF-8"));
 		Gson gson = new GsonBuilder().create();
 		out.println(gson.toJson(error));		
 	}

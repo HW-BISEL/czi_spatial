@@ -10,10 +10,15 @@ function openTab(evt, tabName) {
 		tablinks[i].className = tablinks[i].className.replace(" active", "");
 	}
 	document.getElementById(tabName).style.display = "block";
-	if (tabName == 'click') {
+	if (tabName == 'click' || tabName == 'mapping') {
 		clickQuery = true;
 	} else {
 		clickQuery = false;
+	}	
+	if(tabName == 'mapping') {
+		document.getElementById("model2row").style.display = "block";
+	} else {
+		document.getElementById('model2row').style.display = "none";
 	}
 	evt.currentTarget.className += " active";
 	resizeCanvas();

@@ -1,128 +1,170 @@
-function drawModel() {
+const analStart = 1500;
+const analEnd = 1460;
+const rectumStart = analEnd;
+const rectumMiddle = 1400;
+const rectumEnd = 1340;
+const sigmoidStart = rectumEnd;
+const sigmoidMiddle = 1140;
+const sigmoidEnd = 940;
+const descendingStart = sigmoidEnd;
+const descendingMiddle = 815;
+const descendingEnd = 690;
+const transverseStart = descendingEnd;
+const transverseMiddle = 440;
+const transverseEnd = 190;
+const ascendingStart = transverseEnd;
+const ascendingMiddle = 115;
+const ascendingEnd = 40;
+const cecumStart = ascendingEnd;
+const cecumMiddle = 20;
+const cecumEnd = 0;
+
+const apr = 1400;
+const icv = 0;
+const hf = transverseEnd;
+const sf = transverseStart;
+const anus = 1500;
+
+const h_length = anus - icv;
+
+function drawHuman() {
 	can = document.getElementById('modelCanvas');
 	ctx = can.getContext('2d');
-	var unit = can.width / 150;
-	var y_size = 10;
+	var unit = (can.width - 1) / anus;
+	var y_size = 20;
 	ctx.font = "20px Georgia";
 	ctx.textAlign = "center";
-	ctx.lineWidth = 0.5;
-	ctx.beginPath();
-	ctx.rect(cecumEnd * unit, can.height / 2, unit * 4, y_size);
+	ctx.lineWidth = 1;
+	
+	ctx.beginPath();	
+	ctx.rect(cecumEnd * unit, can.height / 2, unit * (cecumStart - cecumEnd), y_size);
 	ctx.fill();
-	ctx.beginPath()
-	ctx.moveTo(ascendingEnd * unit, can.height / 2 + 5);
-	ctx.lineTo(ascendingStart * unit, can.height / 2 + 5);
+
+	ctx.beginPath();	
+	ctx.rect(ascendingEnd * unit, can.height / 2, unit * (ascendingStart - ascendingEnd), y_size);
 	ctx.stroke();
+	
 	ctx.beginPath();
-	ctx.rect(transverseEnd * unit, can.height / 2, unit * 50, y_size);
-	ctx.fill();
-	ctx.beginPath();
-	ctx.moveTo(descendingEnd * unit, can.height / 2 + 5);
-	ctx.lineTo(descendingStart * unit, can.height / 2 + 5);
-	ctx.stroke();
-	ctx.beginPath();
-	ctx.rect(sigmoidEnd * unit, can.height / 2, unit * 40, y_size);
-	ctx.fill();
-	ctx.beginPath();
-	ctx.moveTo(rectumEnd * unit, can.height / 2 + 5);
-	ctx.lineTo(rectumStart * unit, can.height / 2 + 5);
-	ctx.stroke();
-	ctx.beginPath();
-	ctx.rect(analEnd * unit, can.height / 2, unit * 4, y_size);
-	ctx.fill();
-
-	ctx.fillText("anal", 148 * unit, (can.height / 2) - 100);
-	ctx.fillText("canal", 148 * unit, (can.height / 2) - 80);
-	ctx.fillText("rectum", 140 * unit, (can.height / 2) - 100);
-	ctx.fillText("sigmoid", 114 * unit, (can.height / 2) - 100);
-	ctx.fillText("descending", 82 * unit, (can.height / 2) - 100);
-	ctx.fillText("transverse", 44 * unit, (can.height / 2) - 100);
-	ctx.fillText("ascending", 12 * unit, (can.height / 2) - 100);
-	ctx.fillText("cecum", 2 * unit, (can.height / 2) - 100);
-
-	ctx.beginPath();
-	ctx.fillStyle = "olive";
-	ctx.rect(apr * unit, can.height / 2, unit, y_size);
-	ctx.fillText("APR", apr * unit, (can.height / 2) - 40);
-	ctx.fill();
-
-	ctx.beginPath();
-	ctx.fillStyle = "green";
-	ctx.rect(icv * unit, can.height / 2, unit, y_size);
-	ctx.fillText("ICV", unit, (can.height / 2) - 40);
-	ctx.fill();
-
-	ctx.beginPath();
-	ctx.fillStyle = "teal";
-	ctx.rect(hf * unit, can.height / 2, unit, y_size);
-	ctx.fillText("HF", hf * unit, (can.height / 2) - 40);
-	ctx.fill();
-
-	ctx.beginPath();
-	ctx.fillStyle = "olive";
-	ctx.rect(sf * unit, can.height / 2, unit, y_size);
-	ctx.fillText("SF", sf * unit, (can.height / 2) - 40);
+	ctx.rect(transverseEnd * unit, can.height / 2, unit * (transverseStart - transverseEnd), y_size);
 	ctx.fill();
 	
 	ctx.beginPath();
-	ctx.fillStyle = "purple";
-	ctx.rect(149 * unit, can.height / 2, unit, y_size);
-	ctx.fillText("anus", 148 * unit, (can.height / 2) - 40);
+	ctx.rect(descendingEnd * unit, can.height / 2, unit * (descendingStart - descendingEnd), y_size);
+	ctx.stroke();
+		
+	ctx.beginPath();
+	ctx.rect(sigmoidEnd * unit, can.height / 2, unit * (sigmoidStart - sigmoidEnd), y_size);
+	ctx.fill();
+	
+	ctx.beginPath();
+	ctx.rect(rectumEnd * unit, can.height / 2, (rectumStart - rectumEnd) * unit, y_size);
+	ctx.stroke();
+	
+	ctx.beginPath();
+	ctx.rect(analEnd * unit, can.height / 2, unit * (analStart - analEnd), y_size);
 	ctx.fill();
 
-	ctx.fillStyle = "black";
-	ctx.fillText("0",  149 * unit, (can.height / 2) + 40);
-	ctx.fillText("4", analEnd * unit, (can.height / 2) + 40);
-	ctx.fillText("16", rectumEnd * unit, (can.height / 2) + 40);
-	ctx.fillText("56", sigmoidEnd * unit, (can.height / 2) + 40);
-	ctx.fillText("81", descendingEnd * unit, (can.height / 2) + 40);
-	ctx.fillText("131", transverseEnd * unit, (can.height / 2) + 40);
-	ctx.fillText("146", ascendingEnd * unit, (can.height / 2) + 40);
+	ctx.fillText("anal", 1480 * unit, (can.height / 2) - 40);
+	ctx.fillText("canal", 1480 * unit, (can.height / 2) - 20);
+	ctx.fillText("rectum", 1400 * unit, (can.height / 2) - 40);
+	ctx.fillText("sigmoid", 1140 * unit, (can.height / 2) - 40);
+	ctx.fillText("descending", 820 * unit, (can.height / 2) - 40);
+	ctx.fillText("transverse", 440 * unit, (can.height / 2) - 40);
+	ctx.fillText("ascending", 120 * unit, (can.height / 2) - 40);
+	ctx.fillText("caecum", 30 * unit, (can.height / 2) - 40);
+//
+	ctx.beginPath();
+	ctx.fillStyle = "purple";
+	ctx.strokeStyle = "purple";
+	ctx.moveTo(1, can.height / 2);
+	ctx.lineTo(1, can.height / 2+40);	
+	ctx.fillText("ICV", 15, (can.height / 2) + (y_size * 2) + 20);
+	ctx.stroke();	
+
+	ctx.beginPath();
+	ctx.fillStyle = "blue";
+	ctx.strokeStyle = "blue";
+	ctx.moveTo(hf * unit, can.height / 2);
+	ctx.lineTo(hf * unit, can.height / 2+40);
+	ctx.fillText("HF", hf * unit, (can.height / 2) + (y_size * 2) + 20);
+	ctx.stroke();
+
+	ctx.beginPath();
+	ctx.fillStyle = "teal";
+	ctx.strokeStyle = "teal";
+	ctx.moveTo(sf * unit, can.height / 2);
+	ctx.lineTo(sf * unit, can.height / 2+40);	
+	ctx.fillText("SF", sf * unit, (can.height / 2) + (y_size * 2) + 20);
+	ctx.stroke();
+	
+	ctx.beginPath();
+	ctx.fillStyle = "green";
+	ctx.strokeStyle = "green";
+	ctx.moveTo(apr * unit, can.height / 2);
+	ctx.lineTo(apr * unit, can.height / 2+40);	
+	ctx.fillText("APR", apr * unit, (can.height / 2) + (y_size * 2) + 20);
+	ctx.stroke();	
+	
+	ctx.beginPath();
+	ctx.fillStyle = "olive";
+	ctx.strokeStyle = "olive";
+	ctx.rect((anus * unit) - 1, can.height / 2, unit, y_size * 2);
+	ctx.fillText("anus", (anus * unit) - 20, (can.height / 2) + (y_size * 2) + 20);
+	ctx.fill();
+
+//	ctx.fillStyle = "black";
+//	ctx.fillText("0",  149 * unit, (can.height / 2) + 60);
+//	ctx.fillText("4", analEnd * unit, (can.height / 2) + 60);
+//	ctx.fillText("16", rectumEnd * unit, (can.height / 2) + 60);
+//	ctx.fillText("56", sigmoidEnd * unit, (can.height / 2) + 60);
+//	ctx.fillText("81", descendingEnd * unit, (can.height / 2) + 60);
+//	ctx.fillText("131", transverseEnd * unit, (can.height / 2) + 60);
+//	ctx.fillText("146", ascendingEnd * unit, (can.height / 2) + 60);
+//	ctx.fillText("150", unit, (can.height / 2) + 60);
 }
 
-function updateModel(componentName) {
+function updateHuman(componentName) {
 	can = document.getElementById('modelCanvas');
-	ctx = can.getContext('2d');
-
+	ctx = can.getContext('2d');	
 	ctx.fillStyle = "red";
-	var unit = can.width / 150;
+	var unit = (can.width-1) / h_length;
 	var y = can.height / 2;
-	var y_size = 10;
+	var y_size = 20;
 
 	switch (componentName) {
-	case "anal":
+	case "anal canal":
 		ctx.beginPath();
-		ctx.rect(analStart * unit, y, -(unit * 4), y_size);
+		ctx.rect(analStart * unit, y, -(analStart - analEnd) * unit, y_size);
 		ctx.fill();
 		break;
 	case "rectum":
 		ctx.beginPath();
-		ctx.rect(rectumStart * unit, y, -(unit * 12), y_size);
+		ctx.rect(rectumStart * unit, y, -(rectumStart - rectumEnd) * unit, y_size);
 		ctx.fill();
 		break;
 	case "sigmoid":
 		ctx.beginPath();
-		ctx.rect(sigmoidStart * unit, y, -(unit * 40), y_size);
+		ctx.rect(sigmoidStart * unit, y, -(sigmoidStart - sigmoidEnd) * unit, y_size);
 		ctx.fill();
 		break;
 	case "descending":
 		ctx.beginPath();
-		ctx.rect(descendingStart * unit, y, -(unit * 25), y_size);
+		ctx.rect(descendingStart * unit, y, -(descendingStart - descendingEnd) * unit, y_size);
 		ctx.fill();
 		break;
 	case "transverse":
 		ctx.beginPath();
-		ctx.rect(transverseStart * unit + unit, y, -(unit * 51), y_size);
+		ctx.rect(transverseStart * unit + unit, y, -(transverseStart - transverseEnd) * unit, y_size);
 		ctx.fill();
 		break;
 	case "ascending":
 		ctx.beginPath();
-		ctx.rect(ascendingStart * unit, y, -(unit * 16), y_size);
+		ctx.rect(ascendingStart * unit, y, -(ascendingStart - ascendingEnd) * unit, y_size);
 		ctx.fill();
 		break;
 	case "cecum":
 		ctx.beginPath();
-		ctx.rect(cecumStart * unit, y, -(unit * 4), y_size);
+		ctx.rect(cecumStart * unit, y, -(cecumStart - cecumEnd) * unit, y_size);
 		ctx.fill();
 		break;
 	// landmark

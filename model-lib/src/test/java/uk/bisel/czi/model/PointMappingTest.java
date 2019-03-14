@@ -8,19 +8,22 @@ public class PointMappingTest {
 
 	@Test
 	public void test() {				
-		PointMapping pm = new PointMapping("test1", (short) 1);
-		assertEquals("check name", "test1", pm.getName());
+		PointMapping pm = new PointMapping(GutComponentName.ANUS, (short) 1, Species.HUMAN);
+		assertEquals("check name", GutComponentName.ANUS.toString(), pm.getName());
 		assertEquals("check position", (short) 1, pm.getPosition());
 		
-		pm = new PointMapping("test2", (short) 2, "point 2");
-		assertEquals("check name", "test2", pm.getName());
+		pm = new PointMapping(GutComponentName.ANUS, (short) 2,  Species.HUMAN);
+		assertEquals("check name", GutComponentName.ANUS.toString(), pm.getName());
 		assertEquals("check position", (short) 2, pm.getPosition());
-		assertEquals("check description", "point 2", pm.getDescription());
 		
 		pm = new PointMapping();
-		assertEquals("check name", "", pm.getName());
 		assertEquals("check position", (short) 0, pm.getPosition());
-		assertEquals("check description", "", pm.getDescription());		
+		assertEquals("check description", "", pm.getDescription());
+
+		pm = new PointMapping(GutComponentName.ANUS, (short) 1, Species.HUMAN, "a description");
+		assertEquals("check position", (short) 1, pm.getPosition());
+		assertEquals(Species.HUMAN, pm.getSpecies());
+		assertEquals("check description", "a description", pm.getDescription());
 	}
 
 }

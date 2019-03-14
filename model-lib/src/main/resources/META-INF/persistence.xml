@@ -11,19 +11,25 @@
 			<property name="javax.persistence.jdbc.driver"
 				value="com.mysql.cj.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://localhost:3306/czi" />
+				value="jdbc:mysql://localhost:3306/czi?allowPublicKeyRetrieval=true&amp;useSSL=false" />
 
 			<property name="javax.persistence.jdbc.user" value="czi" />
 			<property name="javax.persistence.jdbc.password"
 				value="abcczi354" />
 
+			<!-- <property name="javax.persistence.jdbc.user" value="bisel" /> <property 
+				name="javax.persistence.jdbc.password" value="b1se1" /> -->
+
+
+			<property name="hibernate.connection.release_mode" value="after_transaction"/>
+			
 
 			<!-- SQL dialect -->
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.MySQL5Dialect" />
 
 			<!-- Create/update tables automatically using mapping metadata -->
-			<property name="hibernate.hbm2ddl.auto" value="validate" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 
 			<!-- Pretty print the SQL in the log file and console -->
 			<property name="hibernate.show_sql" value="false" />

@@ -11,7 +11,7 @@ public class PointNotFoundException extends RuntimeException {
 		super("Point (called "+name+") does not exist");
 	}
 	
-	public PointNotFoundException(short position) {		
+	public PointNotFoundException(float position) {
 		super("No point at position: "+String.valueOf(position));
 	}	
 }

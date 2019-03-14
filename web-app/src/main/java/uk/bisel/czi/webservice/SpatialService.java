@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,9 +15,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
 import uk.bisel.czi.data.NotADao;
-import uk.bisel.czi.logging.*;
 import uk.bisel.czi.model.Image2PositionMapping;
+import uk.bisel.czi.model.Species;
 import uk.bisel.czi.webservice.exceptions.PathException;
+
 
 /**
  * Servlet implementation class SearchByPosition
@@ -42,8 +42,6 @@ public class SpatialService extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		WriteToLog log = new WriteToLog();
-		log.write(request.getRemoteAddr(), request.getRequestURL().toString());
 
 		String unprocessedPath = request.getPathInfo();
 		String[] pathElements = unprocessedPath.split("/");
@@ -55,55 +53,107 @@ public class SpatialService extends HttpServlet {
 		JsonElement element = null;
 		NotADao dao = new NotADao();
 
-		if (pathElements[1].equalsIgnoreCase("searchbyposition")) {
-			if (pathElements.length == 2)
-				throw new PathException("No position provided; should be /searchByPosition/position.");
-			if (pathElements.length > 3)
-				throw new PathException(
-						"Only 1 position should be provided (eg, /searchByPosition/position). Try searchByRange.");
-
-			Image2PositionMapping[] results = dao.getImagesAtPosition((short) Integer.parseInt(pathElements[2]));
-			element = gson.toJsonTree(results);
-
-		} else if (pathElements[1].equalsIgnoreCase("searchbyimage")) {
-			if (pathElements.length == 2)
-				throw new PathException("No imageId provided; should be /searchByImageId/imageId.");
-			if (pathElements.length > 3)
-				throw new PathException("Only 1 imageId should be provided (eg, /searchByImageId/imageId).");
-
-			PositionResult results = new PositionResult(dao.getPositionsFromImage(pathElements[2]));
-			element = gson.toJsonTree(results);
-
-		} else if (pathElements[1].equalsIgnoreCase("searchByRange")) {
-			if (pathElements.length != 4) {
-				throw new PathException(
-						"Exactly 2 positions should be provided (eg, /searchByRange/startPosition/endPosition).");
-			}
-
-			Image2PositionMapping[] results = dao.getImagesFromRange((short) Integer.parseInt(pathElements[2]),
-					(short) Integer.parseInt(pathElements[3]));
-			element = gson.toJsonTree(results);
-
-		} else if (pathElements[1].equalsIgnoreCase("searchByComponent")) {
-			if (pathElements.length == 2)
-				throw new PathException("No position provided; should be /searchByComponent/component.");
-			if (pathElements.length > 3)
-				throw new PathException("Only 1 component should be provided (eg, /searchByComponent/sigmoid).");
-
-			element = gson.toJsonTree(dao.getImagesFromRegion(pathElements[2]));
-		} else {
-			throw new PathException(
-					"URL should contain type (searchByPosition/searchByRange/searchByImage/searchByComponent) of query in second position.");
+		ArrayList<String> allSpecies = new ArrayList<>();
+		for(Species species : Species.values()) {
+			allSpecies.add(species.toString());
 		}
+				
+		if (allSpecies.contains(pathElements[1].toUpperCase())) {
+			Species species = null;
+			
+			species = Species.valueOf(pathElements[1].toUpperCase());
+			
+			if(species == null) throw new PathException("A SPECIES must be provided; eg, /query/mouse/pointQuery?point=13");
+				
+			if(pathElements[2].equalsIgnoreCase("searchByPosition")) {
+				
+				String p1 = request.getParameter("point");
+				if(p1 == null) throw new PathException("A point must be provided; eg, /query/mouse/searchByPosition?point=13");
+				Image2PositionMapping[] results = dao.getImagesAtPosition((short) Integer.parseInt(p1), species);
+				element = gson.toJsonTree(results);				
+				
+			} else if(pathElements[2].equalsIgnoreCase("searchByRange")) {
+				
+				String p1 = request.getParameter("point1");
+				if(p1 == null) throw new PathException("2 points must be provided; eg, query/mouse/searchByRange?point1=13&point2=20");	
+				String p2 = request.getParameter("point2");
+				if(p2 == null) throw new PathException("A 2nd point must be provided;eg, query/mouse/searchByRange?point1=13&point2=20");
+				Image2PositionMapping[] results = dao.getImagesFromRange((short) Integer.parseInt(p1), (short) Integer.parseInt(p2), species);
+				element = gson.toJsonTree(results);
+				
+			} else if(pathElements[2].equalsIgnoreCase("searchByComponent")) {
+				
+				String c = request.getParameter("component").trim();
+				if(c == null) throw new PathException("Must specify a component; eg, query/mouse?component=anal canal");
+				Image2PositionMapping[] results = dao.getImagesFromRegion(species, c);
+				element = gson.toJsonTree(results);
+				
+			} else {
+				throw new PathException("Invalid query type specified must be ONE of searchByPosition, searchByRange OR searchByComponent");
+			}
+		} else {
+			throw new PathException("Not a valid species; eg, /query/mouse/searchByPosition?point=13");
+		}
+		
+//		if (pathElements[1].equalsIgnoreCase("searchbyposition")) {
+//			if (pathElements.length == 2)
+//				throw new PathException("No position provided; should be /searchByPosition/position.");
+//			if (pathElements.length > 3)
+//				throw new PathException(
+//						"Only 1 position should be provided (eg, /searchByPosition/position). Try searchByRange.");
+//
+//			Image2PositionMapping[] results = dao.getImagesAtPosition((short) Integer.parseInt(pathElements[2]));
+//			element = gson.toJsonTree(results);
+//
+//		} else if (pathElements[1].equalsIgnoreCase("searchbyimage")) {
+//			if (pathElements.length == 2)
+//				throw new PathException("No imageId provided; should be /searchByImageId/imageId.");
+//			if (pathElements.length > 3)
+//				throw new PathException("Only 1 imageId should be provided (eg, /searchByImageId/imageId).");
+//
+//			PositionResult results = new PositionResult(dao.getPositionsFromImage(pathElements[2]));
+//			element = gson.toJsonTree(results);
+//
+//		} else if (pathElements[1].equalsIgnoreCase("searchByRange")) {
+//			if (pathElements.length != 4) {
+//				throw new PathException(
+//						"Exactly 2 positions should be provided (eg, /searchByRange/startPosition/endPosition).");
+//			}
+//
+//			Image2PositionMapping[] results = dao.getImagesFromRange((short) Integer.parseInt(pathElements[2]),
+//					(short) Integer.parseInt(pathElements[3]));
+//			element = gson.toJsonTree(results);
+//
+//		} else if (pathElements[1].equalsIgnoreCase("searchByComponent")) {
+//			if (pathElements.length == 2)
+//				throw new PathException("No position provided; should be /searchByComponent/component.");
+//			if (pathElements.length > 3)
+//				throw new PathException("Only 1 component should be provided (eg, /searchByComponent/sigmoid).");
+//
+//			element = gson.toJsonTree(dao.getImagesFromRegion(pathElements[2]));
+//		} else {
+//			throw new PathException(
+//					"URL should contain type (searchByPosition/searchByRange/searchByImage/searchByComponent) of query in second position.");
+//		}
 
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Methods", "GET");
 		response.addHeader("Access-Control-Allow-Headers", "Content-Type");
 		response.addHeader("Access-Control-Max-Age", "86400");
 		response.addHeader("Content-Type", "application/json");
-		ResultOutputFormat result = new ResultOutputFormat("success", request.getRequestURL().toString(), element);
+		ResultOutputFormat result = new ResultOutputFormat("success", request.getRequestURL()+"?"+request.getQueryString(), element);
 		PrintWriter out = response.getWriter();
 		out.println(gson.toJson(result));
+//		for(String pathElement : pathElements) {
+//			out.println(pathElement);
+//		}
+//		String value = request.getParameter("point");
+//		out.println(value);
+//		out.println(output);
+		
+		out.flush();
+		out.close();
+		
 	}
 
 	/**

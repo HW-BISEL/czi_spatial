@@ -1,5 +1,7 @@
 package uk.bisel.czi.exceptions;
 
+import uk.bisel.czi.model.Species;
+
 public class RegionNotFoundException extends RuntimeException {
 	/**
 	 * 
@@ -12,5 +14,9 @@ public class RegionNotFoundException extends RuntimeException {
 	
 	public RegionNotFoundException(short position) {		
 		super("No region at position: "+String.valueOf(position));
+	}	
+	
+	public RegionNotFoundException(Species species, short position) {		
+		super("Cannot map " + species + "."+position+" to the Abstract model.");
 	}	
 }

@@ -7,16 +7,16 @@
 	<parent>
 		<groupId>uk.bisel.czi</groupId>
 		<artifactId>czi</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>model-lib</artifactId>
 	<name>model-lib</name>
-	<url>http://maven.apache.org</url>
+	<url>http://localhost:8080/CZI/</url>
 	<packaging>jar</packaging>
 	<build>
 		<finalName>CZI-Model</finalName>
 		<plugins>
-			<plugin>
+<!-- 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.4</version>
@@ -30,6 +30,37 @@
 						</manifest>
 					</archive>
 				</configuration>
+			</plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<!-- get all project dependencies -->
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<!-- MainClass in mainfest make a executable jar -->
+					<excludes>
+						<exclude>**/persistence.xml</exclude>
+					</excludes>
+					<archive>
+						<manifest>
+							<mainClass>uk.bisel.czi.data.LoadData</mainClass>
+						</manifest>
+					</archive>
+
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<!-- bind to the packaging phase -->
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -47,13 +78,13 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.2.17.Final</version>
+			<version>5.4.1.Final</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.12</version>
+			<version>8.0.15</version>
 		</dependency>
 	</dependencies>
 </project>
