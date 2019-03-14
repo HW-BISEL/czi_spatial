@@ -23,7 +23,7 @@
 <body onload="resizeCanvas();" onresize="resizeCanvas();">
 
 	<div class="container">
-		<h1>Test App for CZI Spatial Descriptions</h1>
+		<h1>Test App for CZI Spatial Models</h1>
 		<br />
 		<div class="row">
 			<div class="col-sm-2">
