@@ -73,9 +73,6 @@
 				<!-- Tab links -->
 				<div class="tab">
 					<button class="tablinks" onclick="openTab(event, 'basic')">Basic</button>
-					<!-- 					<button class="tablinks" onclick="openTab(event, 'landmark')">Landmark</button>
-					<button class="tablinks" onclick="openTab(event, 'near')">Near</button>
-					<button class="tablinks" onclick="openTab(event, 'half')">Half</button> -->
 					<button class="tablinks" onclick="openTab(event, 'click')">Click
 						2 Query</button>
 					<button class="tablinks" onclick="openTab(event, 'mapping')">Click
@@ -88,50 +85,6 @@
 			<div class="col-sm-2"></div>
 
 			<div class="col-sm-8">
-
-				<!-- 				<div id="half" class="tabcontent">
-					The ROI is <em>near</em> the <select id="axis">
-						<option value="proximal">proximal</option>
-						<option value="distal">distal</option>
-					</select> half of the <select id="componentHalf">
-						<option value="anal canal">anal canal</option>
-						<option value="rectum">rectum</option>
-						<option value="sigmoid">sigmoid</option>
-						<option value="descending">descending</option>
-						<option value="transverse">transverse</option>
-						<option value="ascending">ascending</option>
-						<option value="cecum">caecum</option>
-					</select>.<br />
-					This queries exactly half the structure.
-					 <br /> <br />
-					<button type="button"
-						onclick="QueryHalf(document.getElementById('axis').value, document.getElementById('componentHalf').value);">Query</button>
-
-					<br /> <br />
-				</div> -->
-
-
-				<!-- 				<div id="near" class="tabcontent">
-					The ROI is <em>near</em> the <select id="place">
-						<option value="start">start</option>
-						<option value="middle">middle</option>
-						<option value="end">end</option>
-					</select> of the <select id="nearBy">
-						<option value="anal canal">anal canal</option>
-						<option value="rectum">rectum</option>
-						<option value="sigmoid">sigmoid</option>
-						<option value="descending">descending</option>
-						<option value="transverse">transverse</option>
-						<option value="ascending">ascending</option>
-						<option value="cecum">caecum</option>
-					</select>.<br />
-					If the start or end is selected the query is that point +/- 3cm (i.e., range of 4cm). If the middle is selected, it is the midpoint ± 3 (so a total range of 6cm). <br /> <br />
-					<button type="button"
-						onclick="QueryRange(document.getElementById('place').value, document.getElementById('nearBy').value);">Query</button>
-
-					<br /> <br />
-				</div>
- -->
 				<div id="basic" class="tabcontent">
 					Enter the name of colon structure you are interested in: <select
 						id="componentId">
@@ -148,23 +101,6 @@
 
 					<br /> <br />
 				</div>
-
-				<!-- 				<div id="landmark" class="tabcontent">
-					Enter the name of colon landmark you are interested in: <select
-						id="landmarkId">
-						<option value="apr">apr</option>
-						<option value="icv">icv</option>
-						<option value="hf">hf</option>
-						<option value="sf">sf</option>
-					</select>. <br />
-					Query is only the point selected, i.e., no range. <br /> <br />
-					<button type="button"
-						onclick="Query('searchByPosition', document.getElementById('landmarkId').value, 'human');">Query</button>
-
-					<br /> <br />
-				</div> -->
-
-
 
 				<div id="mapping" class="tabcontent">
 					<p>
