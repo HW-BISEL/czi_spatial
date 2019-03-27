@@ -15,11 +15,7 @@
 
 			<property name="javax.persistence.jdbc.user" value="czi" />
 			<property name="javax.persistence.jdbc.password"
-				value="abcczi354" />
-
-			<!-- <property name="javax.persistence.jdbc.user" value="bisel" /> <property 
-				name="javax.persistence.jdbc.password" value="b1se1" /> -->
-
+				value="czi354" />
 
 			<property name="hibernate.connection.release_mode" value="after_transaction"/>
 			
