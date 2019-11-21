@@ -70,7 +70,8 @@
 				</div>
 				<div id="searchByRange" class="tabcontent">
 					Enter the start & stop positions (as an integer) between 0 and 1500: <input type="text" maxlength="4"
-						size="4" id="position"> <br /> <br />
+						size="4" id="start"> to <input type="text" maxlength="4"
+						size="4" id="stop"> <br /> <br />
 					<button type="button" onclick="QueryRange();">Query</button>
 					<br /> <br />
 				</div>
